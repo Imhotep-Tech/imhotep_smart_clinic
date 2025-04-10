@@ -23,20 +23,29 @@ from imhotep_smart_clinic.settings import SITE_DOMAIN
 def register(request):
 
     if request.user.is_authenticated:
-        return redirect("dashboard")  # Changed from today_tasks to dashboard
+        return redirect("dashboard")
 
     if request.method == "POST":
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        user_type = request.POST.get('user_type')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        if user_type not in ['doctor', 'patient']:
+            messages.error(request, "Please select a valid user type.")
+            return render(request, "register.html")
 
         # Check if username contains '@'
         if '@' in username:
             messages.error(request, "Username can't include @")
+            return render(request, "register.html")
 
         # Check if email contains '@'
         if not '@' in email:
             messages.error(request, "Email must include @!")
+            return render(request, "register.html")
 
         # Check if username already exists
         if User.objects.filter(username=username).exists():
@@ -53,10 +62,36 @@ def register(request):
             username=username,
             email=email,
             password=password,
-            email_verify=False
+            email_verify=False,
+            user_type=user_type,
+            first_name=first_name,
+            last_name=last_name
         )
         user.save()
 
+        if user_type == 'doctor':
+            from doctor.models import DoctorProfile
+            specialization = request.POST.get('specialization')
+            if not specialization:
+                messages.error(request, 'Specialization is required for doctors.')
+                user.delete()  # Clean up the created user
+                return render(request, "register.html")
+                
+            doctor = DoctorProfile.objects.create(
+                user=user,
+                specialization=specialization
+            )
+            doctor.save()
+        
+        elif user_type == 'patient':
+            from patient.models import PatientProfile
+            date_of_birth = request.POST.get('date_of_birth')
+            patient = PatientProfile.objects.create(
+                user=user,
+                date_of_birth=date_of_birth if date_of_birth else None
+            )
+            patient.save()
+        
         # Send verification email
         mail_subject = 'Activate your account.'
         current_site = SITE_DOMAIN.rstrip('/')  # Remove trailing slash if present

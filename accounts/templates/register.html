@@ -55,6 +55,33 @@
             </div>
           </div>
 
+          <!-- First Name field -->
+          <div>
+            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <input type="text" name="first_name" id="first_name" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Enter your first name" required>
+            </div>
+          </div>
+
+          <!-- Last Name field -->
+          <div>
+            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <input type="text" name="last_name" id="last_name" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Enter your last name" required>
+            </div>
+          </div>
+
+          <!-- Fixed Email field structure -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
             <div class="mt-1 relative rounded-md shadow-sm">
@@ -67,6 +94,54 @@
             </div>
           </div>
 
+          <!-- User Type Selection -->
+          <div>
+            <label for="user_type" class="block text-sm font-medium text-gray-700">I am a</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <select id="user_type" name="user_type" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                <option value="" selected disabled>Select your role</option>
+                <option value="patient">Patient</option>
+                <option value="doctor">Doctor</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Doctor Fields (Hidden by default) -->
+          <div id="doctor_fields" class="hidden space-y-5">
+            <div>
+              <label for="specialization" class="block text-sm font-medium text-gray-700">Medical Specialization</label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                </div>
+                <input type="text" name="specialization" id="specialization" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc.">
+              </div>
+            </div>
+          </div>
+
+          <!-- Patient Fields (Hidden by default) -->
+          <div id="patient_fields" class="hidden space-y-5">
+            <div>
+              <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <input type="date" name="date_of_birth" id="date_of_birth" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md">
+              </div>
+            </div>
+          </div>
+
+          <!-- Fixed Password field structure -->
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
             <div class="mt-1 relative rounded-md shadow-sm">
@@ -85,6 +160,7 @@
             </div>
           </div>
 
+          <!-- Fixed Confirm Password field structure -->
           <div>
             <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
             <div class="mt-1 relative rounded-md shadow-sm">

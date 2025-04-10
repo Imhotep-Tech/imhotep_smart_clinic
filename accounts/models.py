@@ -10,6 +10,7 @@ class User(AbstractUser):
         ('doctor', 'Doctor'),
         ('assistant', 'Assistant'),
         ('patient', 'Patient'),
+        ('admin', 'Admin')
     )
     
     email_verify = models.BooleanField(default=False)
