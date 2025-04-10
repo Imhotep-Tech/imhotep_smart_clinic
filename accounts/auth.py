@@ -23,7 +23,14 @@ from imhotep_smart_clinic.settings import SITE_DOMAIN
 def register(request):
 
     if request.user.is_authenticated:
-        return redirect("dashboard")
+        if request.user.is_doctor():
+            return redirect("doctor.dashboard")
+        
+        if request.user.is_assistant():
+            return redirect("assistant.dashboard")
+        
+        if request.user.is_patient():
+            return redirect("patient.dashboard")
 
     if request.method == "POST":
         username = request.POST.get('username')
@@ -139,7 +146,14 @@ def activate(request, uidb64, token):
 def user_login(request):
 
     if request.user.is_authenticated:
-        return redirect("dashboard")  # Changed from today_tasks to dashboard
+        if request.user.is_doctor():
+            return redirect("doctor.dashboard")
+        
+        if request.user.is_assistant():
+            return redirect("assistant.dashboard")
+        
+        if request.user.is_patient():
+            return redirect("patient.dashboard")
 
     if request.method == "POST":
         user_username_mail = request.POST.get('user_username_mail')
@@ -153,7 +167,15 @@ def user_login(request):
                 if user.email_verify == True:
                     login(request, user)
                     messages.success(request, "Login successful!")
-                    return redirect("dashboard")  # Changed from today_tasks to dashboard
+
+                    if request.user.is_doctor():
+                        return redirect("doctor.dashboard")
+                    
+                    if request.user.is_assistant():
+                        return redirect("assistant.dashboard")
+                    
+                    if request.user.is_patient():
+                        return redirect("patient.dashboard")
                 else:
                     # Send verification email
                     mail_subject = 'Activate your account.'
@@ -181,7 +203,14 @@ def user_login(request):
                     if user.email_verify == True:
                         login(request, user)
                         messages.success(request, "Login successful!")
-                        return redirect("dashboard")  # Changed from today_tasks to dashboard
+                        if request.user.is_doctor():
+                            return redirect("doctor.dashboard")
+                        
+                        if request.user.is_assistant():
+                            return redirect("assistant.dashboard")
+                        
+                        if request.user.is_patient():
+                            return redirect("patient.dashboard")
                     else:
                         # Send verification email
                         mail_subject = 'Activate your account.'
@@ -346,7 +375,14 @@ def google_callback(request):
             # User exists, log them in
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('dashboard')
+            if request.user.is_doctor():
+                return redirect("doctor.dashboard")
+            
+            if request.user.is_assistant():
+                return redirect("assistant.dashboard")
+            
+            if request.user.is_patient():
+                return redirect("patient.dashboard")
         
         # Store info in session for the next steps
         google_user_data = {
@@ -454,7 +490,14 @@ def add_details_google_login(request):
         login(request, user)
         
         messages.success(request, "Account created successfully!")
-        return redirect('dashboard')
+        if request.user.is_doctor():
+            return redirect("doctor.dashboard")
+        
+        if request.user.is_assistant():
+            return redirect("assistant.dashboard")
+        
+        if request.user.is_patient():
+            return redirect("patient.dashboard")
     
     # GET request - show the form
     return render(request, 'add_details_google.html', {'user_info': user_info})
