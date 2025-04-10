@@ -21,9 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@4vj851rc85$=0*i*xa+dtb(*ttp$kr%o$yx2asdl9ii=hf9!f'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
@@ -35,9 +32,9 @@ if DEBUG:
     # Add this to your settings
     SITE_DOMAIN = 'http://127.0.0.1:8000'  # Replace with your actual domain
 else:
-    SITE_DOMAIN = 'https://imhoteptasks.pythonanywhere.com' 
+    SITE_DOMAIN = 'https://imhotep-clinic.pythonanywhere.com' 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'imhoteptasks.pythonanywhere.com'] 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'imhotep-clinic.pythonanywhere.com'] 
 
 if DEBUG == False:
     # Security settings - keep these as they are
@@ -61,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
     'doctor',
     'assistant',
     'patient',
@@ -160,6 +158,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'accounts.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
