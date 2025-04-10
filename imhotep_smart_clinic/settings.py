@@ -93,7 +93,13 @@ ROOT_URLCONF = 'imhotep_smart_clinic.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'accounts', 'templates'),
+            os.path.join(BASE_DIR, 'doctor', 'templates'),
+            os.path.join(BASE_DIR, 'patient', 'templates'),
+            os.path.join(BASE_DIR, 'assistant', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,7 +126,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'imhoteptech1@gmail.com'
 EMAIL_HOST_PASSWORD =  config('MAIL_PASSWORD')
 
-WSGI_APPLICATION = 'imhotep_tasks.wsgi.application'
+WSGI_APPLICATION = 'imhotep_smart_clinic.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

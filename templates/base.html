@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Primary Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Imhotep Smart Clinic - Your Health, Our Priority{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %}Imhotep Smart Clinic provides quality healthcare services with modern technology. Schedule appointments, access medical records, and connect with healthcare providers.{% endblock %}">
+        <meta name="keywords" content="healthcare, medical clinic, doctor appointments, patient care, medical services, imhotep clinic, smart clinic">
+        <meta name="author" content="Imhotep Tech">
+        
+        <!-- Canonical URL -->
+        <link rel="canonical" href="{{ request.build_absolute_uri }}">
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ request.build_absolute_uri }}">
+        <meta property="og:title" content="{% block og_title %}Imhotep Smart Clinic - Your Health, Our Priority{% endblock %}">
+        <meta property="og:description" content="{% block og_description %}Imhotep Smart Clinic provides quality healthcare services with modern technology. Schedule appointments, access medical records, and connect with healthcare providers.{% endblock %}">
+        <meta property="og:image" content="{% block og_image %}{% static 'imhotep_clinic.png' %}{% endblock %}">
+        
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+        <meta property="twitter:title" content="{% block twitter_title %}Imhotep Smart Clinic - Your Health, Our Priority{% endblock %}">
+        <meta property="twitter:description" content="{% block twitter_description %}Imhotep Smart Clinic provides quality healthcare services with modern technology. Schedule appointments, access medical records, and connect with healthcare providers.{% endblock %}">
+        <meta property="twitter:image" content="{% block twitter_image %}{% static 'imhotep_clinic_social.png' %}{% endblock %}">
+        
+        <!-- Favicon and App Icons -->
+        <link rel="shortcut icon" type="image/png" href="{% static 'imhotep_clinic.png' %}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'imhotep_clinic.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'imhotep_clinic.png' %}">
+        <link rel="manifest" href="{% static 'manifest.json' %}">
+        <script src="{% static 'service-worker.js' %}"></script>
+
+        <!-- Add PWA meta tags -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Imhotep Clinic">
+        <link rel="apple-touch-icon" href="{% static 'imhotep_clinic.png' %}">
+        <meta name="theme-color" content="#007bff">
+        
+        <!-- Stylesheets -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: {
+                                500: '#0284c7',
+                                600: '#0369a1',
+                                700: '#075985'
+                            },
+                        }
+                    }
+                }
+            }
+        </script>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        
+        <!-- Preload critical resources -->
+        <link rel="preconnect" href="https://cdn.tailwindcss.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+        <!-- Structured Data - Organization -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "MedicalOrganization",
+          "name": "Imhotep Smart Clinic",
+          "url": "https://imhotep-clinic.pythonanywhere.com",
+          "logo": "https://imhotep-clinic.pythonanywhere.com/static/imhotep_clinic.png",
+          "description": "A modern medical clinic providing quality healthcare services."
+        }
+        </script>
+        
+        {% block extra_head %}{% endblock %}
+    </head>
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation Container -->
+        <div class="nav-container h-full">
+            {% if user.is_authenticated %}
+                {% include "nav.html" %}
+            {% endif %}
+        </div>
+        
+        <!-- Main Content -->
+        <div id="content" class="content-wrapper flex-1">
+            
+            <!-- Messages container -->
+            {% if messages %}
+                <div class="container mx-auto px-4 py-4">
+                    {% for message in messages %}
+                        <div class="p-4 {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %} rounded-lg mb-4 flex justify-between items-center">
+                            <div>{{ message }}</div>
+                            <button type="button" class="text-gray-500 hover:text-gray-700" onclick="this.parentElement.remove()">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Page content -->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Add main.js at the end of body for better performance -->
+    <script src="{% static 'main.js' %}"></script>
+    <script src="/static/js/register-sw.js"></script>
+</body>
+</html>

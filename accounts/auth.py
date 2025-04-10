@@ -23,7 +23,7 @@ from imhotep_smart_clinic.settings import SITE_DOMAIN
 def register(request):
 
     if request.user.is_authenticated:
-        return redirect("today_tasks")
+        return redirect("dashboard")  # Changed from today_tasks to dashboard
 
     if request.method == "POST":
         username = request.POST.get('username')
@@ -104,7 +104,7 @@ def activate(request, uidb64, token):
 def user_login(request):
 
     if request.user.is_authenticated:
-        return redirect("today_tasks")
+        return redirect("dashboard")  # Changed from today_tasks to dashboard
 
     if request.method == "POST":
         user_username_mail = request.POST.get('user_username_mail')
@@ -118,7 +118,7 @@ def user_login(request):
                 if user.email_verify == True:
                     login(request, user)
                     messages.success(request, "Login successful!")
-                    return redirect("today_tasks")
+                    return redirect("dashboard")  # Changed from today_tasks to dashboard
                 else:
                     # Send verification email
                     mail_subject = 'Activate your account.'
@@ -146,7 +146,7 @@ def user_login(request):
                     if user.email_verify == True:
                         login(request, user)
                         messages.success(request, "Login successful!")
-                        return redirect("today_tasks")
+                        return redirect("dashboard")  # Changed from today_tasks to dashboard
                     else:
                         # Send verification email
                         mail_subject = 'Activate your account.'
@@ -191,7 +191,7 @@ class CustomPasswordResetView(PasswordResetView):
     def get_extra_email_context(self):
         context = {}
         context['domain'] = SITE_DOMAIN.replace('http://', '').replace('https://', '')
-        context['site_name'] = 'Imhotep Tasks'
+        context['site_name'] = 'Imhotep Smart Clinic'  # Changed from Imhotep Tasks
         context['protocol'] = 'https' if 'https://' in SITE_DOMAIN else 'http'
         return context
 
@@ -210,7 +210,7 @@ class CustomPasswordResetView(PasswordResetView):
             context = {
                 'email': email,
                 'domain': SITE_DOMAIN.replace('http://', '').replace('https://', ''),
-                'site_name': 'Imhotep Tasks',
+                'site_name': 'Imhotep Smart Clinic',  # Changed from Imhotep Tasks
                 'protocol': 'https' if 'https://' in SITE_DOMAIN else 'http',
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'user': user,
@@ -218,7 +218,7 @@ class CustomPasswordResetView(PasswordResetView):
             }
             
             # Render email
-            subject = "Reset your Imhotep Tasks password"
+            subject = "Reset your Imhotep Smart Clinic password"  # Changed from Imhotep Tasks
             email_message = render_to_string(self.email_template_name, context)
             html_email = render_to_string(self.html_email_template_name, context)
             
@@ -307,7 +307,7 @@ def google_callback(request):
             # User exists, log them in
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('today_tasks')
+            return redirect('dashboard')  # Changed from today_tasks to dashboard
         
         # Check if username exists
         if User.objects.filter(username=username).exists():
@@ -332,7 +332,7 @@ def google_callback(request):
         # Log user in
         login(request, user)
         messages.success(request, "Account created successfully!")
-        return redirect('today_tasks')
+        return redirect('dashboard')  # Changed from today_tasks to dashboard
 
     except Exception as e:
         messages.error(request, f"An error occurred during Google login. Please try again. {e}")
@@ -373,4 +373,4 @@ def add_username_google_login(request):
     # Log user in
     login(request, user)
     messages.success(request, "Account created successfully!")
-    return redirect('today_tasks')
+    return redirect('dashboard')  # Changed from today_tasks to dashboard

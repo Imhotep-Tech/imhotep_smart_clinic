@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate your Imhotep Smart Clinic account</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto;">
+        <tr>
+            <td style="padding: 40px 0;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="padding: 30px 30px 20px 30px;">
+                            <!-- Logo/Icon -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <img src="{{ domain }}/static/imhotep_clinic.png" alt="Imhotep Smart Clinic Logo" width="48" height="48" style="display: block;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding: 20px 0 0 0;">
+                                        <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #111827;">Activate Your Account</h1>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 20px 30px 40px 30px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="padding: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 24px;">
+                                        <p style="margin: 0 0 16px 0;">Hi {{ user.username }},</p>
+                                        <p style="margin: 0 0 24px 0;">Thank you for registering with Imhotep Smart Clinic. To access our patient management system and healthcare services, please activate your account by clicking the button below:</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding: 16px 0 32px 0;">
+                                        <a href="{{ domain }}{% url 'activate' uidb64=uid token=token %}" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: 500; display: inline-block; font-size: 16px;">Activate Account</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0; color: #6b7280; font-size: 14px; line-height: 20px;">
+                                        <p style="margin: 0 0 16px 0;">If the button above doesn't work, you can also copy and paste the following link into your browser:</p>
+                                        <p style="margin: 0; word-break: break-all; color: #0d9488;">{{ domain }}{% url 'activate' uidb64=uid token=token %}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 20px 30px; background-color: #f9fafb; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="color: #6b7280; font-size: 12px; text-align: center;">
+                                        <p style="margin: 0 0 8px 0;">Imhotep Smart Clinic — Your Health, Our Priority</p>
+                                        <p style="margin: 0;">This email was sent to you because you registered for a healthcare account.</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
