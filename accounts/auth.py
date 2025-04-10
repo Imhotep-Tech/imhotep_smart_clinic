@@ -332,6 +332,10 @@ def google_callback(request):
         email = user_info['email']
         username = email.split('@')[0]
         
+        # Get first and last name if available
+        first_name = user_info.get('given_name', '')
+        last_name = user_info.get('family_name', '')
+        
         # Check if user exists
         user = User.objects.filter(email=email).first()
         
@@ -342,32 +346,26 @@ def google_callback(request):
             # User exists, log them in
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('dashboard')  # Changed from today_tasks to dashboard
+            return redirect('dashboard')
+        
+        # Store info in session for the next steps
+        google_user_data = {
+            'email': email,
+            'first_name': first_name,
+            'last_name': last_name
+        }
         
         # Check if username exists
         if User.objects.filter(username=username).exists():
-            # Store info in session and ask for new username
-            request.session['google_user_info'] = {
-                'email': email,
-                'need_username': True
-            }
+            # Need to collect a new username
+            google_user_data['need_username'] = True
+            request.session['google_user_info'] = google_user_data
             return render(request, 'add_username_google.html')
-
-        # Create new user
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=make_password(None),  # Random password since using OAuth
-            email_verify=True  # Google accounts are pre-verified
-        )
-
-        backend = get_backends()[0]
-        user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
-
-        # Log user in
-        login(request, user)
-        messages.success(request, "Account created successfully!")
-        return redirect('dashboard')  # Changed from today_tasks to dashboard
+        
+        # Username is available, but still need to collect role/user type
+        google_user_data['username'] = username
+        request.session['google_user_info'] = google_user_data
+        return redirect('add_details_google_login')
 
     except Exception as e:
         messages.error(request, f"An error occurred during Google login. Please try again. {e}")
@@ -390,22 +388,73 @@ def add_username_google_login(request):
         messages.error(request, "Username already taken. Please choose another one.")
         return render(request, 'add_username_google.html')
 
-    # Create user with new username
-    user = User.objects.create_user(
-        username=new_username,
-        email=user_info['email'],
-        password=make_password(None),
-        email_verify=True
-    )
+    # Update username in session
+    user_info['username'] = new_username
+    request.session['google_user_info'] = user_info
+    
+    # Redirect to collect additional details
+    return redirect('add_details_google_login')
 
-    # Set the backend attribute on the user
-    backend = get_backends()[0]
-    user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
-
-    # Clean up session
-    del request.session['google_user_info']
-
-    # Log user in
-    login(request, user)
-    messages.success(request, "Account created successfully!")
-    return redirect('dashboard')  # Changed from today_tasks to dashboard
+def add_details_google_login(request):
+    """Collects user type and role-specific details after Google login"""
+    user_info = request.session.get('google_user_info', {})
+    
+    if not user_info:
+        messages.error(request, "Session expired. Please try again.")
+        return redirect('login')
+    
+    if request.method == "POST":
+        user_type = request.POST.get('user_type')
+        
+        if user_type not in ['doctor', 'patient']:
+            messages.error(request, "Please select a valid user type.")
+            return render(request, 'add_details_google.html', {'user_info': user_info})
+        
+        # Create the user
+        user = User.objects.create_user(
+            username=user_info['username'],
+            email=user_info['email'],
+            password=make_password(None),  # Random password since using OAuth
+            first_name=user_info['first_name'],
+            last_name=user_info['last_name'],
+            email_verify=True,  # Google accounts are pre-verified
+            user_type=user_type
+        )
+        
+        # Create the appropriate profile
+        if user_type == 'doctor':
+            from doctor.models import DoctorProfile
+            specialization = request.POST.get('specialization')
+            if not specialization:
+                messages.error(request, 'Specialization is required for doctors.')
+                user.delete()  # Clean up the created user
+                return render(request, 'add_details_google.html', {'user_info': user_info})
+                
+            doctor = DoctorProfile.objects.create(
+                user=user,
+                specialization=specialization
+            )
+            doctor.save()
+        
+        elif user_type == 'patient':
+            from patient.models import PatientProfile
+            date_of_birth = request.POST.get('date_of_birth')
+            patient = PatientProfile.objects.create(
+                user=user,
+                date_of_birth=date_of_birth if date_of_birth else None
+            )
+            patient.save()
+        
+        # Clean up session
+        del request.session['google_user_info']
+        
+        # Log user in
+        backend = get_backends()[0]
+        user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
+        login(request, user)
+        
+        messages.success(request, "Account created successfully!")
+        return redirect('dashboard')
+    
+    # GET request - show the form
+    return render(request, 'add_details_google.html', {'user_info': user_info})

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from . import  auth
+from . import auth
 
 urlpatterns = [
     #the main url
@@ -22,4 +22,5 @@ urlpatterns = [
     path('google/login/', auth.google_login, name='google_login'),
     path('google/callback/', auth.google_callback, name='google_callback'),
     path('google/handle-username/', auth.add_username_google_login, name='add_username_google_login'),
+    path('google/handle-details/', auth.add_details_google_login, name='add_details_google_login'),
 ]
