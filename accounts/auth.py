@@ -90,14 +90,14 @@ def register(request):
             )
             doctor.save()
         
-        elif user_type == 'patient':
-            from patient.models import PatientProfile
-            date_of_birth = request.POST.get('date_of_birth')
-            patient = PatientProfile.objects.create(
-                user=user,
-                date_of_birth=date_of_birth if date_of_birth else None
-            )
-            patient.save()
+        # elif user_type == 'patient':
+        #     from patient.models import PatientProfile
+        #     date_of_birth = request.POST.get('date_of_birth')
+        #     patient = PatientProfile.objects.create(
+        #         user=user,
+        #         date_of_birth=date_of_birth if date_of_birth else None
+        #     )
+        #     patient.save()
         
         # Send verification email
         mail_subject = 'Activate your account.'
