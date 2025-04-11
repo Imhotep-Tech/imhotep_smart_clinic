@@ -9,7 +9,6 @@ class User(AbstractUser):
     USER_TYPE_CHOICES = (
         ('doctor', 'Doctor'),
         ('assistant', 'Assistant'),
-        ('patient', 'Patient'),
         ('admin', 'Admin')
     )
     
@@ -21,9 +20,6 @@ class User(AbstractUser):
         
     def is_assistant(self):
         return self.user_type == 'assistant'
-        
-    def is_patient(self):
-        return self.user_type == 'patient'
     
     def __str__(self):
         return f"{self.username} ({self.get_user_type_display()})"

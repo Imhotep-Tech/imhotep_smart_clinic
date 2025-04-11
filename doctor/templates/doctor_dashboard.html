@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Doctor Dashboard - Imhotep Smart Clinic{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <!-- Include navigation -->
+    {% include "nav.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <div class="container mx-auto">
+            <!-- Header with greeting and quick actions -->
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Welcome back, Dr. {{ user_data.first_name }}</h1>
+                    <p class="text-gray-600">{{ today_date|date:"l, F j, Y" }}</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-3">
+                    <a href="{% url 'add_patient' %}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center transition-all">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Add Patient
+                    </a>
+                    <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg flex items-center transition-all">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Schedule Appointment
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+                <!-- Patients -->
+                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-green-500 hover:shadow-lg transition-all">
+                    <div class="flex items-center">
+                        <div class="p-3.5 mr-4 bg-green-100 rounded-full">
+                            <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total Patients</p>
+                            <p class="text-3xl font-semibold text-gray-900">{{ number_of_patients }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#" class="text-sm font-medium text-green-600 hover:text-green-800 flex items-center">
+                            View all patients
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Patient Records -->
+                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-amber-500 hover:shadow-lg transition-all">
+                    <div class="flex items-center">
+                        <div class="p-3.5 mr-4 bg-amber-100 rounded-full">
+                            <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Patient Records</p>
+                            <p class="text-3xl font-semibold text-gray-900">{{ number_of_patients_records }}</p>
+                            <p class="text-xs text-amber-600 mt-1">Updated today</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#" class="text-sm font-medium text-amber-600 hover:text-amber-800 flex items-center">
+                            View records
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Appointments Today -->
+                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-blue-500 hover:shadow-lg transition-all">
+                    <div class="flex items-center">
+                        <div class="p-3.5 mr-4 bg-blue-100 rounded-full">
+                            <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Today's Appointments</p>
+                            <p class="text-3xl font-semibold text-gray-900">{{ todays_appointments.total }}</p>
+                            <p class="text-xs text-blue-600 mt-1">{{ todays_appointments.completed }} completed</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
+                            View schedule
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Analytics -->
+                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-purple-500 hover:shadow-lg transition-all">
+                    <div class="flex items-center">
+                        <div class="p-3.5 mr-4 bg-purple-100 rounded-full">
+                            <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Avg. Patients/Day</p>
+                            <p class="text-3xl font-semibold text-gray-900">{{ avg_patients_per_day }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#" class="text-sm font-medium text-purple-600 hover:text-purple-800 flex items-center">
+                            View analytics
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Content -->
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Upcoming Appointments Today -->
+                <div class="p-6 bg-white rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Today's Appointments</h2>
+                        <span class="text-sm font-medium text-indigo-600">{{ today_date|date:"F d, Y" }}</span>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for appointment in appointments_list %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ appointment.time }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 flex-shrink-0">
+                                                <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                    <span class="text-indigo-800 font-medium">{{ appointment.patient_initials }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">{{ appointment.patient_name }}</div>
+                                                <div class="text-sm text-gray-500">{{ appointment.patient_gender }}, {{ appointment.patient_age }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ appointment.status_color }}-100 text-{{ appointment.status_color }}-800">
+                                            {{ appointment.status }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

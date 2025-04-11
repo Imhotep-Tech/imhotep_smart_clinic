@@ -147,7 +147,7 @@ def user_login(request):
 
     if request.user.is_authenticated:
         if request.user.is_doctor():
-            return redirect("doctor.dashboard")
+            return redirect("doctor_dashboard")
         
         if request.user.is_assistant():
             return redirect("assistant.dashboard")
@@ -169,7 +169,7 @@ def user_login(request):
                     messages.success(request, "Login successful!")
 
                     if request.user.is_doctor():
-                        return redirect("doctor.dashboard")
+                        return redirect("doctor_dashboard")
                     
                     if request.user.is_assistant():
                         return redirect("assistant.dashboard")
@@ -204,7 +204,7 @@ def user_login(request):
                         login(request, user)
                         messages.success(request, "Login successful!")
                         if request.user.is_doctor():
-                            return redirect("doctor.dashboard")
+                            return redirect("doctor_dashboard")
                         
                         if request.user.is_assistant():
                             return redirect("assistant.dashboard")
@@ -376,7 +376,7 @@ def google_callback(request):
             login(request, user)
             messages.success(request, "Login successful!")
             if request.user.is_doctor():
-                return redirect("doctor.dashboard")
+                return redirect("doctor_dashboard")
             
             if request.user.is_assistant():
                 return redirect("assistant.dashboard")
@@ -472,14 +472,14 @@ def add_details_google_login(request):
             )
             doctor.save()
         
-        elif user_type == 'patient':
-            from patient.models import PatientProfile
-            date_of_birth = request.POST.get('date_of_birth')
-            patient = PatientProfile.objects.create(
-                user=user,
-                date_of_birth=date_of_birth if date_of_birth else None
-            )
-            patient.save()
+        # elif user_type == 'patient':
+        #     from patient.models import PatientProfile
+        #     date_of_birth = request.POST.get('date_of_birth')
+        #     patient = PatientProfile.objects.create(
+        #         user=user,
+        #         date_of_birth=date_of_birth if date_of_birth else None
+        #     )
+        #     patient.save()
         
         # Clean up session
         del request.session['google_user_info']
@@ -491,7 +491,7 @@ def add_details_google_login(request):
         
         messages.success(request, "Account created successfully!")
         if request.user.is_doctor():
-            return redirect("doctor.dashboard")
+            return redirect("doctor_dashboard")
         
         if request.user.is_assistant():
             return redirect("assistant.dashboard")
