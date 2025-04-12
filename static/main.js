@@ -1,3 +1,24 @@
+// Simplified global function for sidebar toggle that will work with onclick
+function handleSidebarToggle() {
+    const sidebar = document.getElementById('sideNav');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (!sidebar || !overlay) return;
+    
+    if (sidebar.classList.contains('-translate-x-full')) {
+        // Open sidebar
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+    } else {
+        // Close sidebar
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    }
+}
+
+// Make sure the function is globally available
+window.handleSidebarToggle = handleSidebarToggle;
+
 // Toggle password visibility
 function togglePasswordVisibility(inputId) {
     const input = document.getElementById(inputId);
@@ -74,5 +95,86 @@ document.addEventListener('submit', function(e) {
     const loadingOverlay = document.getElementById('loading-overlay');
     if (loadingOverlay) {
         loadingOverlay.style.display = 'flex';
+    }
+});
+
+// Mobile sidebar functionality 
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach event listeners to all sidebar toggle buttons
+    const toggleButtons = document.querySelectorAll('[data-action="toggle-sidebar"]');
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            handleSidebarToggle();
+        });
+    });
+    
+    // Make sure mobile navigation button is visible and working
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    if (mobileMenuButton) {
+        // Ensure button is visible on mobile only
+        if (window.innerWidth < 1024) {
+            mobileMenuButton.style.display = 'block';
+        } else {
+            mobileMenuButton.style.display = 'none';
+        }
+        
+        // Re-attach the click event (in case it was lost)
+        const button = mobileMenuButton.querySelector('button');
+        if (button) {
+            button.onclick = function() {
+                handleSidebarToggle();
+            };
+        }
+    }
+    
+    // Ensure sidebar and overlay are properly initialized
+    const sidebar = document.getElementById('sideNav');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+    }
+    
+    if (overlay && !overlay.classList.contains('hidden')) {
+        overlay.classList.add('hidden');
+    }
+    
+    // Add window resize listener to hide button on desktop
+    window.addEventListener('resize', function() {
+        if (mobileMenuButton) {
+            if (window.innerWidth >= 1024) {
+                mobileMenuButton.style.display = 'none';
+            } else {
+                mobileMenuButton.style.display = 'block';
+            }
+        }
+    });
+});
+
+// Update mobile sidebar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Make sure mobile navigation button is visible on mobile only
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    if (mobileMenuButton) {
+        // Set initial visibility based on screen size
+        mobileMenuButton.style.display = window.innerWidth < 1024 ? 'block' : 'none';
+        
+        // Add resize listener
+        window.addEventListener('resize', function() {
+            mobileMenuButton.style.display = window.innerWidth < 1024 ? 'block' : 'none';
+        });
+    }
+    
+    // Ensure sidebar starts in correct state (closed)
+    const sidebar = document.getElementById('sideNav');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (sidebar) {
+        sidebar.classList.add('-translate-x-full');
+    }
+    
+    if (overlay) {
+        overlay.classList.add('hidden');
     }
 });

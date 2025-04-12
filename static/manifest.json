@@ -1,0 +1,82 @@
+{
+  "name": "Imhotep Tasks",
+  "theme_color": "#007bff",
+  "background_color": "#f5f5f5",
+  "short_name": "Tasks",
+  "id": "Imhotep_tasks",
+  "description": "Efficiently manage your tasks and boost productivity",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/imhotep_tasks.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+task",
+      "url": "/task?id=%s"
+    }
+  ],
+  "display_overrides": [
+    "standalone",
+    "fullscreen",
+    "minimal-ui",
+    "browser"
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Task",
+      "url": "/add_task",
+      "description": "Create a new task"
+    }
+  ],
+  "categories": [
+    "productivity"
+  ]
+}

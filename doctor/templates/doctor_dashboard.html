@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-sm font-medium text-green-600 hover:text-green-800 flex items-center">
+                        <a href="{% url 'show_patients' %}" class="text-sm font-medium text-green-600 hover:text-green-800 flex items-center">
                             View all patients
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -71,14 +71,6 @@
                             <p class="text-3xl font-semibold text-gray-900">{{ number_of_patients_records }}</p>
                             <p class="text-xs text-amber-600 mt-1">Updated today</p>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <a href="#" class="text-sm font-medium text-amber-600 hover:text-amber-800 flex items-center">
-                            View records
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
                     </div>
                 </div>
 
@@ -118,14 +110,6 @@
                             <p class="text-sm font-medium text-gray-600">Avg. Patients/Day</p>
                             <p class="text-3xl font-semibold text-gray-900">{{ avg_patients_per_day }}</p>
                         </div>
-                    </div>
-                    <div class="mt-4">
-                        <a href="#" class="text-sm font-medium text-purple-600 hover:text-purple-800 flex items-center">
-                            View analytics
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </a>
                     </div>
                 </div>
             </div>

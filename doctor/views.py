@@ -101,5 +101,33 @@ def add_patient(request):
         except:
             messages.error(request, "Something went wrong while saving the patient data")
             return redirect("doctor_dashboard")
-        
-    return render(request, "add_patient.html")
+    context={
+        "user_data": request.user
+    }
+    return render(request, "add_patient.html", context)
+
+@login_required
+@doctor_required
+def show_patients(request):
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    patients = Patients.objects.filter(doctor=doctor_profile).order_by('name')
+    context = {
+        "user_data": request.user,
+        "patients": patients
+    }
+    return render(request, "show_patients.html", context)
+
+@login_required
+@doctor_required
+def show_patient_details(request):
+    patient_id = request.GET.get('patient_id')
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    
+    # Update to get a single patient or 404 rather than a list
+    patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
+    
+    context = {
+        "user_data": request.user,
+        "patients": [patient]  # Keep as list for compatibility with existing template
+    }
+    return render(request, "show_patient_details.html", context)
