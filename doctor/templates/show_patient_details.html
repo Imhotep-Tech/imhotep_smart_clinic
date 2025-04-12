@@ -44,12 +44,18 @@
                             </span>
                         </div>
                     </div>
-                    <div class="mt-4 md:mt-0 md:ml-auto">
-                        <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center transition-all mr-2">
+                    <div class="mt-4 md:mt-0 md:ml-auto flex">
+                        <a href="{% url 'update_patient' %}?patient_id={{ patient.id }}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center transition-all mr-2">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                             </svg>
                             Edit Patient
+                        </a>
+                        <button type="button" onclick="openDeleteModal()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center transition-all">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            Delete Patient
                         </button>
                     </div>
                 </div>
@@ -150,4 +156,47 @@
         </div>
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 z-50 hidden">
+    <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeDeleteModal()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-center mb-4 text-red-600">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Confirm Patient Deletion</h3>
+                <p class="text-center text-gray-600 mb-6">
+                    Are you sure you want to delete <span class="font-semibold">{{ patients.0.name }}</span>? This action cannot be undone.
+                </p>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none">
+                        Cancel
+                    </button>
+                    <form action="{% url 'delete_patient' %}?patient_id={{ patients.0.id }}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+    
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+</script>
 {% endblock %}

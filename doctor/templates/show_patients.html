@@ -27,15 +27,6 @@
                 </div>
             </div>
 
-            <!-- Alert Messages -->
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="mb-6 p-4 {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %} rounded-lg">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
             <div class="grid grid-cols-1 gap-6">
                 <div class="p-6 bg-white rounded-lg shadow-md">
                     <div class="flex justify-between items-center mb-6">
