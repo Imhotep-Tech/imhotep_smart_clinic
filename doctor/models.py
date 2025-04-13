@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 class DoctorProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_profile')
@@ -24,4 +25,13 @@ class Patients(models.Model):
 
     def __str__(self):
         return f"{self.name} (Patient of {self.doctor})"
-    
+
+class MedicalRecord(models.Model):
+    doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
+    details = models.CharField(max_length=20000)
+    remarks = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"Medical record for {self.patient} - {self.date.strftime('%Y-%m-%d')}"
