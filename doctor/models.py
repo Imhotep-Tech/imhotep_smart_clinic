@@ -32,6 +32,7 @@ class MedicalRecord(models.Model):
     date = models.DateTimeField(default=timezone.now)
     details = models.CharField(max_length=20000)
     remarks = models.CharField(max_length=200)
+    prescription = models.CharField(max_length=20000, default=None)
 
     def __str__(self):
         return f"Medical record for {self.patient} - {self.date.strftime('%Y-%m-%d')}"

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import DoctorProfile, Patients
+from .models import DoctorProfile, Patients, MedicalRecord
 from accounts.models import User
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -125,13 +125,15 @@ def show_patients(request):
 def show_patient_details(request):
     patient_id = request.GET.get('patient_id')
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
-    
-    # Update to get a single patient or 404 rather than a list
+
     patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
     
+    records = MedicalRecord.objects.filter(doctor=doctor_profile, patient=patient_id)
+
     context = {
         "user_data": request.user,
-        "patients": [patient] # Keep as list for compatibility with existing template
+        "patients": [patient],
+        "records":records
     }
     return render(request, "show_patient_details.html", context)
 
@@ -189,3 +191,47 @@ def delete_patient(request):
     else:
         messages.error(request, "Method Not allowed")
         return redirect("doctor_dashboard")
+
+
+@doctor_required
+@login_required
+def add_medical_record(request):
+    if request.method == 'POST':
+        patient_id = request.POST.get("patient_id")
+        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        patient = get_object_or_404(Patients,  doctor=doctor, id=patient_id)
+
+        date = request.POST.get("date")
+        details = request.POST.get("details")
+        remarks = request.POST.get("remarks")
+        prescription = request.POST.get("prescription")
+
+        new_record = MedicalRecord.objects.create(
+            doctor=doctor,
+            patient=patient,
+            date=date,
+            details=details,
+            remarks=remarks,
+            prescription=prescription
+        )
+
+        try:
+            new_record.save()
+            messages.success(request, f"Patient Record for {patient.name} Added successfully!")
+            patient_id = patient.id
+            url = reverse('show_patient_details') + f'?patient_id={patient_id}'
+            return redirect(url)
+        except Exception as e:
+            messages.error(request, f"Something went wrong while saving the new record for patient: {str(e)}")
+            return redirect("doctor_dashboard")
+    else:  # GET request
+        patient_id = request.GET.get('patient_id')
+        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        patient = get_object_or_404(Patients, doctor=doctor, id=patient_id)
+        
+        context = {
+            "user_data": request.user,
+            "patient_name": patient.name,
+            "patient_id": patient_id
+        }
+        return render(request, "add_medical_record.html", context)

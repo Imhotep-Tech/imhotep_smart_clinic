@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Add Medical Record - Imhotep Smart Clinic{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <!-- Include navigation -->
+    {% include "nav.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <div class="container mx-auto max-w-3xl">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Add Medical Record</h1>
+                <p class="text-gray-600">Create a new medical record for {{ patient_name }}</p>
+            </div>
+
+            <!-- Back Navigation -->
+            <div class="mb-6">
+                <a href="{% url 'show_patient_details' %}?patient_id={{ patient_id }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-800">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Patient Details
+                </a>
+            </div>
+
+            <!-- Add Medical Record Form -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <form method="POST" action="{% url 'add_medical_record' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="patient_id" value="{{ patient_id }}">
+                    
+                    <!-- Date Field -->
+                    <div class="mb-6">
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <input type="date" name="date" id="date" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Details Field -->
+                    <div class="mb-6">
+                        <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Medical Details</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <textarea name="details" id="details" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Detailed medical information" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Remarks Field -->
+                    <div class="mb-6">
+                        <label for="remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <textarea name="remarks" id="remarks" rows="3" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Additional remarks or observations"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Prescription Field -->
+                    <div class="mb-6">
+                        <label for="prescription" class="block text-sm font-medium text-gray-700 mb-1">Prescription</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <textarea name="prescription" id="prescription" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Medication details and instructions"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <a href="{% url 'show_patient_details' %}?patient_id={{ patient_id }}" class="mr-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Cancel
+                        </a>
+                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Save Record
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
