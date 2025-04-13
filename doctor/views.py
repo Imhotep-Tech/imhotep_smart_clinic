@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from accounts.decorators import doctor_required
 from datetime import datetime, date, timedelta
 from django.urls import reverse
+from django.utils import timezone
 
 @login_required
 @doctor_required
@@ -16,7 +17,7 @@ def dashboard(request):
     number_of_patients = doctor_profile.doctor_patients.count()
 
     #to be implemented
-    number_of_patients_records=7
+    number_of_patients_records = MedicalRecord.objects.filter(doctor=doctor_profile).count()
     
     #to get the daily average
     today = date.today()
@@ -224,7 +225,7 @@ def add_medical_record(request):
         except Exception as e:
             messages.error(request, f"Something went wrong while saving the new record for patient: {str(e)}")
             return redirect("doctor_dashboard")
-    else:  # GET request
+    else:
         patient_id = request.GET.get('patient_id')
         doctor = get_object_or_404(DoctorProfile, user=request.user)
         patient = get_object_or_404(Patients, doctor=doctor, id=patient_id)
@@ -232,6 +233,68 @@ def add_medical_record(request):
         context = {
             "user_data": request.user,
             "patient_name": patient.name,
-            "patient_id": patient_id
+            "patient_id": patient_id,
+            "today_date":timezone.now
         }
         return render(request, "add_medical_record.html", context)
+
+@login_required
+@doctor_required
+def update_medical_record(request):
+    medical_record_id = request.GET.get('medical_record_id')
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    medical_record = get_object_or_404(MedicalRecord, id=medical_record_id, doctor=doctor_profile)
+    patient_id = medical_record.patient.id
+
+    if request.method == 'GET': 
+        context = {
+            "user_data": request.user,
+            "medical_record": medical_record,
+            "patient_name": medical_record.patient.name,
+            "patient_id": patient_id
+        }
+        return render(request, "edit_medical_record.html", context)
+
+    date = request.POST.get('date')
+    details = request.POST.get('details')
+    remarks = request.POST.get('remarks')
+    prescription = request.POST.get('prescription')
+
+    medical_record.date = date
+    medical_record.details = details
+    medical_record.remarks = remarks
+    medical_record.prescription = prescription
+
+    try:
+        medical_record.save()
+        messages.success(request, "Medical record updated successfully!")
+        url = reverse('show_patient_details') + f'?patient_id={patient_id}'
+        return redirect(url)
+    except Exception as e:
+        messages.error(request, f"Something went wrong while updating the medical record: {str(e)}")
+        url = reverse('show_patient_details') + f'?patient_id={patient_id}'
+        return redirect(url)
+
+@login_required
+@doctor_required
+def delete_medical_record(request):
+    medical_record_id = request.GET.get('medical_record_id')
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    medical_record = get_object_or_404(MedicalRecord, id=medical_record_id, doctor=doctor_profile)
+    patient_id = medical_record.patient.id
+
+    if request.method == 'POST': 
+        try:
+            name = medical_record.patient.name
+            date = medical_record.date
+            medical_record.delete()
+            messages.success(request, f"Record deleted for {name} with date {date} successfully!")
+            url = reverse('show_patient_details') + f'?patient_id={patient_id}'
+            return redirect(url)
+        except Exception as e:
+            messages.error(request, f"Something went wrong while deleting the medical record: {str(e)}")
+            url = reverse('show_patient_details') + f'?patient_id={patient_id}'
+            return redirect(url)
+    else:
+        messages.error(request, "Method Not allowed")
+        return redirect("doctor_dashboard")

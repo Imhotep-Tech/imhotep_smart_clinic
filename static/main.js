@@ -178,3 +178,24 @@ document.addEventListener('DOMContentLoaded', function() {
         overlay.classList.add('hidden');
     }
 });
+
+// Modal functions for patient details page
+
+// Medical record delete modal functions
+function openDeleteRecordModal(recordId) {
+    document.getElementById('deleteRecordModal').classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    
+    // Set the form action dynamically
+    const form = document.getElementById('deleteRecordForm');
+    form.action = `/doctor/delete-medical-record/?medical_record_id=${recordId}`;
+}
+
+function closeDeleteRecordModal() {
+    document.getElementById('deleteRecordModal').classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+
+// Make modal functions globally available
+window.openDeleteRecordModal = openDeleteRecordModal;
+window.closeDeleteRecordModal = closeDeleteRecordModal;

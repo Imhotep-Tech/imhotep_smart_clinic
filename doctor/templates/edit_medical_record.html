@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Add Medical Record - Imhotep Smart Clinic{% endblock %}
+{% block title %}Edit Medical Record - Imhotep Smart Clinic{% endblock %}
 
 {% block content %}
 <div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -13,8 +13,8 @@
         <div class="container mx-auto max-w-3xl">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-800">Add Medical Record</h1>
-                <p class="text-gray-600">Create a new medical record for {{ patient_name }}</p>
+                <h1 class="text-3xl font-bold text-gray-800">Edit Medical Record</h1>
+                <p class="text-gray-600">Update medical record for {{ patient_name }}</p>
             </div>
 
             <!-- Back Navigation -->
@@ -27,11 +27,10 @@
                 </a>
             </div>
 
-            <!-- Add Medical Record Form -->
+            <!-- Edit Medical Record Form -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <form method="POST" action="{% url 'add_medical_record' %}">
+                <form method="POST" action="{% url 'update_medical_record' %}?medical_record_id={{ medical_record.id }}">
                     {% csrf_token %}
-                    <input type="hidden" name="patient_id" value="{{ patient_id }}">
                     
                     <!-- Date Field -->
                     <div class="mb-6">
@@ -42,7 +41,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <input type="date" name="date" id="date" value="{{ today_date|date:'Y-m-d' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md">
+                            <input type="date" name="date" id="date" value="{{ medical_record.date|date:'Y-m-d' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
                         </div>
                     </div>
                     
@@ -50,7 +49,7 @@
                     <div class="mb-6">
                         <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Medical Details</label>
                         <div class="relative rounded-md shadow-sm">
-                            <textarea name="details" id="details" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Detailed medical information" required></textarea>
+                            <textarea name="details" id="details" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Detailed medical information" required>{{ medical_record.details }}</textarea>
                         </div>
                     </div>
 
@@ -58,7 +57,7 @@
                     <div class="mb-6">
                         <label for="remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
                         <div class="relative rounded-md shadow-sm">
-                            <textarea name="remarks" id="remarks" rows="3" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Additional remarks or observations"></textarea>
+                            <textarea name="remarks" id="remarks" rows="3" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Additional remarks or observations">{{ medical_record.remarks }}</textarea>
                         </div>
                     </div>
 
@@ -66,7 +65,7 @@
                     <div class="mb-6">
                         <label for="prescription" class="block text-sm font-medium text-gray-700 mb-1">Prescription</label>
                         <div class="relative rounded-md shadow-sm">
-                            <textarea name="prescription" id="prescription" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Medication details and instructions"></textarea>
+                            <textarea name="prescription" id="prescription" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Medication details and instructions">{{ medical_record.prescription }}</textarea>
                         </div>
                     </div>
 
@@ -76,7 +75,7 @@
                             Cancel
                         </a>
                         <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Save Record
+                            Update Record
                         </button>
                     </div>
                 </form>
