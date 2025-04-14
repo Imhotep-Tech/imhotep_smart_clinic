@@ -34,7 +34,7 @@ if DEBUG:
 else:
     SITE_DOMAIN = 'https://imhotep-clinic.pythonanywhere.com' 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'imhotep-clinic.pythonanywhere.com'] 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.100.44', 'imhotep-clinic.pythonanywhere.com'] 
 
 if DEBUG == False:
     # Security settings - keep these as they are

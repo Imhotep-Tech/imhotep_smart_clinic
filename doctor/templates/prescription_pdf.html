@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Prescription</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-family: Arial, "Noto Sans Arabic", sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .prescription-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2a4365;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .date {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .divider {
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+        .patient-info {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9fafb;
+        }
+        .patient-info h3 {
+            background-color: #e9ecef;
+            padding: 8px;
+            margin-top: 0;
+            color: #2a4365;
+        }
+        .prescription-content {
+            margin-bottom: 30px;
+        }
+        .prescription-item {
+            margin-bottom: 10px;
+        }
+        .rx-symbol {
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .signature {
+            margin-top: 60px;
+            border-top: 1px solid #999;
+            padding-top: 10px;
+            width: 50%;
+            margin-left: 50%;
+        }
+        .footer {
+            text-align: center;
+            font-size: 9px;
+            color: #777;
+            margin-top: 40px;
+            font-style: italic;
+        }
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+        .clinic-name {
+            font-size: 8px;
+            color: #aaa;
+            text-align: center;
+            margin-top: 5px;
+        }
+        .logo {
+            max-height: 80px;
+            max-width: 200px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if logo_url %}
+        <div class="header">
+            <img src="{{ logo_url }}" class="logo" alt="Clinic Logo">
+        </div>
+        {% endif %}
+        
+        <h1 class="prescription-title">PRESCRIPTION</h1>
+        
+        <div class="date">
+            <p>Date: {{ formatted_date }}</p>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="patient-info">
+            <h3>Patient Information</h3>
+            <p>Name: <span {% if has_arabic_name %}class="rtl"{% endif %}>{{ patient.name }}</span></p>
+            <p>Gender: {{ patient.gender }}</p>
+            {% if patient.date_of_birth %}
+            <p>DOB: {{ patient.date_of_birth }}</p>
+            {% endif %}
+        </div>
+        
+        {% if medical_record.prescription %}
+        <div class="prescription-content">
+            <h3>Prescription:</h3>
+            {% for line in prescription_lines %}
+                {% if line %}
+                <div class="prescription-item {% if line.has_arabic %}rtl{% endif %}">
+                    <span class="rx-symbol">℞</span> {{ line.text }}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="signature">
+            <p>Doctor's Signature:</p>
+            <p {% if has_arabic_doctor_name %}class="rtl"{% endif %}>Dr. {{ doctor_name }}</p>
+            <p {% if has_arabic_specialization %}class="rtl"{% endif %}>Specialization: {{ doctor_specialization }}</p>
+        </div>
+        
+        <div class="footer">
+            <p>This is a computer-generated prescription and does not require a physical signature.</p>
+            <p class="clinic-name">Imhotep Smart Clinic</p>
+        </div>
+    </div>
+</body>
+</html>
