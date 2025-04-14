@@ -17,13 +17,22 @@ def add_patient(request):
         date_of_birth = request.POST.get('date_of_birth')
         doctor = get_object_or_404(DoctorProfile, user=request.user)
 
-        new_patient = Patients.objects.create(
-            name=name,
-            phone_number=phone_number,
-            gender=gender,
-            date_of_birth=date_of_birth,
-            doctor=doctor
-        )
+        if date_of_birth:
+            new_patient = Patients.objects.create(
+                name=name,
+                phone_number=phone_number,
+                gender=gender,
+                date_of_birth=date_of_birth,
+                doctor=doctor
+            )
+        else:
+            new_patient = Patients.objects.create(
+                name=name,
+                phone_number=phone_number,
+                gender=gender,
+                doctor=doctor
+            )
+            
         try:
             new_patient.save()
             messages.success(request, "Patient Added successfully!")
