@@ -152,13 +152,6 @@ def generate_prescription_pdf(request, record_id):
     has_arabic_doctor_name = has_arabic(doctor_name)
     has_arabic_specialization = has_arabic(doctor_profile.specialization)
     
-    # Check for logo
-    logo_url = None
-    if hasattr(doctor_profile, 'logo') and doctor_profile.logo:
-        logo_url = doctor_profile.logo.url
-    elif os.path.exists(os.path.join(settings.STATIC_ROOT, 'images/clinic_logo.png')):
-        logo_url = os.path.join(settings.STATIC_URL, 'images/clinic_logo.png')
-    
     # Prepare context for the template
     context = {
         'patient': patient,
@@ -171,7 +164,6 @@ def generate_prescription_pdf(request, record_id):
         'has_arabic_name': has_arabic_name,
         'has_arabic_doctor_name': has_arabic_doctor_name,
         'has_arabic_specialization': has_arabic_specialization,
-        'logo_url': logo_url,
     }
     
     # Render the HTML template
