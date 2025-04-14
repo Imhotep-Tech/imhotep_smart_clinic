@@ -4,8 +4,8 @@ from .models import DoctorProfile, Patients, MedicalRecord
 from django.contrib import messages
 from accounts.decorators import doctor_required
 from django.urls import reverse
-from reportlab.lib.pagesizes import letter, A4
-from reportlab.lib.units import inch, mm
+from django.db.models import Q
+from .utils.search_patient import search_patient_by_name, search_patient_by_phone
 
 @login_required
 @doctor_required
@@ -120,3 +120,23 @@ def delete_patient(request):
     else:
         messages.error(request, "Method Not allowed")
         return redirect("doctor_dashboard")
+    
+@login_required
+@doctor_required
+def search_patient(request):
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    patient_name = request.GET.get('patient_name', '')
+    patient_phone = request.GET.get('patient_phone', '')
+    
+    if patient_name:
+        patients = search_patient_by_name(doctor_profile, patient_name)
+    elif patient_phone:
+        patients = search_patient_by_phone(doctor_profile, patient_phone)
+    else:
+        patients = []
+    
+    context = {
+        "user_data": request.user,
+        "patients": patients
+    }
+    return render(request, "show_patients.html", context)

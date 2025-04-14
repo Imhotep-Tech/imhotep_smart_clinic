@@ -11,5 +11,6 @@ urlpatterns = [
     path('add-medical-record/', medical_records.add_medical_record, name='add_medical_record'),
     path('update-medical-record/', medical_records.update_medical_record, name='update_medical_record'),
     path('delete-medical-record/', medical_records.delete_medical_record, name='delete_medical_record'),
-     path('generate-prescription-pdf/<int:record_id>/', medical_records.generate_prescription_pdf, name='generate_prescription_pdf'),
+    path('generate-prescription-pdf/<int:record_id>/', medical_records.generate_prescription_pdf, name='generate_prescription_pdf'),
+    path('search-patient/', patients.search_patient, name='search_patient'),
 ]
