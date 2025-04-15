@@ -20,8 +20,27 @@
             margin: 0 auto;
         }
         .header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a4365;
+        }
+        .header-left {
+            flex: 1;
+        }
+        .header-center {
+            flex: 1;
+            text-align: center;
+        }
+        .header-right {
+            flex: 1;
+            text-align: right;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
         }
         .prescription-title {
             font-size: 24px;
@@ -88,20 +107,33 @@
         .logo {
             max-height: 80px;
             max-width: 200px;
-            margin-bottom: 15px;
+            margin-right: 15px;
+        }
+        .clinic-details {
+            font-size: 14px;
+            color: #555;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        
-        <h1 class="prescription-title">PRESCRIPTION</h1>
-        
-        <div class="date">
-            <p>Date: {{ formatted_date }}</p>
+        <!-- Header with logo -->
+        <div class="header">
+            <div class="header-left logo-container">
+                {% if clinic_logo_path %}
+                    <img src="{{ clinic_logo_path }}" alt="Clinic Logo" class="logo">
+                {% endif %}
+                <div class="clinic-details">
+                    <h3 style="margin: 0;">Dr. {{ doctor_name }}</h3>
+                    <p style="margin: 0;">{{ doctor_specialization }}</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <p style="margin: 0;">Date: {{ formatted_date }}</p>
+            </div>
         </div>
         
-        <div class="divider"></div>
+        <h1 class="prescription-title">PRESCRIPTION</h1>
         
         <div class="patient-info">
             <h3>Patient Information</h3>

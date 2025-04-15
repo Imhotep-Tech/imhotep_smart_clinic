@@ -106,6 +106,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # Add this line for media URLs
             ],
         },
     },
@@ -204,6 +205,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# Media files (uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# For production environment (e.g. PythonAnywhere)
+if not DEBUG:
+    # Override the MEDIA_URL to use the full domain for production
+    MEDIA_URL = f"{SITE_DOMAIN}/media/"
 
 # This is the simple configuration - no compression or manifest
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'

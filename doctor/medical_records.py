@@ -152,6 +152,12 @@ def generate_prescription_pdf(request, record_id):
     has_arabic_doctor_name = has_arabic(doctor_name)
     has_arabic_specialization = has_arabic(doctor_profile.specialization)
     
+    # Prepare the clinic logo path with absolute URL if it exists
+    clinic_logo_path = None
+    if doctor_profile.clinic_photo_path:
+        # Get the absolute URL for the clinic logo
+        clinic_logo_path = request.build_absolute_uri(settings.MEDIA_URL + doctor_profile.clinic_photo_path)
+    
     # Prepare context for the template
     context = {
         'patient': patient,
@@ -164,6 +170,7 @@ def generate_prescription_pdf(request, record_id):
         'has_arabic_name': has_arabic_name,
         'has_arabic_doctor_name': has_arabic_doctor_name,
         'has_arabic_specialization': has_arabic_specialization,
+        'clinic_logo_path': clinic_logo_path,
     }
     
     # Render the HTML template

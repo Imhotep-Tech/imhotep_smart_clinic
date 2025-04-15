@@ -5,6 +5,7 @@ from django.utils import timezone
 class DoctorProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_profile')
     specialization = models.CharField(max_length=100)
+    clinic_photo_path = models.CharField(max_length=100, default='', null=True, blank=True)
     
     def __str__(self):
         return f"Dr. {self.user.get_full_name()}"
@@ -32,7 +33,7 @@ class MedicalRecord(models.Model):
     date = models.DateTimeField(default=timezone.now)
     details = models.CharField(max_length=20000)
     remarks = models.CharField(max_length=200)
-    prescription = models.CharField(max_length=20000, default=None)
+    prescription = models.CharField(max_length=20000, default='', null=True, blank=True)
 
     def __str__(self):
         return f"Medical record for {self.patient} - {self.date.strftime('%Y-%m-%d')}"

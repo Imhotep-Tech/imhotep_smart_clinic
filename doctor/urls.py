@@ -14,4 +14,6 @@ urlpatterns = [
     path('generate-prescription-pdf/<int:record_id>/', medical_records.generate_prescription_pdf, name='generate_prescription_pdf'),
     path('search-patient/', patients.search_patient, name='search_patient'),
     path('update-doctor-profile/', doctor_settings.update_doctor_profile, name='update_doctor_profile'),
+    path('upload-clinic-logo/', doctor_settings.upload_clinic_logo, name='upload_clinic_logo'),
+    path('remove-clinic-logo/', doctor_settings.remove_clinic_logo, name='remove_clinic_logo'),
 ]
