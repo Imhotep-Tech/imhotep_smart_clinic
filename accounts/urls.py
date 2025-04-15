@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import auth
+from . import user_profile, views  # Make sure to add this import
 
 urlpatterns = [
     #the main url
@@ -23,4 +24,10 @@ urlpatterns = [
     path('google/callback/', auth.google_callback, name='google_callback'),
     path('google/handle-username/', auth.add_username_google_login, name='add_username_google_login'),
     path('google/handle-details/', auth.add_details_google_login, name='add_details_google_login'),
+
+    # Add this to your urlpatterns list
+    path('update-profile/', user_profile.update_profile, name='update_profile'),
+    path('password_change/', user_profile.CustomPasswordChangeView.as_view(), name='password_change'),
+    path('password_change/done/', user_profile.CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
+    path('activate-profile-update/<str:uidb64>/<str:token>/<str:new_email>/', user_profile.activate_profile_update, name='activate_profile_update'),
 ]

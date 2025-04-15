@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, medical_records, patients
+from . import views, medical_records, patients, doctor_settings
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='doctor_dashboard'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('delete-medical-record/', medical_records.delete_medical_record, name='delete_medical_record'),
     path('generate-prescription-pdf/<int:record_id>/', medical_records.generate_prescription_pdf, name='generate_prescription_pdf'),
     path('search-patient/', patients.search_patient, name='search_patient'),
+    path('update-doctor-profile/', doctor_settings.update_doctor_profile, name='update_doctor_profile'),
 ]
