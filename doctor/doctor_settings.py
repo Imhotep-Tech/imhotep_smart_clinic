@@ -45,9 +45,9 @@ def upload_clinic_logo(request):
         uploaded_file = request.FILES['clinic_logo']
         
         # Validate file type
-        allowed_types = ['image/jpeg', 'image/png', 'image/gif']
+        allowed_types = ['image/jpeg', 'image/png']
         if uploaded_file.content_type not in allowed_types:
-            messages.error(request, 'Only JPEG, PNG, or GIF images are allowed')
+            messages.error(request, 'Only JPEG, or PNG images are allowed')
             return redirect('update_doctor_profile')
         
         # Validate file size (max 500KB)
