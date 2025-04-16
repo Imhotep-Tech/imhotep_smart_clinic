@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Appointments - Imhotep Smart Clinic{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <!-- Include navigation -->
+    {% include "nav.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <div class="container mx-auto">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Appointments</h1>
+                    <p class="text-gray-600">Manage your patient appointments</p>
+                </div>
+                <div>
+                    <a href="{% url 'schedule_appointment' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Schedule Appointment
+                    </a>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                <form method="GET" action="{% url 'appointment_list' %}" class="flex flex-wrap gap-4">
+                    <div class="flex flex-col">
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <input type="date" id="date" name="date" value="{{ request.GET.date }}" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select id="status" name="status" class="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="">All</option>
+                            <option value="scheduled" {% if request.GET.status == 'scheduled' %}selected{% endif %}>Scheduled</option>
+                            <option value="completed" {% if request.GET.status == 'completed' %}selected{% endif %}>Completed</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            </svg>
+                            Filter
+                        </button>
+                        {% if request.GET.date or request.GET.status %}
+                        <a href="{% url 'appointment_list' %}" class="ml-2 inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Clear
+                        </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b border-gray-200 mb-6">
+                <nav class="-mb-px flex space-x-8">
+                    <a href="{% url 'appointment_list' %}{% if request.GET.date %}?date={{ request.GET.date }}{% endif %}" class="{% if not request.GET.status or request.GET.status == '' %}border-blue-500 text-blue-600{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm">
+                        All Appointments
+                    </a>
+                    <a href="{% url 'appointment_list' %}?status=scheduled{% if request.GET.date %}&date={{ request.GET.date }}{% endif %}" class="{% if request.GET.status == 'scheduled' %}border-blue-500 text-blue-600{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm">
+                        Scheduled
+                    </a>
+                    <a href="{% url 'appointment_list' %}?status=completed{% if request.GET.date %}&date={{ request.GET.date }}{% endif %}" class="{% if request.GET.status == 'completed' %}border-blue-500 text-blue-600{% else %}border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300{% endif %} whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm">
+                        Completed
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Appointments List -->
+            {% if appointments %}
+            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                <!-- Desktop Table -->
+                <div class="hidden sm:block">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for appointment in appointments %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ appointment.date|date:"M d, Y" }}</div>
+                                        <div class="text-sm text-gray-500">{{ appointment.start_time|time:"g:i A" }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                <span class="text-indigo-800 font-medium">{{ appointment.patient.name|slice:":1" }}</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">{{ appointment.patient.name }}</div>
+                                                {% if appointment.patient.phone_number %}
+                                                <div class="text-sm text-gray-500">{{ appointment.patient.phone_number }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                            {% if appointment.status == 'scheduled' %}
+                                                bg-blue-100 text-blue-800
+                                            {% else %}
+                                                bg-green-100 text-green-800
+                                            {% endif %}">
+                                            {{ appointment.status|title }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{% url 'appointment_detail' %}?appointment_id={{ appointment.id }}" class="text-indigo-600 hover:text-indigo-900 mr-3">View</a>
+                                        
+                                        <a href="{% url 'update_appointment_doctor' %}?appointment_id={{ appointment.id }}" class="text-blue-600 hover:text-blue-900 mr-3">Update</a>
+                                        
+                                        <button type="button" onclick="confirmDelete('{{ appointment.id }}', '{{ appointment.patient.name }}')" class="text-red-600 hover:text-red-900 mr-3">Delete</button>
+                                        
+                                        {% if appointment.status == 'scheduled' %}
+                                        <form method="POST" action="{% url 'mark_appointment' %}" class="inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                            <button type="submit" class="text-green-600 hover:text-green-900">Mark Completed</button>
+                                        </form>
+                                        {% else %}
+                                        <form method="POST" action="{% url 'mark_appointment' %}" class="inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                            <button type="submit" class="text-orange-600 hover:text-orange-900">Unmark Scheduled</button>
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="px-6 py-10 text-center">
+                                        <div class="text-center">
+                                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <h3 class="mt-2 text-sm font-medium text-gray-900">No appointments found</h3>
+                                            <p class="mt-1 text-sm text-gray-500">Get started by creating a new appointment.</p>
+                                            <div class="mt-6">
+                                                <a href="{% url 'schedule_appointment' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                    </svg>
+                                                    Schedule Appointment
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Mobile List -->
+                <div class="sm:hidden">
+                    <ul class="divide-y divide-gray-200">
+                        {% for appointment in appointments %}
+                        <li class="px-4 py-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span class="text-indigo-800 font-medium">{{ appointment.patient.name|slice:":1" }}</span>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-900">{{ appointment.patient.name }}</p>
+                                        <p class="text-xs text-gray-500">{{ appointment.date|date:"M d, Y" }} at {{ appointment.start_time|time:"g:i A" }}</p>
+                                    </div>
+                                </div>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {% if appointment.status == 'scheduled' %}
+                                        bg-blue-100 text-blue-800
+                                    {% else %}
+                                        bg-green-100 text-green-800
+                                    {% endif %}">
+                                    {{ appointment.status|title }}
+                                </span>
+                            </div>
+                            <div class="mt-3 flex justify-end">
+                                <a href="{% url 'appointment_detail' %}?appointment_id={{ appointment.id }}" class="text-indigo-600 font-medium hover:text-indigo-500 text-sm mr-4">View</a>
+                                
+                                <a href="{% url 'update_appointment_doctor' %}?appointment_id={{ appointment.id }}" class="text-blue-600 font-medium hover:text-blue-500 text-sm mr-4">Update</a>
+                                
+                                <button type="button" onclick="confirmDelete('{{ appointment.id }}', '{{ appointment.patient.name }}')" class="text-red-600 font-medium hover:text-red-500 text-sm mr-4">Delete</button>
+                                
+                                {% if appointment.status == 'scheduled' %}
+                                <form method="POST" action="{% url 'mark_appointment' %}" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                    <button type="submit" class="text-green-600 font-medium hover:text-green-500 text-sm">Mark Completed</button>
+                                </form>
+                                {% else %}
+                                <form method="POST" action="{% url 'mark_appointment' %}" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                    <button type="submit" class="text-orange-600 font-medium hover:text-orange-500 text-sm">Mark Scheduled</button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="px-4 py-8 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">No appointments found</h3>
+                            <p class="mt-1 text-sm text-gray-500">Get started by creating a new appointment.</p>
+                            <div class="mt-6">
+                                <a href="{% url 'schedule_appointment' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    Schedule Appointment
+                                </a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% else %}
+            <!-- No appointments message -->
+            <div class="bg-white shadow overflow-hidden sm:rounded-md p-6 text-center">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No appointments found</h3>
+                <p class="mt-1 text-sm text-gray-500">Get started by creating a new appointment.</p>
+                <div class="mt-6">
+                    <a href="{% url 'schedule_appointment' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Schedule Appointment
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Confirm Delete</h3>
+        <p class="text-gray-500 mb-6">Are you sure you want to delete the appointment for <span id="patientName" class="font-medium"></span>? This action cannot be undone.</p>
+        <div class="flex justify-end">
+            <button type="button" onclick="closeDeleteModal()" class="mr-3 inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Cancel
+            </button>
+            <form id="deleteForm" method="POST" action="">
+                {% csrf_token %}
+                <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(appointmentId, patientName) {
+        document.getElementById('patientName').textContent = patientName;
+        document.getElementById('deleteForm').action = "{% url 'delete_appointment_doctor' %}?appointment_id=" + appointmentId;
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+    
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+</script>
+{% endblock %}

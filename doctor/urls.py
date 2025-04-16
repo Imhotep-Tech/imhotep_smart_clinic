@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, medical_records, patients, doctor_settings
+from . import views, medical_records, patients, doctor_settings, appointments
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='doctor_dashboard'),
@@ -21,4 +21,13 @@ urlpatterns = [
     path('set-appointment-times/', doctor_settings.set_appointment_times, name='set_appointment_times'),
     path('update-appointment-times/', doctor_settings.update_appointment_times, name='update_appointment_times'),
     path('deactivate-appointment-times/', doctor_settings.deactivate_appointment_times, name='deactivate_appointment_times'),
+    
+    # Appointment management
+    path('appointments/', appointments.appointment_list, name='appointment_list'),
+    path('appointment-detail/', appointments.appointment_detail, name='appointment_detail'),
+    path('schedule-appointment/', appointments.schedule_appointment, name='schedule_appointment'),
+    path('get_available_times/', appointments.get_available_times, name='get_available_times'),
+    path('mark-appointment-completed/', appointments.mark_appointment, name='mark_appointment'),
+    path('update-appointment/', appointments.update_appointment_doctor, name='update_appointment_doctor'),
+    path('delete-appointment/', appointments.delete_appointment_doctor, name='delete_appointment_doctor'),
 ]

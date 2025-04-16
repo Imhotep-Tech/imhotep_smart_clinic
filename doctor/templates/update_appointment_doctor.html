@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Update Appointment - Imhotep Smart Clinic{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <!-- Include navigation -->
+    {% include "nav.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <div class="container mx-auto max-w-4xl">
+            <!-- Header -->
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Update Appointment</h1>
+                <p class="text-gray-600">Modify appointment details for {{ appointments.patient.name }}</p>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="flex items-center text-sm text-gray-600 mb-6">
+                <a href="{% url 'appointment_list' %}" class="hover:text-blue-600 transition-colors">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Appointments
+                </a>
+            </div>
+
+            <!-- Appointment Form -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <form method="POST" action="{% url 'update_appointment_doctor' %}?appointment_id={{ appointments.id }}" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <!-- Patient Information (Non-editable) -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Patient</label>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-md border border-gray-200">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <span class="text-indigo-800 font-medium">{{ appointments.patient.name|slice:":1" }}</span>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">{{ appointments.patient.name }}</p>
+                                {% if appointments.patient.phone_number %}
+                                <p class="text-xs text-gray-500">{{ appointments.patient.phone_number }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <input type="hidden" name="patient_id" value="{{ patient_id }}">
+                    </div>
+                    
+                    <!-- Date and Available Times -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Date Selection -->
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Appointment Date</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <input type="date" name="date" id="date" 
+                                       value="{{ appointments.date|date:'Y-m-d' }}" 
+                                       min="{{ appointments.date|date:'Y-m-d' }}" 
+                                       class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" 
+                                       required 
+                                       onchange="fetchAvailableTimes(this.value)">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500">Select a date to see available time slots</p>
+                        </div>
+                        
+                        <!-- Time Slot Selection -->
+                        <div>
+                            <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Available Time Slots</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <select name="details" id="details" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                                    <option value="{{ appointments.start_time|time:'H:i:s' }}" selected>{{ appointments.start_time|time:'g:i A' }} (Current)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Info Card -->
+                    <div class="bg-blue-50 p-4 rounded-md border border-blue-200 mt-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">About Updating Appointments</h3>
+                                <div class="mt-2 text-sm text-blue-700">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Changing the date will refresh the available time slots</li>
+                                        <li>The current time slot will remain selected unless you pick a new date</li>
+                                        <li>Only available time slots will be shown</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <a href="{% url 'appointment_list' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">
+                            Cancel
+                        </a>
+                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">
+                            Update Appointment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Store the current appointment time for reference
+    const currentTime = "{{ appointments.start_time|time:'H:i:s' }}";
+    const currentTimeDisplay = "{{ appointments.start_time|time:'g:i A' }} (Current)";
+    const currentDate = "{{ appointments.date|date:'Y-m-d' }}";
+    let timeSlotSelect = document.getElementById('details');
+    
+    // Function to load available times for the selected date
+    function fetchAvailableTimes(date) {
+        timeSlotSelect = document.getElementById('details');
+        timeSlotSelect.disabled = true;
+        
+        // Clear existing options
+        while (timeSlotSelect.options.length > 0) {
+            timeSlotSelect.remove(0);
+        }
+        
+        // Set loading state
+        const loadingOption = document.createElement('option');
+        loadingOption.text = "Loading available times...";
+        loadingOption.disabled = true;
+        loadingOption.selected = true;
+        timeSlotSelect.add(loadingOption);
+        
+        // Check if we're keeping the same date
+        const keepCurrentTimeOption = date === currentDate;
+        
+        // Fetch available times from the server
+        fetch(`/doctor/get_available_times/?date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                // Remove all options first
+                while (timeSlotSelect.options.length > 0) {
+                    timeSlotSelect.remove(0);
+                }
+                
+                if (data.available_times && data.available_times.length > 0) {
+                    // If it's the current date, add current time first with selected=true
+                    if (keepCurrentTimeOption) {
+                        const currentOption = document.createElement('option');
+                        currentOption.text = currentTimeDisplay;
+                        currentOption.value = currentTime;
+                        currentOption.selected = true;
+                        timeSlotSelect.add(currentOption);
+                    } else {
+                        // For other dates, add a default selection prompt
+                        const defaultOption = document.createElement('option');
+                        defaultOption.text = "Select a time";
+                        defaultOption.value = "";
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        timeSlotSelect.add(defaultOption);
+                    }
+                    
+                    // Add all available time options
+                    data.available_times.forEach(time => {
+                        // Skip adding the current time again if we already added it and we're on the current date
+                        if (keepCurrentTimeOption && time.value === currentTime) {
+                            return;
+                        }
+                        
+                        const option = document.createElement('option');
+                        option.text = time.display;
+                        option.value = time.value;
+                        timeSlotSelect.add(option);
+                    });
+                    
+                    timeSlotSelect.disabled = false;
+                } else {
+                    // No times available
+                    if (keepCurrentTimeOption) {
+                        // If it's the current date, still show the current time
+                        const currentOption = document.createElement('option');
+                        currentOption.text = currentTimeDisplay;
+                        currentOption.value = currentTime;
+                        currentOption.selected = true;
+                        timeSlotSelect.add(currentOption);
+                        timeSlotSelect.disabled = false;
+                    } else {
+                        // For other dates, show no times available message
+                        const noTimesOption = document.createElement('option');
+                        noTimesOption.text = "No available times on this date";
+                        noTimesOption.disabled = true;
+                        noTimesOption.selected = true;
+                        timeSlotSelect.add(noTimesOption);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching available times:', error);
+                // Clear all options
+                while (timeSlotSelect.options.length > 0) {
+                    timeSlotSelect.remove(0);
+                }
+                
+                const errorOption = document.createElement('option');
+                errorOption.text = "Error loading times. Please try again.";
+                errorOption.disabled = true;
+                errorOption.selected = true;
+                timeSlotSelect.add(errorOption);
+            });
+    }
+    
+    // If the user changes the date, fetch available times for that date
+    document.getElementById('date').addEventListener('change', function() {
+        fetchAvailableTimes(this.value);
+    });
+    
+    // When page loads, fetch all available times for the current date
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch all available times for the current date
+        fetchAvailableTimes(currentDate);
+    });
+</script>
+{% endblock %}
+{% endblock %}

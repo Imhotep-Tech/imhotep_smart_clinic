@@ -41,13 +41,13 @@ class MedicalRecord(models.Model):
 class AppointmentTimes(models.Model):
 
     DAYS_OF_THE_WEEK = (
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday')
+        ('Monday', 'monday'),
+        ('Tuesday', 'tuesday'),
+        ('Wednesday', 'wednesday'),
+        ('Thursday', 'thursday'),
+        ('Friday', 'friday'),
+        ('Saturday', 'saturday'),
+        ('Sunday', 'sunday')
     )
 
     doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)
