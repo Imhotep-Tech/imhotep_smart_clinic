@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Update Appointment Times - Imhotep Smart Clinic{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <!-- Include navigation -->
+    {% include "nav.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <div class="container mx-auto max-w-3xl">
+            <!-- Header -->
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800">Update Appointment Schedule</h1>
+                <p class="text-gray-600">Modify your existing appointment availability</p>
+            </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="flex items-center text-sm text-gray-600 mb-6">
+                <a href="{% url 'update_doctor_profile' %}" class="hover:text-blue-600 transition-colors">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Profile
+                </a>
+            </div>
+
+            <!-- Schedule Form -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                    <h2 class="text-xl font-medium text-gray-800">Edit Appointment Schedule</h2>
+                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        {% if appointment_time.activated_status %}
+                            bg-green-100 text-green-800
+                        {% else %}
+                            bg-red-100 text-red-800
+                        {% endif %}">
+                        {{ appointment_time.activated_status|yesno:"Active,Inactive" }}
+                    </span>
+                </div>
+                
+                <form method="POST" action="{% url 'update_appointment_times' %}?appointment_id={{ appointment_time.id }}" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <!-- Day of the Week -->
+                    <div>
+                        <label for="day_of_the_week" class="block text-sm font-medium text-gray-700 mb-1">Day of the Week</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <select name="day_of_the_week" id="day_of_the_week" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                                <option value="Monday" {% if appointment_time.day_of_the_week == "Monday" %}selected{% endif %}>Monday</option>
+                                <option value="Tuesday" {% if appointment_time.day_of_the_week == "Tuesday" %}selected{% endif %}>Tuesday</option>
+                                <option value="Wednesday" {% if appointment_time.day_of_the_week == "Wednesday" %}selected{% endif %}>Wednesday</option>
+                                <option value="Thursday" {% if appointment_time.day_of_the_week == "Thursday" %}selected{% endif %}>Thursday</option>
+                                <option value="Friday" {% if appointment_time.day_of_the_week == "Friday" %}selected{% endif %}>Friday</option>
+                                <option value="Saturday" {% if appointment_time.day_of_the_week == "Saturday" %}selected{% endif %}>Saturday</option>
+                                <option value="Sunday" {% if appointment_time.day_of_the_week == "Sunday" %}selected{% endif %}>Sunday</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Start Time -->
+                        <div>
+                            <label for="start_time" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <input type="time" name="start_time" id="start_time" value="{{ appointment_time.start_time|time:'H:i' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                            </div>
+                        </div>
+                        
+                        <!-- End Time -->
+                        <div>
+                            <label for="end_time" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <input type="time" name="end_time" id="end_time" value="{{ appointment_time.end_time|time:'H:i' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Separation Time (in minutes) -->
+                    <div>
+                        <label for="separation_time" class="block text-sm font-medium text-gray-700 mb-1">Time Between Appointments (minutes)</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <select name="separation_time" id="separation_time" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                                <option value="00:15:00" {% if appointment_time.separation_time|time:'H:i:s' == '00:15:00' %}selected{% endif %}>15 minutes</option>
+                                <option value="00:20:00" {% if appointment_time.separation_time|time:'H:i:s' == '00:20:00' %}selected{% endif %}>20 minutes</option>
+                                <option value="00:30:00" {% if appointment_time.separation_time|time:'H:i:s' == '00:30:00' %}selected{% endif %}>30 minutes</option>
+                                <option value="00:45:00" {% if appointment_time.separation_time|time:'H:i:s' == '00:45:00' %}selected{% endif %}>45 minutes</option>
+                                <option value="01:00:00" {% if appointment_time.separation_time|time:'H:i:s' == '01:00:00' %}selected{% endif %}>60 minutes</option>
+                            </select>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">This determines how long each appointment slot will be</p>
+                    </div>
+                    
+                    <!-- Status Toggle -->
+                    <div class="flex items-center space-x-4 pt-4 border-t">
+                        <span class="text-sm font-medium text-gray-700">Status:</span>
+                        <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ appointment_time.id }}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="inline-flex items-center px-3 py-1.5 rounded-full {% if appointment_time.activated_status %}bg-red-100 text-red-800 hover:bg-red-200{% else %}bg-green-100 text-green-800 hover:bg-green-200{% endif %} transition-colors text-sm font-medium">
+                                {% if appointment_time.activated_status %}
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Deactivate
+                                {% else %}
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                Activate
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <a href="{% url 'update_doctor_profile' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">
+                            Cancel
+                        </a>
+                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">
+                            Update Schedule
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

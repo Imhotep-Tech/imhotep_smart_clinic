@@ -16,4 +16,9 @@ urlpatterns = [
     path('update-doctor-profile/', doctor_settings.update_doctor_profile, name='update_doctor_profile'),
     path('upload-clinic-logo/', doctor_settings.upload_clinic_logo, name='upload_clinic_logo'),
     path('remove-clinic-logo/', doctor_settings.remove_clinic_logo, name='remove_clinic_logo'),
+    
+    # Appointment times management
+    path('set-appointment-times/', doctor_settings.set_appointment_times, name='set_appointment_times'),
+    path('update-appointment-times/', doctor_settings.update_appointment_times, name='update_appointment_times'),
+    path('deactivate-appointment-times/', doctor_settings.deactivate_appointment_times, name='deactivate_appointment_times'),
 ]

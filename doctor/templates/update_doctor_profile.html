@@ -104,6 +104,171 @@
                 </form>
             </div>
 
+
+            
+            <div class="p-6 bg-white rounded-lg shadow-md mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <h2 class="text-xl font-medium text-gray-800">Appointment Schedules</h2>
+                    <p class="text-sm text-gray-600 order-3 sm:order-2">Set your availability for patient appointments</p>
+                    <a href="{% url 'set_appointment_times' %}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors text-sm font-medium order-2 sm:order-3">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add New Schedule
+                    </a>
+                </div>
+                
+                {% if doctor_profile.appointmenttimes_set.all %}
+                    <!-- Large screen table view -->
+                    <div class="hidden md:block">
+                        <div class="overflow-x-auto max-w-full">
+                            <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Day</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Time Range</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">Duration</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Status</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for schedule in doctor_profile.appointmenttimes_set.all %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="h-10 w-10 flex-shrink-0">
+                                                    <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                        <span class="text-indigo-800 font-medium">{{ schedule.day_of_the_week|slice:":2" }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">{{ schedule.day_of_the_week }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ schedule.start_time|time:"g:i A" }} - {{ schedule.end_time|time:"g:i A" }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ schedule.separation_time }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {% if schedule.activated_status %}
+                                                    bg-green-100 text-green-800
+                                                {% else %}
+                                                    bg-red-100 text-red-800
+                                                {% endif %}">
+                                                {{ schedule.activated_status|yesno:"Active,Inactive" }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="{% url 'update_appointment_times' %}?appointment_id={{ schedule.id }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                            <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ schedule.id }}" class="inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="text-{% if schedule.activated_status %}red{% else %}green{% endif %}-600 hover:text-{% if schedule.activated_status %}red{% else %}green{% endif %}-900">
+                                                    {{ schedule.activated_status|yesno:"Deactivate,Activate" }}
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile card view -->
+                    <div class="md:hidden space-y-4">
+                        {% for schedule in doctor_profile.appointmenttimes_set.all %}
+                            <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                            <span class="text-indigo-800 font-medium">{{ schedule.day_of_the_week|slice:":2" }}</span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">{{ schedule.day_of_the_week }}</div>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                        {% if schedule.activated_status %}
+                                            bg-green-100 text-green-800
+                                        {% else %}
+                                            bg-red-100 text-red-800
+                                        {% endif %}">
+                                        {{ schedule.activated_status|yesno:"Active,Inactive" }}
+                                    </span>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-2 mb-3">
+                                    <div>
+                                        <span class="block text-xs font-medium text-gray-500">Time Range</span>
+                                        <span class="text-sm text-gray-900">{{ schedule.start_time|time:"g:i A" }} - {{ schedule.end_time|time:"g:i A" }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs font-medium text-gray-500">Duration</span>
+                                        <span class="text-sm text-gray-900">{{ schedule.separation_time }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-end space-x-2 pt-2 border-t border-gray-200">
+                                    <a href="{% url 'update_appointment_times' %}?appointment_id={{ schedule.id }}" class="flex-1 text-center px-3 py-2 text-sm bg-indigo-50 text-indigo-600 rounded-md hover:bg-indigo-100 transition-colors">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ schedule.id }}" class="flex-1">
+                                        {% csrf_token %}
+                                        <button type="submit" class="w-full px-3 py-2 text-sm {% if schedule.activated_status %}bg-red-50 text-red-600 hover:bg-red-100{% else %}bg-green-50 text-green-600 hover:bg-green-100{% endif %} rounded-md transition-colors">
+                                            {{ schedule.activated_status|yesno:"Deactivate,Activate" }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="bg-gray-50 rounded-lg p-8 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">No appointment schedules</h3>
+                        <p class="mt-1 text-sm text-gray-500">Get started by creating a new appointment schedule.</p>
+                        <div class="mt-6">
+                            <a href="{% url 'set_appointment_times' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                New Schedule
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Quick Help Card -->
+                <div class="mt-4 bg-blue-50 rounded-md p-4 border border-blue-200">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-blue-800">Managing Your Appointment Schedules</h3>
+                            <div class="mt-2 text-sm text-blue-700">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Create multiple schedules for different days of the week</li>
+                                    <li>Set specific time ranges and appointment durations</li>
+                                    <li>Deactivate schedules temporarily without deleting them</li>
+                                    <li>Patients can only book appointments during your active schedules</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                 <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Personal Information</h2>
                 

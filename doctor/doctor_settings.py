@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import doctor_required
 from django.contrib import messages
-from .models import DoctorProfile
+from .models import DoctorProfile, AppointmentTimes
 import os
 from PIL import Image
 from django.conf import settings
@@ -114,4 +114,88 @@ def remove_clinic_logo(request):
     else:
         messages.info(request, 'No logo to remove.')
     
+    return redirect('update_doctor_profile')
+
+@login_required
+@doctor_required
+def set_appointment_times(request):
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    
+    if request.method == 'POST':
+        start_time = request.POST.get('start_time')
+        end_time = request.POST.get('end_time')
+        separation_time = request.POST.get('separation_time')
+        day_of_the_week = request.POST.get('day_of_the_week')
+        
+        if start_time and end_time and separation_time and day_of_the_week:
+            new_appointment_time = AppointmentTimes.objects.create(
+            doctor=doctor_profile,
+            start_time=start_time,
+            end_time=end_time,
+            separation_time=separation_time,
+            day_of_the_week=day_of_the_week
+        )
+        
+        try:
+            new_appointment_time.save()
+            messages.success(request, 'Your appointment time were successfully added!')
+            return redirect('update_doctor_profile')
+        except Exception as e:
+            messages.error(request, f'Error updating doctor profile: {str(e)}')
+            return redirect('update_doctor_profile')
+    
+    context = {
+        "user_data": request.user
+    }
+    return render(request, "set_appointment_times.html", context)
+
+@login_required
+@doctor_required
+def update_appointment_times(request):
+
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    if request.method == 'POST':
+        appointment_id = request.POST.get('appointment_id')
+        appointment_time = get_object_or_404(AppointmentTimes, id=appointment_id, doctor=doctor_profile)
+
+        appointment_time.start_time = request.POST.get('start_time')
+        appointment_time.end_time = request.POST.get('end_time')
+        appointment_time.separation_time = request.POST.get('separation_time')
+        appointment_time.day_of_the_week = request.POST.get('day_of_the_week')
+        
+        try:
+            appointment_time.save()
+            messages.success(request, 'Your appointment time were successfully updated!')
+            return redirect('update_doctor_profile')
+        except Exception as e:
+            messages.error(request, f'Error updating doctor profile: {str(e)}')
+            return redirect('update_doctor_profile')
+    
+    appointment_id = request.GET.get('appointment_id')
+    appointment_time = get_object_or_404(AppointmentTimes, id=appointment_id, doctor=doctor_profile)
+    context = {
+        "user_data": request.user,
+        "appointment_time":appointment_time
+    }
+    return render(request, "update_appointment_times.html", context)
+
+@login_required
+@doctor_required
+def deactivate_appointment_times(request):
+
+    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    if request.method == 'POST':
+        appointment_id = request.GET.get('appointment_id')
+        appointment_time = get_object_or_404(AppointmentTimes, id=appointment_id, doctor=doctor_profile)
+
+        appointment_time.activated_status = not (appointment_time.activated_status)
+        
+        try:
+            appointment_time.save()
+            messages.success(request, 'Your appointment time were successfully updated!')
+            return redirect('update_doctor_profile')
+        except Exception as e:
+            messages.error(request, f'Error updating doctor profile: {str(e)}')
+            return redirect('update_doctor_profile')
+
     return redirect('update_doctor_profile')

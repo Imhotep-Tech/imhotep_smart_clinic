@@ -41,11 +41,13 @@ def update_profile(request):
 
         if first_name != user.first_name:
             user.first_name = first_name
+            messages.info(request, "First name updated")
         if last_name != user.last_name:
             user.last_name = last_name
+            messages.info(request, "Last name updated")
 
         if user.email == user_email and user.username == user_username:
-            messages.info(request, "Nothing has been updated!")
+            messages.info(request, "Nothing in the credentials has been updated!")
             if user.is_doctor():
                 return redirect('update_doctor_profile')
             elif user.is_assistant():
