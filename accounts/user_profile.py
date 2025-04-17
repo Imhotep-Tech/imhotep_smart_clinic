@@ -46,6 +46,8 @@ def update_profile(request):
             user.last_name = last_name
             messages.info(request, "Last name updated")
 
+        user.save()
+        
         if user.email == user_email and user.username == user_username:
             messages.info(request, "Nothing in the credentials has been updated!")
             if user.is_doctor():
