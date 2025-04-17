@@ -62,7 +62,7 @@
                                 </div>
                                 <input type="date" name="date" id="date" 
                                        value="{{ appointments.date|date:'Y-m-d' }}" 
-                                       min="{{ appointments.date|date:'Y-m-d' }}" 
+                                       min="{{ min_date|date:'Y-m-d' }}" 
                                        class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" 
                                        required 
                                        onchange="fetchAvailableTimes(this.value)">

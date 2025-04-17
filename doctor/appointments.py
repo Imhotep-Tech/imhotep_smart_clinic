@@ -189,7 +189,7 @@ def update_appointment_doctor(request):
         
         if request.method == 'GET':
             # Get the minimum date (today or appointment date if in the past)
-            min_date = max(timezone.now().date(), appointment.date)
+            min_date = timezone.now().date()
             
             context = {
                 "user_data": request.user,

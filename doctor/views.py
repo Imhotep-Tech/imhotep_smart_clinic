@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import DoctorProfile, MedicalRecord
+from .models import DoctorProfile, MedicalRecord, Appointments
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from accounts.decorators import doctor_required
 from datetime import datetime, date, timedelta
@@ -28,9 +28,13 @@ def dashboard(request):
         avg_patients_per_day = 0
 
     #to be implemented
+    todays_appointments_today = Appointments.objects.filter(doctor=doctor_profile, date=date.today()).count()
+
+    completed = Appointments.objects.filter(doctor=doctor_profile, date=date.today(), status='completed').count()
+
     todays_appointments = {
-        'total': 5,
-        'completed': 2
+        'total': todays_appointments_today,
+        'completed': completed
     }
 
     #to be implemented
@@ -63,7 +67,10 @@ def dashboard(request):
             'status_color': 'yellow'
         }
     ]
-
+    
+    appointments = Appointments.objects.filter(doctor=doctor_profile).order_by('-date', 'start_time')
+    for i in appointments:
+        print(i)
     context = {
         "user_data": request.user,
         "today_date": datetime.now(),
@@ -71,6 +78,6 @@ def dashboard(request):
         "number_of_patients_records": number_of_patients_records,
         "todays_appointments": todays_appointments,
         "avg_patients_per_day": avg_patients_per_day,
-        "appointments_list": appointments_list
+        "appointments": appointments
     }
     return render(request, "doctor_dashboard.html", context)

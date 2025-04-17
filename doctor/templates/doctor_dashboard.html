@@ -24,12 +24,14 @@
                         </svg>
                         Add Patient
                     </a>
-                    <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg flex items-center transition-all">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        Schedule Appointment
-                    </button>
+                    <div>
+                        <a href="{% url 'schedule_appointment' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Schedule Appointment
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -89,7 +91,7 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
+                        <a href="{% url 'appointment_list' %}" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center">
                             View schedule
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -134,29 +136,37 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                {% for appointment in appointments_list %}
+                                {% for appointment in appointments %}
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ appointment.time }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ appointment.date|date:"M d, Y" }}</div>
+                                        <div class="text-sm text-gray-500">{{ appointment.start_time|time:"g:i A" }}</div>
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div class="h-10 w-10 flex-shrink-0">
-                                                <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                    <span class="text-indigo-800 font-medium">{{ appointment.patient_initials }}</span>
-                                                </div>
+                                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                <span class="text-indigo-800 font-medium">{{ appointment.patient.name|slice:":1" }}</span>
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">{{ appointment.patient_name }}</div>
-                                                <div class="text-sm text-gray-500">{{ appointment.patient_gender }}, {{ appointment.patient_age }}</div>
+                                                <div class="text-sm font-medium text-gray-900">{{ appointment.patient.name }}</div>
+                                                {% if appointment.patient.phone_number %}
+                                                <div class="text-sm text-gray-500">{{ appointment.patient.phone_number }}</div>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ appointment.status_color }}-100 text-{{ appointment.status_color }}-800">
-                                            {{ appointment.status }}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                            {% if appointment.status == 'scheduled' %}
+                                                bg-blue-100 text-blue-800
+                                            {% else %}
+                                                bg-green-100 text-green-800
+                                            {% endif %}">
+                                            {{ appointment.status|title }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                        <a href="{% url 'appointment_detail' %}?appointment_id={{ appointment.id }}" class="text-indigo-600 hover:text-indigo-900 mr-3">View</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
