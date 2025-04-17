@@ -6,6 +6,7 @@ from accounts.decorators import doctor_required
 from django.urls import reverse
 from django.db.models import Q
 from .utils.search_patient import search_patient_by_name, search_patient_by_phone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 @doctor_required
@@ -51,10 +52,23 @@ def add_patient(request):
 @doctor_required
 def show_patients(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
-    patients = Patients.objects.filter(doctor=doctor_profile).order_by('name')
+    patients_list = Patients.objects.filter(doctor=doctor_profile).order_by('name')
+    
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(patients_list, 10)  # Show 10 patients per page
+    
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    
     context = {
         "user_data": request.user,
-        "patients": patients
+        "patients": patients_list,
+        "page_obj": page_obj
     }
     return render(request, "show_patients.html", context)
 
@@ -65,13 +79,24 @@ def show_patient_details(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
 
     patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
+    records_list = MedicalRecord.objects.filter(doctor=doctor_profile, patient=patient_id).order_by('-date')
     
-    records = MedicalRecord.objects.filter(doctor=doctor_profile, patient=patient_id)
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(records_list, 10)
+    
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
 
     context = {
         "user_data": request.user,
         "patients": [patient],
-        "records":records
+        "records": records_list,
+        "page_obj": page_obj
     }
     return render(request, "show_patient_details.html", context)
 
@@ -138,14 +163,26 @@ def search_patient(request):
     patient_phone = request.GET.get('patient_phone', '')
     
     if patient_name:
-        patients = search_patient_by_name(doctor_profile, patient_name)
+        patients_list = search_patient_by_name(doctor_profile, patient_name)
     elif patient_phone:
-        patients = search_patient_by_phone(doctor_profile, patient_phone)
+        patients_list = search_patient_by_phone(doctor_profile, patient_phone)
     else:
-        patients = []
+        patients_list = []
+    
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(patients_list, 10)  # Show 10 patients per page
+    
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
     
     context = {
         "user_data": request.user,
-        "patients": patients
+        "patients": patients_list,
+        "page_obj": page_obj
     }
     return render(request, "show_patients.html", context)

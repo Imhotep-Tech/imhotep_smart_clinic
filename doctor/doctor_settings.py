@@ -10,6 +10,7 @@ import uuid
 import io
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 @doctor_required
@@ -30,9 +31,24 @@ def update_doctor_profile(request):
         except Exception as e:
             messages.error(request, f'Error updating doctor profile: {str(e)}')
     
+    # Get all appointment times and paginate
+    appointment_times_list = AppointmentTimes.objects.filter(doctor=doctor_profile).order_by('day_of_the_week', 'start_time')
+    
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(appointment_times_list, 10)  # Show 10 items per page
+    
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    
     context = {
         "user_data": request.user,
         "doctor_profile": doctor_profile,
+        "page_obj": page_obj,
     }
     return render(request, "update_doctor_profile.html", context)
 

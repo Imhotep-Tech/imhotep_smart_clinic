@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.http import JsonResponse
 import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @doctor_required
 @login_required
@@ -19,22 +20,34 @@ def appointment_list(request):
     status_filter = request.GET.get('status')
     
     # Base queryset
-    appointments = Appointments.objects.filter(doctor=doctor).order_by('-date', 'start_time')
+    appointments_list = Appointments.objects.filter(doctor=doctor).order_by('-date', 'start_time')
     
     # Apply filters if provided
     if date_filter:
         try:
             filter_date = datetime.datetime.strptime(date_filter, '%Y-%m-%d').date()
-            appointments = appointments.filter(date=filter_date)
+            appointments_list = appointments_list.filter(date=filter_date)
         except ValueError:
             messages.error(request, "Invalid date format. Please use YYYY-MM-DD.")
     
     if status_filter:
-        appointments = appointments.filter(status=status_filter)
+        appointments_list = appointments_list.filter(status=status_filter)
+    
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(appointments_list, 10)  # Show 10 appointments per page
+    
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
     
     context = {
         "user_data": request.user,
-        "appointments": appointments,
+        "appointments": appointments_list,
+        "page_obj": page_obj
     }
     
     return render(request, "appointment_list.html", context)

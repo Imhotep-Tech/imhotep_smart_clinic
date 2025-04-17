@@ -12,10 +12,9 @@ def dashboard(request):
 
     number_of_patients = doctor_profile.doctor_patients.count()
 
-    #to be implemented
     number_of_patients_records = MedicalRecord.objects.filter(doctor=doctor_profile).count()
     
-    #to get the daily average
+    # to get the daily average
     today = date.today()
     thirty_days_ago = today - timedelta(days=30)
     patients_last_30_days = doctor_profile.doctor_patients.filter(
@@ -27,7 +26,6 @@ def dashboard(request):
     else:
         avg_patients_per_day = 0
 
-    #to be implemented
     todays_appointments_today = Appointments.objects.filter(doctor=doctor_profile, date=date.today()).count()
 
     completed = Appointments.objects.filter(doctor=doctor_profile, date=date.today(), status='completed').count()
@@ -37,40 +35,20 @@ def dashboard(request):
         'completed': completed
     }
 
-    #to be implemented
-    appointments_list = [
-        {
-            'time': '9:00 AM',
-            'patient_name': 'John Doe',
-            'patient_initials': 'JD',
-            'patient_gender': 'Male',
-            'patient_age': 42,
-            'status': 'Completed',
-            'status_color': 'green'
-        },
-        {
-            'time': '11:30 AM',
-            'patient_name': 'Maria Smith',
-            'patient_initials': 'MS',
-            'patient_gender': 'Female',
-            'patient_age': 35,
-            'status': 'In Progress',
-            'status_color': 'blue'
-        },
-        {
-            'time': '2:00 PM',
-            'patient_name': 'Robert Johnson',
-            'patient_initials': 'RJ',
-            'patient_gender': 'Male',
-            'patient_age': 58,
-            'status': 'Scheduled',
-            'status_color': 'yellow'
-        }
-    ]
+    # Get appointments and implement pagination
+    appointments_list = Appointments.objects.filter(doctor=doctor_profile).order_by('-date', 'start_time')
     
-    appointments = Appointments.objects.filter(doctor=doctor_profile).order_by('-date', 'start_time')
-    for i in appointments:
-        print(i)
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(appointments_list, 5)  # Show 5 appointments per page
+    
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    
     context = {
         "user_data": request.user,
         "today_date": datetime.now(),
@@ -78,6 +56,7 @@ def dashboard(request):
         "number_of_patients_records": number_of_patients_records,
         "todays_appointments": todays_appointments,
         "avg_patients_per_day": avg_patients_per_day,
-        "appointments": appointments
+        "appointments": appointments_list,
+        "page_obj": page_obj
     }
     return render(request, "doctor_dashboard.html", context)
