@@ -39,7 +39,7 @@ def dashboard(request):
     }
 
     # Get appointments and implement pagination
-    appointments_list = Appointments.objects.filter(doctor=doctor_profile).order_by('-date', 'start_time')
+    appointments_list = Appointments.objects.filter(doctor=doctor_profile, date=date.today()).order_by('-date', 'start_time')
     
     # Pagination
     page = request.GET.get('page', 1)
