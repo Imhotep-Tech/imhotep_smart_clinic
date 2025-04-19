@@ -30,4 +30,6 @@ urlpatterns = [
     path('mark-appointment-completed/', appointments.mark_appointment, name='mark_appointment'),
     path('update-appointment/', appointments.update_appointment_doctor, name='update_appointment_doctor'),
     path('delete-appointment/', appointments.delete_appointment_doctor, name='delete_appointment_doctor'),
+
+    path('add-assistant/',  views.add_assistant, name='add_assistant'),
 ]

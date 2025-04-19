@@ -24,13 +24,10 @@ def register(request):
 
     if request.user.is_authenticated:
         if request.user.is_doctor():
-            return redirect("doctor.dashboard")
+            return redirect("doctor_dashboard")
         
         if request.user.is_assistant():
-            return redirect("assistant.dashboard")
-        
-        if request.user.is_patient():
-            return redirect("patient.dashboard")
+            return redirect("assistant_dashboard")
 
     if request.method == "POST":
         username = request.POST.get('username')
