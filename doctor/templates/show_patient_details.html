@@ -51,12 +51,14 @@
                             </svg>
                             Edit Patient
                         </a>
+                        {% if request.user.is_doctor %}
                         <button type="button" onclick="openDeleteModal()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg flex items-center transition-all">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
                             Delete Patient
                         </button>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -178,6 +180,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <div class="flex space-x-3">
+                                                    {% if request.user.is_doctor %}
                                                     <button type="button" onclick="openRecordDetails('{{ record.id }}')" class="text-indigo-600 hover:text-indigo-900">
                                                         View Details
                                                     </button>
@@ -197,11 +200,15 @@
                                                         </span>
                                                     </a>
                                                     {% endif %}
+                                                    {% else %}
+                                                    <span class="text-gray-400">Restricted</span>
+                                                    {% endif %}
                                                 </div>
                                             </td>
                                         </tr>
                                         
-                                        <!-- Modal for Record Details -->
+                                        <!-- Modal for Record Details (only for doctors) -->
+                                        {% if request.user.is_doctor %}
                                         <div id="recordModal{{ record.id }}" class="fixed inset-0 z-50 hidden overflow-auto bg-gray-900 bg-opacity-50">
                                             <div class="relative p-8 bg-white w-full max-w-2xl mx-auto mt-10 rounded-lg shadow-lg">
                                                 <div class="flex justify-between items-center mb-4">
@@ -248,6 +255,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -338,6 +346,7 @@
                             </svg>
                             <h3 class="mt-2 text-lg font-medium text-gray-900">No medical records yet</h3>
                             <p class="mt-1 text-sm text-gray-500">Start by adding the first medical record for this patient.</p>
+                            {% if request.user.is_doctor %}
                             <div class="mt-6">
                                 <a href="{% url 'add_medical_record' %}?patient_id={{ patients.0.id }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -346,6 +355,7 @@
                                     Add Medical Record
                                 </a>
                             </div>
+                            {% endif %}
                         </div>
                     {% endif %}
                 </div>

@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import DoctorProfile, Patients, MedicalRecord
+from assistant.models import AssistantProfile
 from django.contrib import messages
-from accounts.decorators import doctor_required
+from accounts.decorators import doctor_required, doctor_or_assistant_required
 from django.urls import reverse
 from django.db.models import Q
 from .utils.search_patient import search_patient_by_name, search_patient_by_phone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
-@doctor_required
+@doctor_required  # Only doctors can add patients
 def add_patient(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -49,9 +50,15 @@ def add_patient(request):
     return render(request, "add_patient.html", context)
 
 @login_required
-@doctor_required
+@doctor_or_assistant_required  # Both doctors and assistants can view patient lists
 def show_patients(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor_profile = assistant_profile.doctor
+        
     patients_list = Patients.objects.filter(doctor=doctor_profile).order_by('name')
     
     # Pagination
@@ -73,11 +80,17 @@ def show_patients(request):
     return render(request, "show_patients.html", context)
 
 @login_required
-@doctor_required
+@doctor_or_assistant_required  # Both doctors and assistants can view patient details
 def show_patient_details(request):
     patient_id = request.GET.get('patient_id')
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
-
+    
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor_profile = assistant_profile.doctor
+    
     patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
     records_list = MedicalRecord.objects.filter(doctor=doctor_profile, patient=patient_id).order_by('-date')
     
@@ -101,10 +114,17 @@ def show_patient_details(request):
     return render(request, "show_patient_details.html", context)
 
 @login_required
-@doctor_required
+@doctor_or_assistant_required  # Both doctors and assistants can update patient basic info
 def update_patient(request):
     patient_id = request.GET.get('patient_id')
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor_profile = assistant_profile.doctor
+        
     patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
 
     if request.method == 'GET': 
@@ -135,7 +155,7 @@ def update_patient(request):
         return redirect(url)
 
 @login_required
-@doctor_required
+@doctor_required  # Only doctors can delete patients
 def delete_patient(request):
     patient_id = request.GET.get('patient_id')
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
@@ -156,9 +176,15 @@ def delete_patient(request):
         return redirect("doctor_dashboard")
     
 @login_required
-@doctor_required
+@doctor_or_assistant_required  # Both doctors and assistants can search patients
 def search_patient(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor_profile = assistant_profile.doctor
+    
     patient_name = request.GET.get('patient_name', '')
     patient_phone = request.GET.get('patient_phone', '')
     

@@ -40,10 +40,17 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
         </div>
+        {% if request.user.is_doctor %}
         <div>
           <p class="text-sm font-medium text-gray-900">Dr. {{ user.first_name }} {{ user.last_name }}</p>
           <p class="text-xs text-gray-500">{{ user.doctor_profile.specialization }}</p>
         </div>
+        {% elif request.user.is_assistant %}
+        <div>
+          <p class="text-sm font-medium text-gray-900">Asst. {{ user.first_name }} {{ user.last_name }}</p>
+          <p class="text-xs text-gray-500">Assistant to Dr. {{ user.assistant_profile.doctor.user.get_full_name }}</p>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -73,7 +80,8 @@
         <span>Appointments</span>
       </a>
 
-      <!-- Settings -->
+      {% if request.user.is_doctor %}
+      <!-- Doctor-specific navigation items -->
       <a href="{% url 'update_doctor_profile' %}" class="flex items-center px-4 py-3 text-sm font-medium rounded-md {% if request.resolver_match.url_name == 'update_doctor_profile' %}bg-blue-100 text-blue-900{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
         <svg class="w-5 h-5 mr-3 {% if request.resolver_match.url_name == 'update_doctor_profile' %}text-blue-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -82,14 +90,22 @@
         <span>Settings</span>
       </a>
       
-      <!-- Add Assistant -->
       <a href="{% url 'add_assistant' %}" class="flex items-center px-4 py-3 text-sm font-medium rounded-md {% if request.resolver_match.url_name == 'add_assistant' %}bg-blue-100 text-blue-900{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
         <svg class="w-5 h-5 mr-3 {% if request.resolver_match.url_name == 'add_assistant' %}text-blue-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
         </svg>
         <span>Add Assistant</span>
       </a>
-
+      {% elif request.user.is_assistant %}
+      <!-- Assistant-specific navigation items -->
+      <a href="{% url 'update_assistant_profile' %}" class="flex items-center px-4 py-3 text-sm font-medium rounded-md {% if request.resolver_match.url_name == 'update_assistant_profile' %}bg-blue-100 text-blue-900{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
+        <svg class="w-5 h-5 mr-3 {% if request.resolver_match.url_name == 'update_assistant_profile' %}text-blue-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        <span>My Profile</span>
+      </a>
+      {% endif %}
+      
     <!-- Logout Section -->
     <div class="pt-4 mt-6 border-t">
       <a href="{% url 'logout' %}" class="flex items-center px-4 py-3 mt-1 text-sm font-medium text-gray-700 rounded-md hover:bg-red-50 hover:text-red-700">
@@ -126,10 +142,18 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
+          <!-- Update the mobile navigation profile section to match the desktop version -->
+          {% if request.user.is_doctor %}
           <div>
             <p class="text-sm font-medium text-gray-900">Dr. {{ user.first_name }} {{ user.last_name }}</p>
             <p class="text-xs text-gray-500">{{ user.doctor_profile.specialization }}</p>
           </div>
+          {% elif request.user.is_assistant %}
+          <div>
+            <p class="text-sm font-medium text-gray-900">Asst. {{ user.first_name }} {{ user.last_name }}</p>
+            <p class="text-xs text-gray-500">Assistant to Dr. {{ user.assistant_profile.doctor.user.get_full_name }}</p>
+          </div>
+          {% endif %}
         </div>
       </div>
 
@@ -159,7 +183,8 @@
           <span>Appointments</span>
         </a>
 
-        <!-- Settings -->
+        {% if request.user.is_doctor %}
+        <!-- Doctor-specific navigation items -->
         <a href="{% url 'update_doctor_profile' %}" class="flex items-center px-4 py-3 text-sm font-medium rounded-md {% if request.resolver_match.url_name == 'update_doctor_profile' %}bg-blue-100 text-blue-900{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
           <svg class="w-5 h-5 mr-3 {% if request.resolver_match.url_name == 'update_doctor_profile' %}text-blue-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -168,13 +193,21 @@
           <span>Settings</span>
         </a>
         
-        <!-- Add Assistant -->
         <a href="{% url 'add_assistant' %}" class="flex items-center px-4 py-3 text-sm font-medium rounded-md {% if request.resolver_match.url_name == 'add_assistant' %}bg-blue-100 text-blue-900{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
           <svg class="w-5 h-5 mr-3 {% if request.resolver_match.url_name == 'add_assistant' %}text-blue-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
           </svg>
           <span>Add Assistant</span>
         </a>
+        {% elif request.user.is_assistant %}
+        <!-- Assistant-specific navigation items -->
+        <a href="{% url 'update_assistant_profile' %}" class="flex items-center px-4 py-3 text-sm font-medium rounded-md {% if request.resolver_match.url_name == 'update_assistant_profile' %}bg-blue-100 text-blue-900{% else %}text-gray-700 hover:bg-gray-100{% endif %}">
+          <svg class="w-5 h-5 mr-3 {% if request.resolver_match.url_name == 'update_assistant_profile' %}text-blue-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          <span>My Profile</span>
+        </a>
+        {% endif %}
 
       <!-- Help and Logout Section -->
       <div class="pt-4 mt-6 border-t">

@@ -147,7 +147,7 @@ def user_login(request):
             return redirect("doctor_dashboard")
         
         if request.user.is_assistant():
-            return redirect("assistant.dashboard")
+            return redirect("assistant_dashboard")
         
         if request.user.is_patient():
             return redirect("patient.dashboard")
@@ -169,7 +169,7 @@ def user_login(request):
                         return redirect("doctor_dashboard")
                     
                     if request.user.is_assistant():
-                        return redirect("assistant.dashboard")
+                        return redirect("assistant_dashboard")
                     
                     if request.user.is_patient():
                         return redirect("patient.dashboard")
@@ -204,10 +204,8 @@ def user_login(request):
                             return redirect("doctor_dashboard")
                         
                         if request.user.is_assistant():
-                            return redirect("assistant.dashboard")
-                        
-                        if request.user.is_patient():
-                            return redirect("patient.dashboard")
+                            return redirect("assistant_dashboard")
+
                     else:
                         # Send verification email
                         mail_subject = 'Activate your account.'
@@ -376,10 +374,7 @@ def google_callback(request):
                 return redirect("doctor_dashboard")
             
             if request.user.is_assistant():
-                return redirect("assistant.dashboard")
-            
-            if request.user.is_patient():
-                return redirect("patient.dashboard")
+                return redirect("assistant_dashboard")
         
         # Store info in session for the next steps
         google_user_data = {
@@ -491,10 +486,7 @@ def add_details_google_login(request):
             return redirect("doctor_dashboard")
         
         if request.user.is_assistant():
-            return redirect("assistant.dashboard")
-        
-        if request.user.is_patient():
-            return redirect("patient.dashboard")
+            return redirect("assistant_dashboard")
     
     # GET request - show the form
     return render(request, 'add_details_google.html', {'user_info': user_info})

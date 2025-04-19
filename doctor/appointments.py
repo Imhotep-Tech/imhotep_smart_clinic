@@ -1,19 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import DoctorProfile, Patients, MedicalRecord, Appointments, AppointmentTimes
+from assistant.models import AssistantProfile
 from django.contrib import messages
-from accounts.decorators import doctor_required
+from accounts.decorators import doctor_required, doctor_or_assistant_required
 from django.urls import reverse
 from django.utils import timezone
 from django.http import JsonResponse
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-@doctor_required
+@doctor_or_assistant_required
 @login_required
 def appointment_list(request):
     """View for showing a list of appointments."""
-    doctor = get_object_or_404(DoctorProfile, user=request.user)
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor = assistant_profile.doctor
     
     # Get filter parameters
     date_filter = request.GET.get('date')
@@ -52,11 +58,17 @@ def appointment_list(request):
     
     return render(request, "appointment_list.html", context)
 
-@doctor_required
+@doctor_or_assistant_required
 @login_required
 def appointment_detail(request):
     """View for showing appointment details."""
-    doctor = get_object_or_404(DoctorProfile, user=request.user)
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor = assistant_profile.doctor
+    
     appointment_id = request.GET.get('appointment_id')
     
     if not appointment_id:
@@ -72,11 +84,17 @@ def appointment_detail(request):
         messages.error(request, f"Error retrieving appointment details: {str(e)}")
         return redirect('appointment_list')
 
-@doctor_required
+@doctor_or_assistant_required
 @login_required
 def get_available_times(request):
     """AJAX endpoint to get available appointment times for a date."""
-    doctor = get_object_or_404(DoctorProfile, user=request.user)
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor = assistant_profile.doctor
+    
     date_str = request.GET.get('date')
     
     if not date_str:
@@ -130,11 +148,16 @@ def get_available_times(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-@doctor_required
+@doctor_or_assistant_required
 @login_required
 def schedule_appointment(request):
     """View for scheduling a new appointment."""
-    doctor = get_object_or_404(DoctorProfile, user=request.user)
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor = assistant_profile.doctor
     
     if request.method == 'POST':
         patient_id = request.POST.get("patient")
@@ -184,16 +207,21 @@ def schedule_appointment(request):
         return render(request, "schedule_appointment.html", context)
 
 @login_required
-@doctor_required
+@doctor_or_assistant_required
 def update_appointment_doctor(request):
     """View for updating an existing appointment."""
+    # Get the appropriate doctor profile
+    if request.user.is_doctor():
+        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    else:  # Assistant
+        assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        doctor_profile = assistant_profile.doctor
+    
     # Get parameters and validate
     appointment_id = request.GET.get('appointment_id')
     if not appointment_id:
         messages.error(request, "No appointment specified.")
         return redirect('appointment_list')
-    
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     
     try:
         # Ensure the appointment exists and belongs to this doctor
@@ -262,7 +290,7 @@ def update_appointment_doctor(request):
         return redirect("appointment_list")
 
 @login_required
-@doctor_required
+@doctor_required  # Only doctors can delete appointments
 def delete_appointment_doctor(request):
 
     appointment_id = request.GET.get('appointment_id')
@@ -283,7 +311,7 @@ def delete_appointment_doctor(request):
         messages.error(request, "Method Not allowed")
         return redirect("doctor_dashboard")
 
-@doctor_required
+@doctor_or_assistant_required
 @login_required
 def mark_appointment(request):
     """View to mark an appointment as completed."""

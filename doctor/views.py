@@ -105,7 +105,7 @@ def add_assistant(request):
             username=username,
             email=email,
             password=password,
-            email_verify=False,
+            email_verify=True,
             user_type=user_type,
             first_name=first_name,
             last_name=last_name

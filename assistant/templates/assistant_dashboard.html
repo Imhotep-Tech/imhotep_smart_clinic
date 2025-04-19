@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Assistant Dashboard - Imhotep Smart Clinic{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <!-- Include navigation -->
+    {% include "nav.html" %}
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <div class="container mx-auto">
+            <!-- Welcome Header -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Welcome, {{ user_data.get_full_name }}</h1>
+                <p class="text-gray-600">Assistant for Dr. {{ doctor_profile.user.get_full_name }}</p>
+                <p class="mt-4 text-sm text-gray-600">
+                    As an assistant, you can help manage appointments and patient information. Use the navigation menu on the left to access different sections.
+                </p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <a href="{% url 'appointment_list' %}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border-l-4 border-blue-500">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">Manage Appointments</h2>
+                    <p class="text-gray-600">View and schedule patient appointments</p>
+                </a>
+                
+                <a href="{% url 'show_patients' %}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border-l-4 border-green-500">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">Patient Records</h2>
+                    <p class="text-gray-600">Access patient information</p>
+                </a>
+                
+                <a href="{% url 'update_assistant_profile' %}" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all border-l-4 border-purple-500">
+                    <h2 class="text-lg font-bold text-gray-800 mb-2">My Profile</h2>
+                    <p class="text-gray-600">Update your personal information</p>
+                </a>
+            </div>
+
+            <!-- Guidelines Section -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Assistant Guidelines</h2>
+                
+                <div class="bg-blue-50 rounded-md p-4 border border-blue-200">
+                    <h3 class="text-md font-semibold text-blue-800 mb-2">Your Permissions</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-blue-700 text-sm">
+                        <li>View and manage appointments</li>
+                        <li>View patient basic information</li>
+                        <li>Update patient contact details</li>
+                        <li>Schedule new appointments</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-yellow-50 rounded-md p-4 border border-yellow-200 mt-4">
+                    <h3 class="text-md font-semibold text-yellow-800 mb-2">Limitations</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-yellow-700 text-sm">
+                        <li>Cannot view detailed medical records</li>
+                        <li>Cannot add, edit, or delete medical records</li>
+                        <li>Cannot delete patients</li>
+                        <li>Cannot modify clinic settings</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
