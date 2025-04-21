@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import auth
 from . import user_profile, views  # Make sure to add this import
+from django.views.generic import TemplateView
 
 urlpatterns = [
     #the main url
@@ -31,4 +32,8 @@ urlpatterns = [
     path('password_change/', user_profile.CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', user_profile.CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
     path('activate-profile-update/<str:uidb64>/<str:token>/<str:new_email>/', user_profile.activate_profile_update, name='activate_profile_update'),
+
+    # Terms and Privacy pages
+    path('terms/', TemplateView.as_view(template_name='terms.html'), name='terms'),
+    path('privacy/', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
 ]

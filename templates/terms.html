@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Terms of Service - Imhotep Smart Clinic{% endblock %}
+{% block meta_description %}Terms and conditions for using Imhotep Smart Clinic services and platform.{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12">
+    <div class="container mx-auto px-4 max-w-5xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Terms of Service</h1>
+            <p class="text-lg text-gray-600">Last updated: {% now "F j, Y" %}</p>
+        </div>
+        
+        <!-- Content -->
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="prose max-w-none">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Introduction</h2>
+                <p class="mb-4">Welcome to Imhotep Smart Clinic. These Terms of Service govern your use of our website, services, and applications (collectively, the "Services") provided by Imhotep Tech ("we," "us," or "our").</p>
+                <p class="mb-4">By accessing or using our Services, you agree to be bound by these Terms. If you disagree with any part of the terms, you do not have permission to access the Services.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">2. Use of Services</h2>
+                <p class="mb-4">Our Services are designed to facilitate healthcare management and coordination between patients and healthcare providers. You agree to use the Services only for lawful and legitimate purposes and in accordance with these Terms.</p>
+                
+                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">2.1 Medical Information</h3>
+                <p class="mb-4">The medical information provided through our Services is not intended to replace professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.</p>
+                
+                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">2.2 Account Responsibility</h3>
+                <p class="mb-4">If you create an account with us, you are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer or device. You agree to accept responsibility for all activities that occur under your account.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">3. User Obligations</h2>
+                <p class="mb-4">As a user of our Services, you agree not to:</p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li class="mb-2">Use the Services in any way that violates any applicable laws or regulations</li>
+                    <li class="mb-2">Impersonate any person or entity or falsely state or misrepresent your affiliation with a person or entity</li>
+                    <li class="mb-2">Interfere with or disrupt the Services or servers or networks connected to the Services</li>
+                    <li class="mb-2">Upload or transmit viruses or other malicious code</li>
+                    <li class="mb-2">Collect or track the personal information of others</li>
+                </ul>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">4. Privacy</h2>
+                <p class="mb-4">Your privacy is important to us. Our <a href="/privacy" class="text-blue-600 hover:text-blue-800">Privacy Policy</a> explains how we collect, use, and protect your information when you use our Services.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">5. Intellectual Property</h2>
+                <p class="mb-4">The Services and their original content, features, and functionality are owned by Imhotep Tech and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">6. Termination</h2>
+                <p class="mb-4">We may terminate or suspend your account and access to the Services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">7. Limitation of Liability</h2>
+                <p class="mb-4">In no event shall Imhotep Tech, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Services.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">8. Changes to Terms</h2>
+                <p class="mb-4">We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">9. Contact Us</h2>
+                <p class="mb-4">If you have any questions about these Terms, please contact us at info@imhoteptech.com.</p>
+            </div>
+        </div>
+        
+        <!-- Return button -->
+        <div class="mt-8 text-center">
+            <a href="javascript:history.back()" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Return to Previous Page
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
