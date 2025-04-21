@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Imhotep Smart Clinic - Modern Healthcare Solution{% endblock %}
+
+{% block extra_head %}
+<style>
+    .hero-pattern {
+        background-color: #f0f9ff;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%230284c7' fill-opacity='0.05' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E");
+    }
+    
+    .feature-card {
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .testimonial-card {
+        transition: all 0.3s ease;
+    }
+    
+    .testimonial-card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .cta-button {
+        transition: all 0.2s ease;
+    }
+    
+    .cta-button:hover {
+        transform: scale(1.05);
+    }
+    
+    .app-screenshot {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+    
+    .gradient-text {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        background-image: linear-gradient(90deg, #0284c7, #0ea5e9);
+    }
+    
+    .wave-divider {
+        transform: rotate(180deg);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-pattern min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="{% static 'imhotep_clinic.png' %}" alt="Imhotep Smart Clinic Logo" class="h-10 w-10">
+                    <span class="ml-3 text-xl font-bold text-gray-800">Imhotep Smart Clinic</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'login' %}" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-colors">Sign In</a>
+                    <a href="{% url 'register' %}" class="hidden sm:inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Content -->
+    <div class="flex-grow container mx-auto px-4 py-16 flex flex-col-reverse md:flex-row items-center">
+        <div class="md:w-1/2 mt-8 md:mt-0 md:pr-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                Modern Healthcare <span class="gradient-text">Management Platform</span>
+            </h1>
+            <p class="mt-4 text-xl text-gray-600">
+                Streamline your medical practice with our comprehensive clinic management system. Connect with patients, manage appointments, and access medical records seamlessly.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="{% url 'register' %}" class="cta-button w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:text-lg">
+                    Get Started Free
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Wave Divider -->
+<div class="wave-divider text-gray-50">
+    <svg viewBox="0 0 1440 120" fill="currentColor" preserveAspectRatio="none">
+        <path d="M0 120L48 105C96 90 192 60 288 45C384 30 480 30 576 45C672 60 768 90 864 90C960 90 1056 60 1152 45C1248 30 1344 30 1392 30L1440 30V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0V120Z"></path>
+    </svg>
+</div>
+
+<!-- Features Section -->
+<section id="features" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                <span class="block">Powerful Features for Modern Healthcare</span>
+            </h2>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+                Our platform is designed to streamline your workflow and enhance patient care
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="feature-card bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-500">
+                <div class="p-3 bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-900">Smart Appointment Management</h3>
+                <p class="mt-3 text-base text-gray-600">
+                    Schedule and manage appointments with an intuitive interface. Reduce no-shows with automated reminders.
+                </p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card bg-white rounded-lg shadow-md p-6 border-t-4 border-green-500">
+                <div class="p-3 bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-900">Digital Medical Records</h3>
+                <p class="mt-3 text-base text-gray-600">
+                    Keep detailed patient records in one secure location. Access history, prescriptions, and test results instantly.
+                </p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card bg-white rounded-lg shadow-md p-6 border-t-4 border-purple-500">
+                <div class="p-3 bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-900">Patient Management</h3>
+                <p class="mt-3 text-base text-gray-600">
+                    Comprehensive profiles for each patient with medical history, contact information, and care plans.
+                </p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-card bg-white rounded-lg shadow-md p-6 border-t-4 border-amber-500">
+                <div class="p-3 bg-amber-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-900">Secure & Compliant</h3>
+                <p class="mt-3 text-base text-gray-600">
+                    Built with security at its core. Compliant with healthcare data protection regulations and standards.
+                </p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="feature-card bg-white rounded-lg shadow-md p-6 border-t-4 border-red-500">
+                <div class="p-3 bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-900">Analytics & Insights</h3>
+                <p class="mt-3 text-base text-gray-600">
+                    Data-driven insights to help optimize your practice, track patient trends, and improve care outcomes.
+                </p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="feature-card bg-white rounded-lg shadow-md p-6 border-t-4 border-indigo-500">
+                <div class="p-3 bg-indigo-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-900">Communication Tools</h3>
+                <p class="mt-3 text-base text-gray-600">
+                    Streamlined communication between healthcare providers and staff to enhance coordination of care.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section id="benefits" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                <span class="block">Why Choose Imhotep Smart Clinic?</span>
+            </h2>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+                Our platform offers numerous benefits for healthcare professionals
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Improved Efficiency</h3>
+                        <p class="mt-2 text-base text-gray-600">
+                            Reduce administrative burden and paperwork with our intuitive digital system. Save up to 30% of staff time.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Enhanced Patient Care</h3>
+                        <p class="mt-2 text-base text-gray-600">
+                            Access complete patient history and data instantly, leading to better-informed clinical decisions and improved outcomes.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Reduced Errors</h3>
+                        <p class="mt-2 text-base text-gray-600">
+                            Digital records eliminate common issues associated with paper-based systems, such as misplaced files or illegible handwriting.
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="contact" class="py-20 bg-blue-600">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+            <span class="block">Ready to transform your medical practice?</span>
+        </h2>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-blue-100">
+            Join thousands of healthcare professionals who have already improved their practice with Imhotep Smart Clinic.
+        </p>
+        <div class="mt-10 flex justify-center">
+            <div class="inline-flex rounded-md shadow">
+                <a href="{% url 'register' %}" class="cta-button inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 md:text-lg">
+                    Get Started Free
+                </a>
+            </div>
+            <div class="ml-4 inline-flex">
+                <a href="mailto:support@imhoteptech@outlook.com" class="cta-button inline-flex items-center justify-center px-8 py-3 border border-transparent border-white text-base font-medium rounded-md text-white hover:bg-blue-700 md:text-lg">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

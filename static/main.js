@@ -87,6 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Setup footer interaction
+    setupFooterInteraction();
 });
 
 // Form submission handling
@@ -179,8 +182,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Modal functions for patient details page
+// Setup footer interaction
+function setupFooterInteraction() {
+    // Add any footer-specific functionality here
+    const footerLinks = document.querySelectorAll('footer a');
+    footerLinks.forEach(link => {
+        if (link.getAttribute('rel') === 'noopener noreferrer') {
+            link.addEventListener('click', function(e) {
+                // Optional: track outbound links
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'click', {
+                        'event_category': 'outbound',
+                        'event_label': link.href
+                    });
+                }
+            });
+        }
+    });
 
+    // Add PWA install prompt
+    const appVersion = document.querySelector('footer p.text-xs.text-gray-500');
+    if (appVersion && window.matchMedia('(display-mode: browser)').matches) {
+        // Check if app is installable
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            const installPrompt = e;
+            
+            // Create install button if doesn't exist
+            if (!document.getElementById('pwa-install-btn')) {
+                const installBtn = document.createElement('button');
+                installBtn.id = 'pwa-install-btn';
+                installBtn.className = 'ml-2 text-xs text-blue-600 hover:text-blue-800 font-medium';
+                installBtn.textContent = 'Install App';
+                installBtn.addEventListener('click', () => {
+                    installPrompt.prompt();
+                    installPrompt.userChoice.then(choiceResult => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                        }
+                    });
+                });
+                appVersion.appendChild(installBtn);
+            }
+        });
+    }
+}
+
+// Modal functions for patient details page
 // Medical record delete modal functions
 function openDeleteRecordModal(recordId) {
     document.getElementById('deleteRecordModal').classList.remove('hidden');

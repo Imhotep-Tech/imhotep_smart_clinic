@@ -1,4 +1,4 @@
-const CACHE_NAME = 'imhotep-tasks-v1';
+const CACHE_NAME = 'imhotep-clinic-v1';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately
@@ -6,10 +6,11 @@ const PRECACHE_ASSETS = [
   '/',
   '/offline.html',
   '/static/css/styles.css',
-  '/static/js/app.js',
-  '/static/icons/icon-192x192.png',
-  '/static/icons/icon-512x512.png',
-  '/static/manifest.json'
+  '/static/main.js',
+  '/static/js/register-sw.js',
+  '/static/imhotep_clinic.png',
+  '/static/manifest.json',
+  '/static/icons/placeholder.png'
 ];
 
 // Install event
@@ -93,48 +94,70 @@ self.addEventListener('fetch', event => {
 
 // Background sync for offline form submissions
 self.addEventListener('sync', event => {
-  if (event.tag === 'task-sync') {
-    event.waitUntil(syncTasks());
+  if (event.tag === 'appointment-sync' || event.tag === 'medical-record-sync') {
+    event.waitUntil(syncData(event.tag));
   }
 });
 
-// Function to sync tasks when back online
-async function syncTasks() {
-  const db = await openTasksDatabase();
-  const tasks = await db.getAll('offline-tasks');
+// Function to sync data when back online
+async function syncData(syncTag) {
+  const db = await openDatabase();
+  const storeName = syncTag === 'appointment-sync' ? 'offline-appointments' : 'offline-medical-records';
+  const endpoint = syncTag === 'appointment-sync' ? '/api/appointments/' : '/api/medical-records/';
   
-  for (const task of tasks) {
-    try {
-      const response = await fetch('/api/tasks/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(task)
-      });
-      
-      if (response.ok) {
-        await db.delete('offline-tasks', task.id);
+  try {
+    const tx = db.transaction(storeName, 'readonly');
+    const store = tx.objectStore(storeName);
+    const items = await store.getAll();
+    
+    for (const item of items) {
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+          body: JSON.stringify(item)
+        });
+        
+        if (response.ok) {
+          // Delete item from IndexedDB if successfully synced
+          const deleteTx = db.transaction(storeName, 'readwrite');
+          await deleteTx.objectStore(storeName).delete(item.id);
+        }
+      } catch (error) {
+        console.error(`Failed to sync ${syncTag} data:`, error);
       }
-    } catch (error) {
-      console.error('Failed to sync task:', error);
     }
+  } catch (error) {
+    console.error(`Error accessing IndexedDB for ${syncTag}:`, error);
   }
 }
 
 // Helper function to open IndexedDB
-function openTasksDatabase() {
+function openDatabase() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('tasks-db', 1);
+    const request = indexedDB.open('clinic-db', 1);
     
     request.onupgradeneeded = e => {
       const db = e.target.result;
-      if (!db.objectStoreNames.contains('offline-tasks')) {
-        db.createObjectStore('offline-tasks', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('offline-appointments')) {
+        db.createObjectStore('offline-appointments', { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains('offline-medical-records')) {
+        db.createObjectStore('offline-medical-records', { keyPath: 'id' });
       }
     };
     
     request.onsuccess = e => resolve(e.target.result);
     request.onerror = e => reject(e.target.error);
   });
+}
+
+// Helper function to get CSRF token
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
 }

@@ -4,6 +4,7 @@ from . import user_profile, views  # Make sure to add this import
 
 urlpatterns = [
     #the main url
+    path("", views.landing_page, name="landing_page"),
     #the register url
     path("register/", auth.register, name="register"),
     #login url

@@ -18,12 +18,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('doctor/', include('doctor.urls')),
     path('assistant/', include('assistant.urls')),
+    
+    # Add these lines to serve service-worker.js from the root
+    path('service-worker.js', 
+         RedirectView.as_view(url=settings.STATIC_URL + 'service-worker.js', permanent=False),
+         name='service-worker'),
+         
+    # Add this line if you need to serve offline.html from the root
+    path('offline.html',
+         TemplateView.as_view(template_name='offline.html'),
+         name='offline'),
 ]
 
 # Serve media files in development
