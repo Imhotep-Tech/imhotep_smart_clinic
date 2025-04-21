@@ -3,11 +3,51 @@
 
 {% block title %}Patient Details - Imhotep Smart Clinic{% endblock %}
 
+{% block extra_head %}
+<style>
+    /* Styling for rich text content */
+    .medical-content {
+        font-family: inherit;
+        line-height: 1.5;
+    }
+    .medical-content ul, 
+    .medical-content ol {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .medical-content ul {
+        list-style-type: disc;
+    }
+    .medical-content ol {
+        list-style-type: decimal;
+    }
+    .medical-content strong {
+        font-weight: bold;
+    }
+    .medical-content em {
+        font-style: italic;
+    }
+    .medical-content p {
+        margin-bottom: 0.75rem;
+    }
+    .medical-content li {
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Fix for prescription display */
+    .prescription-content:before {
+        content: "℞ ";
+        font-weight: bold;
+        font-style: italic;
+        font-size: 1.1em;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
     <!-- Include navigation -->
     {% include "nav.html" %}
-
     <!-- Main Content -->
     <div class="flex-1 p-4">
         <div class="container mx-auto">
@@ -20,7 +60,7 @@
                     Back to Patient List
                 </a>
             </div>
-
+            
             {% if patients %}
                 {% with patient=patients.0 %}
                 <!-- Patient Header -->
@@ -61,11 +101,10 @@
                         {% endif %}
                     </div>
                 </div>
-
+                
                 <!-- Patient Information Card -->
                 <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                     <h2 class="text-xl font-bold text-gray-800 mb-4">Basic Information</h2>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Contact Information -->
                         <div>
@@ -84,7 +123,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        {% if request.user.is_doctor %}
                         <!-- Personal Information -->
                         <div>
                             <h3 class="text-lg font-semibold text-gray-700 mb-3">Personal Information</h3>
@@ -100,7 +139,6 @@
                                         <p class="text-base font-medium">{{ patient.gender }}</p>
                                     </div>
                                 </div>
-                                
                                 {% if patient.date_of_birth %}
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-md bg-green-100 text-green-600">
@@ -116,6 +154,7 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -123,10 +162,9 @@
                 <div class="grid grid-cols-1 gap-6">
                     <div class="p-6 bg-white rounded-lg shadow-md">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-xl font-bold text-gray-800">Patient List</h2>
+                            <h2 class="text-xl font-bold text-gray-800">Medical Records</h2>
                             <span class="text-sm font-medium text-indigo-600">Total: {{ records|length }}</span>
                         </div>
-                        
                         <div class="mt-6">
                             <a href="{% url 'add_medical_record' %}?patient_id={{ patients.0.id }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,9 +173,8 @@
                                 Add Medical Record
                             </a>
                         </div>
-
                         {% if records %}
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto mt-6">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -165,7 +202,7 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4">
-                                                <div class="text-sm text-gray-900 truncate max-w-xs">{{ record.details|truncatechars:40 }}</div>
+                                                <div class="text-sm text-gray-900 truncate max-w-xs">{{ record.details|striptags|truncatechars:40 }}</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {% if record.prescription %}
@@ -206,7 +243,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        
                                         <!-- Modal for Record Details (only for doctors) -->
                                         {% if request.user.is_doctor %}
                                         <div id="recordModal{{ record.id }}" class="fixed inset-0 z-50 hidden overflow-auto bg-gray-900 bg-opacity-50">
@@ -219,29 +255,25 @@
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                
                                                 <div class="space-y-4">
                                                     <div>
                                                         <h4 class="text-sm font-medium text-gray-500">Date</h4>
                                                         <p class="text-base font-medium">{{ record.date }}</p>
                                                     </div>
-                                                    
                                                     <div>
                                                         <h4 class="text-sm font-medium text-gray-500">Medical Details</h4>
-                                                        <p class="text-base whitespace-pre-line">{{ record.details }}</p>
+                                                        <div class="text-base medical-content">{{ record.details|safe }}</div>
                                                     </div>
-                                                    
                                                     {% if record.remarks %}
                                                     <div>
                                                         <h4 class="text-sm font-medium text-gray-500">Remarks</h4>
                                                         <p class="text-base whitespace-pre-line">{{ record.remarks }}</p>
                                                     </div>
                                                     {% endif %}
-                                                    
                                                     {% if record.prescription %}
                                                     <div>
                                                         <h4 class="text-sm font-medium text-gray-500">Prescription</h4>
-                                                        <p class="text-base whitespace-pre-line">{{ record.prescription }}</p>
+                                                        <div class="text-base medical-content prescription-content">{{ record.prescription|safe }}</div>
                                                     </div>
                                                     <div class="mt-4 flex justify-end">
                                                         <a href="{% url 'generate_prescription_pdf' record.id %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" target="_blank">
@@ -338,9 +370,10 @@
                                 </div>
                             </div>
                             {% endif %}
+                            
                         </div>
-                    {% else %}
-                        <div class="py-10 text-center">
+                        {% else %}
+                        <div class="py-10 text-center mt-6">
                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
@@ -357,7 +390,8 @@
                             </div>
                             {% endif %}
                         </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
                 {% endwith %}
             {% else %}
@@ -378,7 +412,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 z-50 hidden">

@@ -72,14 +72,48 @@
         .prescription-content {
             margin-bottom: 30px;
         }
-        .prescription-item {
-            margin-bottom: 10px;
+        
+        /* Rich text styling for prescription content */
+        .prescription-content ul, 
+        .prescription-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
         }
-        .rx-symbol {
+        .prescription-content ul {
+            list-style-type: disc;
+        }
+        .prescription-content ol {
+            list-style-type: decimal;
+        }
+        .prescription-content strong {
+            font-weight: bold;
+        }
+        .prescription-content em {
+            font-style: italic;
+        }
+        .prescription-content p {
+            margin-bottom: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .prescription-content li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .prescription-content h3 {
+            background-color: #e9ecef;
+            padding: 8px;
+            margin-top: 0;
+            color: #2a4365;
+        }
+        
+        .rx-symbol:before {
+            content: "℞";
             font-size: 16px;
             font-weight: bold;
             margin-right: 5px;
         }
+        
         .signature {
             margin-top: 60px;
             border-top: 1px solid #999;
@@ -145,15 +179,11 @@
         </div>
         
         {% if medical_record.prescription %}
-        <div class="prescription-content">
+        <div class="prescription-content rx-symbol">
             <h3>Prescription:</h3>
-            {% for line in prescription_lines %}
-                {% if line %}
-                <div class="prescription-item {% if line.has_arabic %}rtl{% endif %}">
-                    <span class="rx-symbol">℞</span> {{ line.text }}
-                </div>
-                {% endif %}
-            {% endfor %}
+            <div {% if has_arabic %}class="rtl"{% endif %}>
+                {{ medical_record.prescription|safe }}
+            </div>
         </div>
         {% endif %}
         

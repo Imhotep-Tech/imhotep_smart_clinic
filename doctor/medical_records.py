@@ -122,7 +122,6 @@ def delete_medical_record(request):
 @login_required
 @doctor_required
 def generate_prescription_pdf(request, record_id):
-    
     # Get the medical record
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     medical_record = get_object_or_404(MedicalRecord, id=record_id, doctor=doctor_profile)
@@ -135,16 +134,10 @@ def generate_prescription_pdf(request, record_id):
     def has_arabic(text):
         return any(ord(c) >= 0x0600 and ord(c) <= 0x06FF for c in text)
     
-    # Process prescription lines
-    prescription_lines = []
+    # Check if prescription content has Arabic
+    has_arabic_prescription = False
     if medical_record.prescription:
-        lines = medical_record.prescription.strip().split('\n')
-        for line in lines:
-            if line.strip():
-                prescription_lines.append({
-                    'text': line.strip(),
-                    'has_arabic': has_arabic(line.strip())
-                })
+        has_arabic_prescription = has_arabic(medical_record.prescription)
     
     # Check if patient name or doctor name contains Arabic
     has_arabic_name = has_arabic(patient.name)
@@ -164,10 +157,10 @@ def generate_prescription_pdf(request, record_id):
         'medical_record': medical_record,
         'doctor_profile': doctor_profile,
         'formatted_date': formatted_date,
-        'prescription_lines': prescription_lines,
         'doctor_name': doctor_name,
         'doctor_specialization': doctor_profile.specialization,
         'has_arabic_name': has_arabic_name,
+        'has_arabic': has_arabic_prescription,
         'has_arabic_doctor_name': has_arabic_doctor_name,
         'has_arabic_specialization': has_arabic_specialization,
         'clinic_logo_path': clinic_logo_path,

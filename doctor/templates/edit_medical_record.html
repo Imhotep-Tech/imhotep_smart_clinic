@@ -3,6 +3,20 @@
 
 {% block title %}Edit Medical Record - Imhotep Smart Clinic{% endblock %}
 
+{% block extra_head %}
+<!-- Include Quill rich text editor CSS -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+    .ql-editor {
+        min-height: 120px;
+        font-family: inherit;
+    }
+    .editor-container {
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
     <!-- Include navigation -->
@@ -29,7 +43,7 @@
 
             <!-- Edit Medical Record Form -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <form method="POST" action="{% url 'update_medical_record' %}?medical_record_id={{ medical_record.id }}">
+                <form method="POST" action="{% url 'update_medical_record' %}?medical_record_id={{ medical_record.id }}" id="editMedicalRecordForm">
                     {% csrf_token %}
                     
                     <!-- Date Field -->
@@ -47,10 +61,12 @@
                     
                     <!-- Details Field -->
                     <div class="mb-6">
-                        <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Medical Details</label>
-                        <div class="relative rounded-md shadow-sm">
-                            <textarea name="details" id="details" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Detailed medical information" required>{{ medical_record.details }}</textarea>
+                        <label for="details-editor" class="block text-sm font-medium text-gray-700 mb-1">Medical Details</label>
+                        <div class="editor-container rounded-md border border-gray-300">
+                            <div id="details-editor"></div>
                         </div>
+                        <input type="hidden" name="details" id="details-input">
+                        <p class="mt-1 text-xs text-gray-500">Use the toolbar to format text with bullet points, bold, or underline.</p>
                     </div>
 
                     <!-- Remarks Field -->
@@ -63,10 +79,12 @@
 
                     <!-- Prescription Field -->
                     <div class="mb-6">
-                        <label for="prescription" class="block text-sm font-medium text-gray-700 mb-1">Prescription</label>
-                        <div class="relative rounded-md shadow-sm">
-                            <textarea name="prescription" id="prescription" rows="4" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Medication details and instructions">{{ medical_record.prescription }}</textarea>
+                        <label for="prescription-editor" class="block text-sm font-medium text-gray-700 mb-1">Prescription</label>
+                        <div class="editor-container rounded-md border border-gray-300">
+                            <div id="prescription-editor"></div>
                         </div>
+                        <input type="hidden" name="prescription" id="prescription-input">
+                        <p class="mt-1 text-xs text-gray-500">Add formatted medication instructions with proper emphasis on dosage.</p>
                     </div>
 
                     <!-- Submit Button -->
@@ -83,4 +101,44 @@
         </div>
     </div>
 </div>
+
+<!-- Include Quill JS -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script>
+    // Initialize Quill editors
+    var detailsEditor = new Quill('#details-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['clean']
+            ]
+        },
+        placeholder: 'Enter detailed medical information...'
+    });
+    
+    var prescriptionEditor = new Quill('#prescription-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['clean']
+            ]
+        },
+        placeholder: 'Enter medication details and instructions...'
+    });
+    
+    // Load existing content into editors
+    detailsEditor.root.innerHTML = `{{ medical_record.details|safe|escapejs }}`;
+    prescriptionEditor.root.innerHTML = `{{ medical_record.prescription|safe|escapejs }}`;
+    
+    // Handle form submission
+    document.getElementById('editMedicalRecordForm').addEventListener('submit', function(e) {
+        // Transfer the HTML content to the hidden input fields
+        document.getElementById('details-input').value = detailsEditor.root.innerHTML;
+        document.getElementById('prescription-input').value = prescriptionEditor.root.innerHTML;
+    });
+</script>
 {% endblock %}
