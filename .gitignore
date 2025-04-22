@@ -10,3 +10,5 @@ node_modules/
 
 #tauri_app in the future
 tauri_app/
+
+imhotep_clinic.db

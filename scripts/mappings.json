@@ -1,0 +1,24 @@
+{
+  "patients": {
+    "target_table": "doctor_patients",
+    "columns": {
+      "id": "id",
+      "doc_id": "doctor_id", 
+      "name": "name",
+      "phone_number": "phone_number",
+      "gender": "gender",
+      "birthdate": "date_of_birth"
+    }
+  },
+  "details": {
+    "target_table": "doctor_medicalrecord",
+    "columns": {
+      "doc_id": "doctor_id",
+      "id": "patient_id",
+      "date": "date",
+      "details": "details",
+      "remarks": "remarks",
+      "prescription": "prescription"
+    }
+  }
+}
