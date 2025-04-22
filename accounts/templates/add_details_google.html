@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="min-h-screen bg-gradient-to-br from-blue-50 to-teal-100 py-12 px-4 sm:px-6 lg:px-8">
+<section class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md mx-auto bg-white rounded-xl shadow-xl overflow-hidden md:max-w-2xl">
     <div class="md:flex">
       <div class="p-8 w-full">
         <div class="flex justify-center">
-          <svg class="w-12 h-12 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-12 h-12 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
           </svg>
         </div>
@@ -38,7 +38,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <select id="user_type" name="user_type" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+              <select id="user_type" name="user_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
                 <option value="" selected disabled>Select your role</option>
                 <!-- <option value="patient">Patient</option> -->
                 <option value="doctor">Doctor</option>
@@ -56,7 +56,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
                 </div>
-                <input type="text" name="specialization" id="specialization" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc.">
+                <input type="text" name="specialization" id="specialization" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc.">
               </div>
             </div>
           </div>
@@ -71,13 +71,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <input type="date" name="date_of_birth" id="date_of_birth" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md">
+                <input type="date" name="date_of_birth" id="date_of_birth" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md">
               </div>
             </div>
           </div>
 
           <div>
-            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 transform hover:-translate-y-1">
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">
               Complete Registration
             </button>
           </div>
@@ -85,7 +85,7 @@
 
         <p class="mt-6 text-center text-sm text-gray-600">
           Changed your mind?
-          <a href="{% url 'login' %}" class="font-medium text-teal-600 hover:text-teal-500">Back to login</a>
+          <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">Back to login</a>
         </p>
       </div>
     </div>

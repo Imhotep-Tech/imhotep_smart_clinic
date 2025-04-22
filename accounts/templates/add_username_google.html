@@ -3,12 +3,12 @@
 {% block title %}Choose Username - Imhotep Smart Clinic{% endblock %}
 
 {% block content %}
-<section class="min-h-screen bg-gradient-to-br from-blue-50 to-teal-100 py-12 px-4 sm:px-6 lg:px-8">
+<section class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md mx-auto bg-white rounded-xl shadow-xl overflow-hidden md:max-w-2xl">
     <div class="md:flex">
       <div class="p-8 w-full">
         <div class="flex justify-center">
-          <svg class="w-12 h-12 text-teal-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-12 h-12 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
         </div>
@@ -31,7 +31,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <input type="text" name="username" id="username" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Choose a username" required>
+              <input type="text" name="username" id="username" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Choose a username" required>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
           </div>
 
           <div>
-            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 transform hover:-translate-y-1">
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">
               Continue
             </button>
           </div>
@@ -48,7 +48,7 @@
 
         <p class="mt-6 text-center text-sm text-gray-600">
           Changed your mind?
-          <a href="{% url 'login' %}" class="font-medium text-teal-600 hover:text-teal-500">Back to login</a>
+          <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">Back to login</a>
         </p>
       </div>
     </div>

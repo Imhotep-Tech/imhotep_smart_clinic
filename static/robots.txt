@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /admin/
-Disallow: /doctor/
-Disallow: /assistant/
-Allow: /
-Sitemap: https://imhotepclinic.pythonanywhere.com/sitemap.xml
