@@ -21,6 +21,14 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
+handler401 = 'tasks.error_handle.handler401'
+handler405 = 'tasks.error_handle.handler405'
+handler408 = 'tasks.error_handle.handler408'
+handler429 = 'tasks.error_handle.handler429'
+handler502 = 'tasks.error_handle.handler502'
+handler503 = 'tasks.error_handle.handler503'
+handler504 = 'tasks.error_handle.handler504'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),

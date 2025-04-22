@@ -32,9 +32,9 @@ if DEBUG:
     # Add this to your settings
     SITE_DOMAIN = 'http://127.0.0.1:8000'  # Replace with your actual domain
 else:
-    SITE_DOMAIN = 'https://imhotep-clinic.pythonanywhere.com' 
+    SITE_DOMAIN = 'https://imhotepsmartclinic.pythonanywhere.com/' 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.100.44', 'imhotep-clinic.pythonanywhere.com'] 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.100.44', 'https://imhotepsmartclinic.pythonanywhere.com/'] 
 
 if DEBUG == False:
     # Security settings - keep these as they are
