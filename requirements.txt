@@ -1,16 +1,16 @@
 # Django and core dependencies
-Django==5.1.6
+Django==5.2.0
 psycopg2-binary==2.9.9
 python-decouple==3.8
-Pillow==10.1.0
-weasyprint==60.1
+Pillow==11.2.1
+weasyprint==65.1
 reportlab==4.0.9
 
 # Authentication
-django-allauth==0.58.2
+django-allauth==65.7.0
 
 # Production
-gunicorn==21.2.0
+gunicorn==23.0.0
 whitenoise==6.6.0
 
 # Security
