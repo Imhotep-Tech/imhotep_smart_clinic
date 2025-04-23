@@ -148,9 +148,6 @@ def user_login(request):
         
         if request.user.is_assistant():
             return redirect("assistant_dashboard")
-        
-        if request.user.is_patient():
-            return redirect("patient.dashboard")
 
     if request.method == "POST":
         user_username_mail = request.POST.get('user_username_mail')
