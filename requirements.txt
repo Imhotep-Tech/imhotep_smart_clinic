@@ -2,7 +2,7 @@
 Django==5.1.6
 psycopg2-binary==2.9.9
 python-decouple==3.8
-Pillow==10.1.0
+Pillow==10.3.0
 weasyprint==60.1
 reportlab==4.0.9
 
