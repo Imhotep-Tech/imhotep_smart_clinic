@@ -11,6 +11,7 @@ import io
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import timedelta
 
 @login_required
 @doctor_required
@@ -140,25 +141,29 @@ def set_appointment_times(request):
     if request.method == 'POST':
         start_time = request.POST.get('start_time')
         end_time = request.POST.get('end_time')
-        separation_time = request.POST.get('separation_time')
+        separation_time_str = request.POST.get('separation_time')
         day_of_the_week = request.POST.get('day_of_the_week')
         
-        if start_time and end_time and separation_time and day_of_the_week:
+        if start_time and end_time and separation_time_str and day_of_the_week:
+            # Convert string time to timedelta
+            hours, minutes, seconds = map(int, separation_time_str.split(':'))
+            separation_time_delta = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+            
             new_appointment_time = AppointmentTimes.objects.create(
-            doctor=doctor_profile,
-            start_time=start_time,
-            end_time=end_time,
-            separation_time=separation_time,
-            day_of_the_week=day_of_the_week
-        )
+                doctor=doctor_profile,
+                start_time=start_time,
+                end_time=end_time,
+                separation_time=separation_time_delta,
+                day_of_the_week=day_of_the_week
+            )
         
-        try:
-            new_appointment_time.save()
-            messages.success(request, 'Your appointment time were successfully added!')
-            return redirect('update_doctor_profile')
-        except Exception as e:
-            messages.error(request, f'Error updating doctor profile: {str(e)}')
-            return redirect('update_doctor_profile')
+            try:
+                new_appointment_time.save()
+                messages.success(request, 'Your appointment time were successfully added!')
+                return redirect('update_doctor_profile')
+            except Exception as e:
+                messages.error(request, f'Error updating doctor profile: {str(e)}')
+                return redirect('update_doctor_profile')
     
     context = {
         "user_data": request.user
@@ -168,7 +173,6 @@ def set_appointment_times(request):
 @login_required
 @doctor_required
 def update_appointment_times(request):
-
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     if request.method == 'POST':
         appointment_id = request.POST.get('appointment_id')
@@ -176,7 +180,13 @@ def update_appointment_times(request):
 
         appointment_time.start_time = request.POST.get('start_time')
         appointment_time.end_time = request.POST.get('end_time')
-        appointment_time.separation_time = request.POST.get('separation_time')
+        
+        # Convert string time to timedelta
+        separation_time_str = request.POST.get('separation_time')
+        if separation_time_str:
+            hours, minutes, seconds = map(int, separation_time_str.split(':'))
+            appointment_time.separation_time = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+        
         appointment_time.day_of_the_week = request.POST.get('day_of_the_week')
         
         try:
@@ -191,7 +201,7 @@ def update_appointment_times(request):
     appointment_time = get_object_or_404(AppointmentTimes, id=appointment_id, doctor=doctor_profile)
     context = {
         "user_data": request.user,
-        "appointment_time":appointment_time
+        "appointment_time": appointment_time
     }
     return render(request, "update_appointment_times.html", context)
 
