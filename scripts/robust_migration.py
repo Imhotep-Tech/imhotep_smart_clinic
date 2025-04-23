@@ -20,10 +20,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class RobustMigrator:
-    def __init__(self, sqlite_db_path, target_db_config, mappings_file):
+    def __init__(self, sqlite_db_path, target_db_config, mappings_file, skip_invalid_doctors=False):
         self.sqlite_db_path = sqlite_db_path
         self.target_db_config = target_db_config
         self.target_db_type = target_db_config.get('db_type', 'postgresql')
+        self.skip_invalid_doctors = skip_invalid_doctors
         
         # Load mappings from file
         with open(mappings_file, 'r') as f:
@@ -34,6 +35,13 @@ class RobustMigrator:
         
         # Track successfully migrated patients
         self.migrated_patients = {}
+        # Track available doctor IDs
+        self.available_doctor_ids = set()
+        # Track skipped records due to doctor ID issues
+        self.skipped_records = {
+            'patients': [],
+            'medical_records': []
+        }
         
         # Default values for NULL fields
         self.default_date = "2005-12-10"  # YYYY-MM-DD format for database
@@ -59,15 +67,41 @@ class RobustMigrator:
                     port=self.target_db_config.get('port', 5432)
                 )
                 logger.info(f"Connected to PostgreSQL database: {self.target_db_config.get('database')}")
+            elif self.target_db_type.lower() == 'mysql':
+                import mysql.connector
+                self.target_conn = mysql.connector.connect(
+                    host=self.target_db_config.get('host', 'localhost'),
+                    database=self.target_db_config.get('database'),
+                    user=self.target_db_config.get('user'),
+                    password=self.target_db_config.get('password'),
+                    port=self.target_db_config.get('port', 3306)
+                )
+                logger.info(f"Connected to MySQL database: {self.target_db_config.get('database')}")
             else:
                 logger.error(f"Unsupported target database type: {self.target_db_type}")
                 return False
+                
+            # After successful connection, load available doctor IDs
+            if self.target_conn:
+                self.load_available_doctor_ids()
                 
             return True
         except Exception as e:
             logger.error(f"Error connecting to databases: {e}")
             self.close()
             return False
+    
+    def load_available_doctor_ids(self):
+        """Load available doctor IDs from target database"""
+        try:
+            cursor = self.target_conn.cursor()
+            cursor.execute("SELECT id FROM doctor_doctorprofile")
+            self.available_doctor_ids = {row[0] for row in cursor.fetchall()}
+            logger.info(f"Loaded {len(self.available_doctor_ids)} available doctor IDs: {self.available_doctor_ids}")
+            cursor.close()
+        except Exception as e:
+            logger.error(f"Error loading doctor IDs: {e}")
+            self.available_doctor_ids = {4}  # Default to doctor ID 4 if query fails
     
     def close(self):
         """Close database connections"""
@@ -87,13 +121,22 @@ class RobustMigrator:
         return columns
 
     def get_target_columns(self, table_name):
-        """Get the columns of a target PostgreSQL table"""
+        """Get the columns of a target database table"""
         cursor = self.target_conn.cursor()
-        cursor.execute(f"""
-            SELECT column_name, data_type, is_nullable
-            FROM information_schema.columns
-            WHERE table_name = %s
-        """, (table_name,))
+        
+        if self.target_db_type.lower() == 'postgresql':
+            cursor.execute(f"""
+                SELECT column_name, data_type, is_nullable
+                FROM information_schema.columns
+                WHERE table_name = %s
+            """, (table_name,))
+        elif self.target_db_type.lower() == 'mysql':
+            cursor.execute(f"""
+                SELECT column_name, data_type, is_nullable
+                FROM information_schema.columns
+                WHERE table_name = %s AND table_schema = %s
+            """, (table_name, self.target_db_config.get('database')))
+            
         columns = {col[0]: {'type': col[1], 'nullable': col[2] == 'YES'} for col in cursor.fetchall()}
         cursor.close()
         return columns
@@ -159,13 +202,12 @@ class RobustMigrator:
         source_columns = list(column_mapping.keys())
         select_columns = ", ".join(source_columns)
         
-        # Get available patient records - FILTER FOR DOCTOR ID 4 ONLY
+        # Get all patients
         cursor = self.sqlite_conn.cursor()
         try:
-            # Modified to filter only doctor_id = 4
-            cursor.execute(f"SELECT {select_columns} FROM {source_table} WHERE doc_id = 4")
+            cursor.execute(f"SELECT {select_columns} FROM {source_table}")
             rows = cursor.fetchall()
-            logger.info(f"Found {len(rows)} patient records for doctor_id=4 in source database")
+            logger.info(f"Found {len(rows)} patient records in source database")
         except sqlite3.Error as e:
             logger.error(f"Error querying source table: {e}")
             cursor.close()
@@ -189,12 +231,44 @@ class RobustMigrator:
                 # Extract data
                 data = list(row)
                 
+                # Find doctor_id in the data
+                doc_id_idx = None
+                for i, col in enumerate(source_columns):
+                    mapped_col = column_mapping[col].lower()
+                    if mapped_col == 'doctor_id':
+                        doc_id_idx = i
+                
+                # Check if doctor_id exists in target database
+                if doc_id_idx is not None:
+                    doctor_id = data[doc_id_idx] if data[doc_id_idx] else 0
+                    if doctor_id and int(doctor_id) not in self.available_doctor_ids:
+                        if self.skip_invalid_doctors:
+                            # Skip this patient because doctor doesn't exist
+                            self.skipped_records['patients'].append({
+                                'id': data[0],
+                                'name': data[source_columns.index('name')] if 'name' in source_columns else 'Unknown',
+                                'doctor_id': doctor_id,
+                                'reason': f"Doctor ID {doctor_id} not found in target database"
+                            })
+                            logger.warning(f"Skipping patient with ID {data[0]} - doctor ID {doctor_id} not found in target database")
+                            continue
+                
                 # Process empty values and add current timestamp for date_added
                 processed_data = []
                 for i, value in enumerate(data):
                     col_name = target_columns[i].lower()
                     target_col_info = target_schema.get(col_name, {})
                     column_type = target_col_info.get('type', 'text')
+                    
+                    # Handle doctor_id specifically
+                    if col_name == 'doctor_id':
+                        doc_id = value if value else 0
+                        # If doctor ID exists in target system, use it, otherwise default to 4
+                        if doc_id and int(doc_id) in self.available_doctor_ids:
+                            processed_data.append(int(doc_id))
+                        else:
+                            processed_data.append(4)  # Default to doctor_id=4
+                        continue
                     
                     # Handle date fields
                     if (value == '' or value is None) and ('date' in col_name or 'birth' in col_name):
@@ -204,7 +278,7 @@ class RobustMigrator:
                         processed_data.append(value.capitalize())
                     # Handle empty string or None values with type-specific defaults
                     elif value == '' or value is None:
-                        if col_name in ('id', 'doctor_id'):  # Keep IDs as is
+                        if col_name in ('id'):  # Keep IDs as is
                             processed_data.append(value)
                         elif 'int' in column_type.lower() or 'serial' in column_type.lower():
                             processed_data.append(0)  # Default for integers
@@ -255,10 +329,15 @@ class RobustMigrator:
                 logger.error(f"Error inserting patient: {e}")
                 logger.error(f"Row data: {data}")
                 
-        logger.info(f"Successfully migrated {count} new patients out of {len(rows)} for doctor_id=4")
+        logger.info(f"Successfully migrated {count} new patients out of {len(rows)}")
         logger.info(f"Total patients available for medical records: {len(self.migrated_patients)}")
         target_cursor.close()
         cursor.close()
+        
+        # Log statistics about skipped records
+        if self.skipped_records['patients']:
+            logger.warning(f"Skipped {len(self.skipped_records['patients'])} patients due to missing doctor IDs")
+        
         return count
 
     def migrate_medical_records(self):
@@ -284,11 +363,10 @@ class RobustMigrator:
         source_columns = list(column_mapping.keys())
         select_columns = ", ".join(source_columns)
         
-        # Get all medical records - we'll filter them after fetching
+        # Get all medical records without filtering
         cursor = self.sqlite_conn.cursor()
         try:
-            # Query all records from the details table
-            # Instead of filtering by patient_id which doesn't exist in the schema
+            # Get all medical records without filtering
             cursor.execute(f"SELECT {select_columns} FROM {source_table}")
             rows = cursor.fetchall()
             logger.info(f"Found {len(rows)} medical records total in source database")
@@ -313,6 +391,30 @@ class RobustMigrator:
                 # Extract data
                 data = list(row)
                 
+                # Find doctor_id in the data (assume it's at column 'doc_id' or similar)
+                doc_id_idx = None
+                for i, col in enumerate(source_columns):
+                    if col.lower() in ('doc_id', 'doctor_id'):
+                        doc_id_idx = i
+                        break
+                
+                # Get the doctor ID value
+                original_doctor_id = None
+                if doc_id_idx is not None:
+                    original_doctor_id = data[doc_id_idx]
+                
+                # Check if doctor exists in target database
+                if original_doctor_id and int(original_doctor_id) not in self.available_doctor_ids and self.skip_invalid_doctors:
+                    # Skip this record because doctor doesn't exist
+                    self.skipped_records['medical_records'].append({
+                        'id': data[0],
+                        'patient_id': data[1] if len(data) > 1 else 'Unknown',
+                        'doctor_id': original_doctor_id,
+                        'reason': f"Doctor ID {original_doctor_id} not found in target database"
+                    })
+                    logger.warning(f"Skipping medical record with ID {data[0]} - doctor ID {original_doctor_id} not found in target database")
+                    continue
+                
                 # Process data with standard defaults
                 processed_data = []
                 for i, value in enumerate(data):
@@ -320,9 +422,14 @@ class RobustMigrator:
                     target_col_info = target_schema.get(col_name, {})
                     column_type = target_col_info.get('type', 'text')
                     
-                    # If doctor_id is 0, make it 4
-                    if col_name == 'doctor_id' and (value == 0 or value == '0'):
-                        processed_data.append(4)  # Force doctor_id to be 4
+                    # Handle doctor_id specifically
+                    if col_name == 'doctor_id':
+                        # If original doctor ID exists in target system, use it
+                        if original_doctor_id and int(original_doctor_id) in self.available_doctor_ids:
+                            processed_data.append(int(original_doctor_id))
+                        else:
+                            # Otherwise use doctor_id=4 as default
+                            processed_data.append(4)
                         continue
                     
                     # Critical fields that should not receive default values
@@ -348,9 +455,14 @@ class RobustMigrator:
                     else:
                         processed_data.append(value)
                 
-                # Add doctor_id to the end of the data if needed - always set to 4
+                # Add doctor_id to the end of the data if needed
                 if 'doctor_id' in target_columns and 'doctor_id' not in column_mapping.values():
-                    processed_data.append(4)  # Always use doctor_id=4
+                    # If original doctor ID exists in target system, use it
+                    if original_doctor_id and int(original_doctor_id) in self.available_doctor_ids:
+                        processed_data.append(int(original_doctor_id))
+                    else:
+                        # Otherwise use doctor_id=4 as default
+                        processed_data.append(4)
                 
                 # Try to insert with duplicate handling
                 try:
@@ -381,7 +493,25 @@ class RobustMigrator:
         logger.info(f"Successfully migrated {count} medical records out of {len(rows)}")
         target_cursor.close()
         cursor.close()
+        
+        # Log statistics about skipped records
+        if self.skipped_records['medical_records']:
+            logger.warning(f"Skipped {len(self.skipped_records['medical_records'])} medical records due to missing doctor IDs")
+        
         return count
+    
+    def export_skipped_records(self, filename="skipped_records.json"):
+        """Export information about skipped records to a JSON file"""
+        if not any(self.skipped_records.values()):
+            logger.info("No records were skipped during migration")
+            return
+            
+        try:
+            with open(filename, 'w') as f:
+                json.dump(self.skipped_records, f, indent=2)
+            logger.info(f"Exported information about skipped records to {filename}")
+        except Exception as e:
+            logger.error(f"Error exporting skipped records: {e}")
     
     def run_migration(self):
         """Run the complete migration process"""
@@ -408,6 +538,10 @@ class RobustMigrator:
             total_count = patients_count + records_count
             logger.info(f"Migration completed successfully. Total {total_count} records migrated.")
             
+            # Export information about skipped records
+            if self.skip_invalid_doctors:
+                self.export_skipped_records()
+            
             return total_count > 0
             
         except Exception as e:
@@ -420,9 +554,9 @@ class RobustMigrator:
 def main():
     parser = argparse.ArgumentParser(description='Robust database migration tool')
     parser.add_argument('--sqlite-db', required=True, help='SQLite database file path')
-    parser.add_argument('--target-type', choices=['postgresql'], default='postgresql', help='Target database type')
+    parser.add_argument('--target-type', choices=['postgresql', 'mysql'], default='postgresql', help='Target database type')
     parser.add_argument('--host', default='localhost', help='Target database host')
-    parser.add_argument('--port', type=int, default=5432, help='Target database port')
+    parser.add_argument('--port', type=int, help='Target database port (default: 5432 for PostgreSQL, 3306 for MySQL)')
     parser.add_argument('--database', required=True, help='Target database name')
     parser.add_argument('--user', required=True, help='Target database username')
     parser.add_argument('--password', required=True, help='Target database password')
@@ -430,11 +564,16 @@ def main():
     parser.add_argument('--debug', action='store_true', help='Enable debug logging')
     parser.add_argument('--patients-only', action='store_true', help='Only migrate patients')
     parser.add_argument('--records-only', action='store_true', help='Only migrate medical records')
+    parser.add_argument('--skip-invalid-doctors', action='store_true', help='Skip records with invalid doctor IDs instead of defaulting to doctor_id=4')
     
     args = parser.parse_args()
     
     if args.debug:
         logger.setLevel(logging.DEBUG)
+    
+    if not args.port:
+        # Set default port based on database type
+        args.port = 3306 if args.target_type.lower() == 'mysql' else 5432
     
     if not os.path.exists(args.sqlite_db):
         logger.error(f"SQLite database not found: {args.sqlite_db}")
@@ -453,7 +592,7 @@ def main():
         'password': args.password
     }
     
-    migrator = RobustMigrator(args.sqlite_db, target_config, args.mappings)
+    migrator = RobustMigrator(args.sqlite_db, target_config, args.mappings, args.skip_invalid_doctors)
     
     if args.patients_only and args.records_only:
         logger.error("Cannot specify both --patients-only and --records-only. Please use only one option.")
