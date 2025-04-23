@@ -20,6 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
+from django.http import HttpResponse
+import os
 
 handler401 = 'tasks.error_handle.handler401'
 handler405 = 'tasks.error_handle.handler405'
@@ -28,6 +30,16 @@ handler429 = 'tasks.error_handle.handler429'
 handler502 = 'tasks.error_handle.handler502'
 handler503 = 'tasks.error_handle.handler503'
 handler504 = 'tasks.error_handle.handler504'
+
+def serve_sitemap(request):
+    sitemap_path = os.path.join(settings.STATIC_ROOT, 'sitemap.xml')
+    if not os.path.exists(sitemap_path):
+        sitemap_path = os.path.join(settings.BASE_DIR, 'static', 'sitemap.xml')
+    
+    with open(sitemap_path, 'r') as f:
+        content = f.read()
+    
+    return HttpResponse(content, content_type='application/xml')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,6 +56,8 @@ urlpatterns = [
     path('offline.html',
          TemplateView.as_view(template_name='offline.html'),
          name='offline'),
+         
+    path('sitemap.xml', serve_sitemap, name='sitemap'),
 ]
 
 # Serve media files in development
