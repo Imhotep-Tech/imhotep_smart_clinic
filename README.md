@@ -102,10 +102,7 @@ Assistants can:
 ### PWA Features
 
 The application supports Progressive Web App features:
-- Offline form submissions
-- Background synchronization when online
 - Installation on mobile devices
-- Push notifications (where supported)
 
 ## Development
 
