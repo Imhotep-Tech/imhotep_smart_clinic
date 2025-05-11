@@ -5,7 +5,7 @@
   "short_name": "Imhotep Clinic",
   "id": "imhotep_smart_clinic",
   "description": "Modern healthcare management platform for doctors and patients",
-  "start_url": "/",
+  "start_url": "/login",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",

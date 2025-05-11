@@ -8,12 +8,13 @@ from django.urls import reverse
 from django.db.models import Q
 from .utils.search_patient import search_patient_by_name, search_patient_by_phone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import date
 
 @login_required
 @doctor_required  # Only doctors can add patients
 def add_patient(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
+        name = request.POST.get('name').title()
         phone_number = request.POST.get('phone_number')
         gender = request.POST.get('gender')
         date_of_birth = request.POST.get('date_of_birth')
@@ -93,7 +94,17 @@ def show_patient_details(request):
     
     patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
     records_list = MedicalRecord.objects.filter(doctor=doctor_profile, patient=patient_id).order_by('-date')
-    
+
+    if patient.date_of_birth:
+        today = date.today()
+        patient_birthdate = patient.date_of_birth
+
+        patient_age = today.year - patient_birthdate.year - (
+            (today.month, today.day) < (patient_birthdate.month, patient_birthdate.day)
+        )
+    else:
+        patient_age = None
+
     # Pagination
     page = request.GET.get('page', 1)
     paginator = Paginator(records_list, 10)
@@ -109,7 +120,8 @@ def show_patient_details(request):
         "user_data": request.user,
         "patients": [patient],
         "records": records_list,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "patient_age": patient_age
     }
     return render(request, "show_patient_details.html", context)
 

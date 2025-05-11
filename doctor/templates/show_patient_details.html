@@ -78,6 +78,9 @@
                             <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
                                 Born: {{ patient.date_of_birth }}
                             </span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
+                                Age: {{ patient_age }} years
+                            </span>
                             {% endif %}
                             <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
                                 Added on {{ patient.date_added|date:"M d, Y" }}
@@ -149,6 +152,17 @@
                                     <div class="ml-3">
                                         <h4 class="text-sm font-medium text-gray-500">Date of Birth</h4>
                                         <p class="text-base font-medium">{{ patient.date_of_birth }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-md bg-yellow-100 text-yellow-600">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h4 class="text-sm font-medium text-gray-500">Age</h4>
+                                        <p class="text-base font-medium">{{ patient_age }} years</p>
                                     </div>
                                 </div>
                                 {% endif %}
