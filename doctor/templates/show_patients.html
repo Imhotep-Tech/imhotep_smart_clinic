@@ -98,7 +98,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ patient.name }}</div>
+                                                    <!-- <div class="text-sm font-medium text-gray-900">{{ patient.name }}</div> -->
+                                                    <a href="{% url 'show_patient_details' %}?patient_id={{ patient.id }}" class="text-sm font-medium text-gray-900">{{ patient.name }}</a>
                                                 </div>
                                             </div>
                                         </td>

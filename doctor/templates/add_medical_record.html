@@ -130,6 +130,34 @@
         },
         placeholder: 'Enter medication details and instructions...'
     });
+
+    // Function to capitalize first letter of each new line
+    function setupAutoCapitalization(editor) {
+        editor.on('text-change', function(delta, oldDelta, source) {
+            if (source !== 'user') return;
+            
+            let text = editor.getText();
+            let ops = [];
+            
+            // Split text by line breaks
+            let lines = text.split('\n');
+            let totalLength = 0;
+            
+            lines.forEach((line, index) => {
+                if (line.length > 0 && line[0] && line[0].match(/[a-z]/)) {
+                    // Capitalize first letter if it's lowercase
+                    editor.formatText(totalLength, 1, {});  // Clear format first
+                    editor.deleteText(totalLength, 1);
+                    editor.insertText(totalLength, line[0].toUpperCase());
+                }
+                totalLength += line.length + 1; // +1 for the newline character
+            });
+        });
+    }
+    
+    // Apply auto-capitalization to both editors
+    setupAutoCapitalization(detailsEditor);
+    setupAutoCapitalization(prescriptionEditor);
     
     // Handle form submission
     document.getElementById('medicalRecordForm').addEventListener('submit', function(e) {
