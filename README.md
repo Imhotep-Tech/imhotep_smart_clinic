@@ -21,11 +21,11 @@
 
 Imhotep Smart Clinic provides a comprehensive solution for medical practice management:
 
-- **User Management**: Role-based access control for doctors, assistants, and patients
+- **User Management**: Role-based access control for doctors, and assistants
 - **Patient Records**: Maintain detailed digital medical records
 - **Prescription Management**: Create and generate PDF prescriptions
 - **Dashboard Analytics**: Get insights into your practice
-- **Progressive Web App**: Works offline and can be installed on mobile devices
+- **Progressive Web App**: Can be installed on mobile devices
 - **Responsive Design**: Works on all device sizes
 - **Multilingual Support**: Includes support for Arabic text in prescriptions
 
