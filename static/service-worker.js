@@ -10,7 +10,14 @@ const PRECACHE_ASSETS = [
   '/static/js/register-sw.js',
   '/static/imhotep_clinic.png',
   '/static/manifest.json',
-  '/static/icons/placeholder.png'
+  '/static/icons/placeholder.png',
+  // Pre-cache important HTML pages for offline access
+  '/login/',
+  '/register/',
+  '/dashboard/',
+  '/privacy.html',
+  '/terms.html',
+  // Add more key pages as needed
 ];
 
 // Install event
@@ -41,7 +48,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event - Network-first strategy with fallback to cache
+// Fetch event - Network-first strategy with dynamic caching for HTML and static assets
 self.addEventListener('fetch', event => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
@@ -52,12 +59,44 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') {
     return;
   }
-  
+
+  // Cache API GET responses for offline read-only access
+  if (event.request.url.includes('/api/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          if (response && response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request).then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            if (event.request.mode === 'navigate') {
+              return caches.match(OFFLINE_URL);
+            }
+            return new Response('', {
+              status: 408,
+              headers: { 'Content-Type': 'text/plain' }
+            });
+          });
+        })
+    );
+    return;
+  }
+
+  // Dynamically cache HTML pages and static assets
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // If valid response, clone and cache
-        if (response && response.status === 200) {
+        // Only cache valid responses
+        if (response && response.status === 200 && (event.request.destination === 'document' || event.request.destination === 'script' || event.request.destination === 'style' || event.request.destination === 'image' || event.request.url.endsWith('.js') || event.request.url.endsWith('.css') || event.request.url.endsWith('.png') || event.request.url.endsWith('.jpg') || event.request.url.endsWith('.jpeg') || event.request.url.endsWith('.svg'))) {
           const responseClone = response.clone();
           caches.open(CACHE_NAME).then(cache => {
             cache.put(event.request, responseClone);
@@ -66,28 +105,22 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // If offline, try to serve from cache
-        return caches.match(event.request)
-          .then(cachedResponse => {
-            if (cachedResponse) {
-              return cachedResponse;
-            }
-            // If not in cache, serve offline page for navigation requests
-            if (event.request.mode === 'navigate') {
-              return caches.match(OFFLINE_URL);
-            }
-            
-            // For image requests, return a placeholder
-            if (event.request.destination === 'image') {
-              return caches.match('/static/icons/placeholder.png');
-            }
-            
-            // Return empty response for other resources
-            return new Response('', {
-              status: 408,
-              headers: { 'Content-Type': 'text/plain' }
-            });
+        return caches.match(event.request).then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          if (event.request.mode === 'navigate') {
+            return caches.match(OFFLINE_URL);
+          }
+          // For image requests, return a placeholder
+          if (event.request.destination === 'image') {
+            return caches.match('/static/icons/placeholder.png');
+          }
+          return new Response('', {
+            status: 408,
+            headers: { 'Content-Type': 'text/plain' }
           });
+        });
       })
   );
 });

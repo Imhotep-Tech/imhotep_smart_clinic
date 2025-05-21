@@ -227,3 +227,42 @@ function setupFooterInteraction() {
         });
     }
 }
+
+// Offline/online detection and read-only enforcement
+function setReadOnlyMode(isOffline) {
+    // Disable all forms and editing controls
+    document.querySelectorAll('form, input, textarea, select, button').forEach(el => {
+        if (el.tagName === 'FORM') {
+            el.querySelectorAll('input, textarea, select, button').forEach(child => {
+                child.disabled = isOffline;
+            });
+        } else {
+            el.disabled = isOffline;
+        }
+    });
+    // Show/hide offline banner
+    let banner = document.getElementById('offline-banner');
+    if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'offline-banner';
+        banner.style.position = 'fixed';
+        banner.style.top = '0';
+        banner.style.left = '0';
+        banner.style.width = '100%';
+        banner.style.background = '#ff9800';
+        banner.style.color = '#fff';
+        banner.style.textAlign = 'center';
+        banner.style.zIndex = '9999';
+        banner.style.padding = '8px 0';
+        banner.textContent = 'Read-only: You are offline. Editing is disabled.';
+        document.body.appendChild(banner);
+    }
+    banner.style.display = isOffline ? 'block' : 'none';
+}
+
+window.addEventListener('online', () => setReadOnlyMode(false));
+window.addEventListener('offline', () => setReadOnlyMode(true));
+
+document.addEventListener('DOMContentLoaded', function() {
+    setReadOnlyMode(!navigator.onLine);
+});
