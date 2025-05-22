@@ -15,10 +15,24 @@ def dashboard(request):
 
     number_of_patients = doctor_profile.doctor_patients.count()
 
-    number_of_patients_records = MedicalRecord.objects.filter(doctor=doctor_profile).count()
+    patients_records = MedicalRecord.objects.filter(doctor=doctor_profile).order_by('-date')
     
     # to get the daily average
     today = date.today()
+
+    latest_record = patients_records.first()
+    latest_update = latest_record.date if latest_record else None
+
+    if latest_update and hasattr(latest_update, 'date'):
+        latest_update = latest_update.date()
+
+    if latest_update == today:
+        latest_update = "today"
+    elif latest_update == (today - timedelta(days=1)):
+        latest_update = "yesterday"
+
+    number_of_patients_records = patients_records.count()
+    
     thirty_days_ago = today - timedelta(days=30)
     patients_last_30_days = doctor_profile.doctor_patients.filter(
         date_added__gte=thirty_days_ago
@@ -60,7 +74,8 @@ def dashboard(request):
         "todays_appointments": todays_appointments,
         "avg_patients_per_day": avg_patients_per_day,
         "appointments": appointments_list,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "latest_update":latest_update
     }
     return render(request, "doctor_dashboard.html", context)
 

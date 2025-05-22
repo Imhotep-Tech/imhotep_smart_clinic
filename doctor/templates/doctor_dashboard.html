@@ -71,7 +71,15 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Patient Records</p>
                             <p class="text-3xl font-semibold text-gray-900">{{ number_of_patients_records }}</p>
-                            <p class="text-xs text-amber-600 mt-1">Updated today</p>
+                            <p class="text-xs text-amber-600 mt-1">
+                                {% if latest_update == "today" %}
+                                    Today
+                                {% elif latest_update == "yesterday" %}
+                                    Yesterday
+                                {% elif latest_update %}
+                                    {{ latest_update|date:"M d, Y" }}
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div>
