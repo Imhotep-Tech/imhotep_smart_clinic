@@ -131,6 +131,10 @@
         placeholder: 'Enter medication details and instructions...'
     });
 
+    // Make editors globally available for auto-save
+    window.detailsEditor = detailsEditor;
+    window.prescriptionEditor = prescriptionEditor;
+
     // Function to capitalize first letter of each new line
     function setupAutoCapitalization(editor) {
         editor.on('text-change', function(delta, oldDelta, source) {

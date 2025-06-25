@@ -29,8 +29,13 @@
 
             <!-- Edit Patient Form -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <form method="POST" action="{% url 'update_patient' %}?patient_id={{ patients.0.id }}">
+                <form method="POST" action="{% url 'update_patient' %}?patient_id={{ patients.0.id }}" id="editPatientForm">
                     {% csrf_token %}
+                    
+                    <!-- Auto-save status indicator -->
+                    <div class="mb-4 text-sm text-gray-500 italic">
+                        Form data is automatically saved as you type
+                    </div>
                     
                     <!-- Name Field -->
                     <div class="mb-6">

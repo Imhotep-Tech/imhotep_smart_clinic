@@ -130,6 +130,10 @@
         placeholder: 'Enter medication details and instructions...'
     });
     
+    // Make editors globally available for auto-save
+    window.detailsEditor = detailsEditor;
+    window.prescriptionEditor = prescriptionEditor;
+    
     // Load existing content into editors
     detailsEditor.root.innerHTML = `{{ medical_record.details|safe|escapejs }}`;
     prescriptionEditor.root.innerHTML = `{{ medical_record.prescription|safe|escapejs }}`;

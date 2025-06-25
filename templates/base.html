@@ -33,7 +33,6 @@
         <link rel="apple-touch-icon" sizes="180x180" href="{% static 'imhotep_clinic.png' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'imhotep_clinic.png' %}">
         <link rel="manifest" href="{% static 'manifest.json' %}">
-        <script src="{% static 'service-worker.js' %}"></script>
 
         <!-- Add PWA meta tags -->
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -62,6 +61,38 @@
             }
         </script>
         <link rel="stylesheet" href="{% static 'styles.css' %}">
+        
+        <!-- Auto-save indicator styles -->
+        <style>
+            #autosave-indicator {
+                transition: opacity 0.3s ease-in-out;
+                font-size: 0.75rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+            
+            .form-restored {
+                animation: highlight 2s ease-in-out;
+                background-color: #dbeafe !important;
+            }
+            
+            @keyframes highlight {
+                0% { background-color: #dbeafe; }
+                50% { background-color: #bfdbfe; }
+                100% { background-color: white; }
+            }
+            
+            /* Auto-save status styles */
+            .autosave-status {
+                position: sticky;
+                top: 0;
+                z-index: 40;
+                background: linear-gradient(90deg, #f0f9ff, #e0f2fe);
+                border-bottom: 1px solid #0284c7;
+                padding: 8px 16px;
+                font-size: 0.875rem;
+                color: #0369a1;
+            }
+        </style>
         
         <!-- Preload critical resources -->
         <link rel="preconnect" href="https://cdn.tailwindcss.com">
@@ -115,7 +146,22 @@
 
     <!-- Add main.js at the end of body for better performance -->
     <script src="{% static 'main.js' %}"></script>
-    <script src="/static/js/register-sw.js"></script>
+    
+    <!-- ServiceWorker registration script -->
+    <script>
+        // Register ServiceWorker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/static/service-worker.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+    
     {% include 'footer.html' %}
 </body>
 </html>
