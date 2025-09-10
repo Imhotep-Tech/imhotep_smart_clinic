@@ -1,5 +1,5 @@
 # Django and core dependencies
-Django==5.2.1
+Django==5.2.6
 psycopg2-binary==2.9.9
 python-decouple==3.8
 Pillow==11.3.0
