@@ -14,9 +14,9 @@ const PRECACHE_ASSETS = [
   // Pre-cache important HTML pages for offline access
   '/login/',
   '/register/',
-  '/dashboard/',
-  '/privacy.html',
-  '/terms.html',
+  '/doctor/dashboard/',
+  '/privacy/',
+  '/terms/',
   // Add more key pages as needed
 ];
 
