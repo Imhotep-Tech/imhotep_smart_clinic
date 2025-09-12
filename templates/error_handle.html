@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo_1_.ico')}}">
+    <meta name="google-site-verification" content="t0C7WT8MTJ1gP87eh4Y7U9bkqPxRAnm1JxYLnDix6_Y" />
+    <meta name="keywords" content="7CS Loyalty App, 7cs, Loyalty App, 7 cylinders, 7 cylinders loyalty app">
+</head>
+<body>
+  {% extends "base.html" %}
+  {% block content %}
+  <div class="grid h-screen place-content-center bg-white px-4">
+    <div class="text-center">
+      <h1 class="text-6xl font-black text-gray-300">{{ error_code }}</h1>
+      <p class="text-2xl font-bold tracking-tight">Uh‑oh!</p>
+      <p class="mt-3 text-muted">{{ error_description }}</p>
+      <p class="mt-2">Redirecting to the homepage in <span id="countdown">10</span> seconds…</p>
+      <a href="/" class="btn btn-primary mt-3">Go Back Home</a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var s = 10, el = document.getElementById('countdown');
+    var t = setInterval(function(){
+      s -= 1; if (el) el.textContent = String(s);
+      if (s <= 0) { clearInterval(t); window.location.href = '/'; }
+    }, 1000);
+  })();
+  </script>
+  {% endblock %}
+</body>
+</html>

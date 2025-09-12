@@ -85,7 +85,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
+    'imhotep_smart_clinic.middleware.CustomErrorLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'imhotep_smart_clinic.urls'
@@ -231,5 +232,29 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'REDIRECT_URI': f"{SITE_DOMAIN}/google/callback/",
         'SCOPE': ['profile', 'email'],
+    }
+}
+
+# Send detailed errors to the terminal/console
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'WARNING',  # include 404 warnings and 500 errors
+            'propagate': False,
+        },
     }
 }

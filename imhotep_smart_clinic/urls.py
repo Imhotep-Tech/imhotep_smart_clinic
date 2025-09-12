@@ -31,6 +31,12 @@ handler502 = 'tasks.error_handle.handler502'
 handler503 = 'tasks.error_handle.handler503'
 handler504 = 'tasks.error_handle.handler504'
 
+# Custom error handlers
+handler400 = 'imhotep_smart_clinic.error_views.custom_bad_request'
+handler403 = 'imhotep_smart_clinic.error_views.custom_permission_denied'
+handler404 = 'imhotep_smart_clinic.error_views.custom_page_not_found'
+handler500 = 'imhotep_smart_clinic.error_views.custom_server_error'
+
 def serve_sitemap(request):
     sitemap_path = os.path.join(settings.STATIC_ROOT, 'sitemap.xml')
     if not os.path.exists(sitemap_path):
