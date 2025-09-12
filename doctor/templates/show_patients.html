@@ -12,13 +12,32 @@
     <div class="flex-1 p-4">
         <div class="container mx-auto">
             <!-- Header with title and action button -->
-            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-3">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-800">My Patients</h1>
                     <p class="text-gray-600">Manage your patient records</p>
                 </div>
-                <div class="mt-4 md:mt-0">
-                    <a href="{% url 'add_patient' %}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center transition-all">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <!-- Sort By -->
+                    <form action="" method="get" class="flex items-center gap-2">
+                        {% if filter_name %}
+                          <input type="hidden" name="patient_name" value="{{ filter_name }}">
+                        {% endif %}
+                        {% if filter_phone %}
+                          <input type="hidden" name="patient_phone" value="{{ filter_phone }}">
+                        {% endif %}
+                        <label for="sort_with" class="text-sm text-gray-600">Sort by</label>
+                        <select name="sort_with" id="sort_with" class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" onchange="this.form.submit()">
+                            <option value="name" {% if sort_with == 'name' %}selected{% endif %}>Name (A→Z)</option>
+                            <option value="-name" {% if sort_with == '-name' %}selected{% endif %}>Name (Z→A)</option>
+                            <option value="date_of_birth" {% if sort_with == 'date_of_birth' %}selected{% endif %}>Birthdate (Oldest)</option>
+                            <option value="-date_of_birth" {% if sort_with == '-date_of_birth' %}selected{% endif %}>Birthdate (Newest)</option>
+                            <option value="date_added" {% if sort_with == 'date_added' %}selected{% endif %}>Date Added (Oldest)</option>
+                            <option value="-date_added" {% if sort_with == '-date_added' %}selected{% endif %}>Date Added (Newest)</option>
+                        </select>
+                    </form>
+
+                    <a href="{% url 'add_patient' %}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center transition-all">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
@@ -36,8 +55,8 @@
                             <form action="{% url 'search_patient' %}" method="GET" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                                 <div class="w-full sm:w-40">
                                     <select id="searchType" onchange="updateSearchField(this.value)" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                        <option value="name">Search by Name</option>
-                                        <option value="phone">Search by Phone</option>
+                                        <option value="name" {% if search_type == 'name' %}selected{% endif %}>Search by Name</option>
+                                        <option value="phone" {% if search_type == 'phone' %}selected{% endif %}>Search by Phone</option>
                                     </select>
                                 </div>
                                 <div class="flex-grow relative">
@@ -46,8 +65,9 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                         </svg>
                                     </div>
-                                    <input type="text" id="searchInput" name="patient_name" class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter patient name...">
+                                    <input type="text" id="searchInput" name="{% if search_type == 'phone' %}patient_phone{% else %}patient_name{% endif %}" value="{{ search_value }}" class="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="{% if search_type == 'phone' %}Enter phone number...{% else %}Enter patient name...{% endif %}">
                                 </div>
+                                <input type="hidden" name="sort_with" value="{{ sort_with }}">
                                 <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                     Search
                                 </button>
@@ -65,10 +85,10 @@
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-800">Patient List</h2>
                         <div>
-                            {% if request.GET.patient_name %}
-                                <span class="text-sm text-gray-600 mr-3">Search results for name: "{{ request.GET.patient_name }}"</span>
-                            {% elif request.GET.patient_phone %}
-                                <span class="text-sm text-gray-600 mr-3">Search results for phone: "{{ request.GET.patient_phone }}"</span>
+                            {% if filter_name %}
+                                <span class="text-sm text-gray-600 mr-3">Search results for name: "{{ filter_name }}"</span>
+                            {% elif filter_phone %}
+                                <span class="text-sm text-gray-600 mr-3">Search results for phone: "{{ filter_phone }}"</span>
                             {% endif %}
                             <span class="text-sm font-medium text-indigo-600">Total: {{ patients|length }}</span>
                         </div>
@@ -98,7 +118,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="ml-4">
-                                                    <!-- <div class="text-sm font-medium text-gray-900">{{ patient.name }}</div> -->
                                                     <a href="{% url 'show_patient_details' %}?patient_id={{ patient.id }}" class="text-sm font-medium text-gray-900">{{ patient.name }}</a>
                                                 </div>
                                             </div>
@@ -126,7 +145,7 @@
                             <div class="py-4 flex items-center justify-between border-t border-gray-200 mt-4">
                                 <div class="flex-1 flex justify-between sm:hidden">
                                     {% if page_obj.has_previous %}
-                                    <a href="?{% if request.GET.patient_name %}patient_name={{ request.GET.patient_name }}&{% elif request.GET.patient_phone %}patient_phone={{ request.GET.patient_phone }}&{% endif %}page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    <a href="?{% if filter_name %}patient_name={{ filter_name }}&{% elif filter_phone %}patient_phone={{ filter_phone }}&{% endif %}sort_with={{ sort_with }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                         Previous
                                     </a>
                                     {% else %}
@@ -136,7 +155,7 @@
                                     {% endif %}
                                     
                                     {% if page_obj.has_next %}
-                                    <a href="?{% if request.GET.patient_name %}patient_name={{ request.GET.patient_name }}&{% elif request.GET.patient_phone %}patient_phone={{ request.GET.patient_phone }}&{% endif %}page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    <a href="?{% if filter_name %}patient_name={{ filter_name }}&{% elif filter_phone %}patient_phone={{ filter_phone }}&{% endif %}sort_with={{ sort_with }}&page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                         Next
                                     </a>
                                     {% else %}
@@ -156,7 +175,7 @@
                                     <div>
                                         <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                             {% if page_obj.has_previous %}
-                                            <a href="?{% if request.GET.patient_name %}patient_name={{ request.GET.patient_name }}&{% elif request.GET.patient_phone %}patient_phone={{ request.GET.patient_phone }}&{% endif %}page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                            <a href="?{% if filter_name %}patient_name={{ filter_name }}&{% elif filter_phone %}patient_phone={{ filter_phone }}&{% endif %}sort_with={{ sort_with }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                                 <span class="sr-only">Previous</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -175,12 +194,12 @@
                                                 {% if page_obj.number == i %}
                                                 <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600">{{ i }}</span>
                                                 {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                                                <a href="?{% if request.GET.patient_name %}patient_name={{ request.GET.patient_name }}&{% elif request.GET.patient_phone %}patient_phone={{ request.GET.patient_phone }}&{% endif %}page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">{{ i }}</a>
+                                                <a href="?{% if filter_name %}patient_name={{ filter_name }}&{% elif filter_phone %}patient_phone={{ filter_phone }}&{% endif %}sort_with={{ sort_with }}&page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">{{ i }}</a>
                                                 {% endif %}
                                             {% endfor %}
                                             
                                             {% if page_obj.has_next %}
-                                            <a href="?{% if request.GET.patient_name %}patient_name={{ request.GET.patient_name }}&{% elif request.GET.patient_phone %}patient_phone={{ request.GET.patient_phone }}&{% endif %}page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                            <a href="?{% if filter_name %}patient_name={{ filter_name }}&{% elif filter_phone %}patient_phone={{ filter_phone }}&{% endif %}sort_with={{ sort_with }}&page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                                 <span class="sr-only">Next</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -203,9 +222,9 @@
                     {% else %}
                         <div class="py-10 text-center">
                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 009.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
-                            {% if request.GET.patient_name or request.GET.patient_phone %}
+                            {% if filter_name or filter_phone %}
                                 <h3 class="mt-2 text-lg font-medium text-gray-900">No matching patients found</h3>
                                 <p class="mt-1 text-sm text-gray-500">Try a different search term or check your spelling.</p>
                             {% else %}

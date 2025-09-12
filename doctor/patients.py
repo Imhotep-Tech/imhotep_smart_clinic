@@ -59,8 +59,13 @@ def show_patients(request):
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor_profile = assistant_profile.doctor
-        
-    patients_list = Patients.objects.filter(doctor=doctor_profile).order_by('name')
+    
+    sort_with = request.GET.get('sort_with', 'name')
+
+    if sort_with not in ["date_added", "name", "date_of_birth", "-date_added", "-name", "-date_of_birth"]:
+        sort_with = "name"
+
+    patients_list = Patients.objects.filter(doctor=doctor_profile).order_by(f'{sort_with}')
     
     # Pagination
     page = request.GET.get('page', 1)
@@ -72,11 +77,22 @@ def show_patients(request):
         page_obj = paginator.page(1)
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
+
+    # Safe search context vars for template
+    filter_name = request.GET.get('patient_name', '')
+    filter_phone = request.GET.get('patient_phone', '')
+    search_type = 'phone' if filter_phone else 'name'
+    search_value = filter_phone or filter_name or ''
     
     context = {
         "user_data": request.user,
         "patients": patients_list,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "sort_with": sort_with,
+        "filter_name": filter_name,
+        "filter_phone": filter_phone,
+        "search_type": search_type,
+        "search_value": search_value,
     }
     return render(request, "show_patients.html", context)
 
@@ -200,12 +216,21 @@ def search_patient(request):
     patient_name = request.GET.get('patient_name', '')
     patient_phone = request.GET.get('patient_phone', '')
     
+    # Sorting support for search results
+    sort_with = request.GET.get('sort_with', 'name')
+    if sort_with not in ["date_added", "name", "date_of_birth", "-date_added", "-name", "-date_of_birth"]:
+        sort_with = "name"
+    
     if patient_name:
         patients_list = search_patient_by_name(doctor_profile, patient_name)
     elif patient_phone:
         patients_list = search_patient_by_phone(doctor_profile, patient_phone)
     else:
         patients_list = []
+    
+    # Apply ordering if we have a QuerySet
+    if hasattr(patients_list, 'order_by'):
+        patients_list = patients_list.order_by(sort_with)
     
     # Pagination
     page = request.GET.get('page', 1)
@@ -217,10 +242,21 @@ def search_patient(request):
         page_obj = paginator.page(1)
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
+
+    # Safe search context vars for template
+    filter_name = patient_name
+    filter_phone = patient_phone
+    search_type = 'phone' if filter_phone else 'name'
+    search_value = filter_phone or filter_name or ''
     
     context = {
         "user_data": request.user,
         "patients": patients_list,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "sort_with": sort_with,
+        "filter_name": filter_name,
+        "filter_phone": filter_phone,
+        "search_type": search_type,
+        "search_value": search_value,
     }
     return render(request, "show_patients.html", context)
