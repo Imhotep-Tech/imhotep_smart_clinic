@@ -36,9 +36,43 @@ Imhotep Smart Clinic provides a comprehensive solution for medical practice mana
 - Python 3.8+
 - pip
 - Virtual environment (recommended)
+- Docker and Docker Compose (optional, for containerized setup)
 - Git
 
 ### Setup
+
+#### Using Docker (Recommended)
+
+1. Clone the repository
+```bash
+git clone https://github.com/imhotep-tech/imhotep_smart_clinic.git
+cd imhotep_smart_clinic
+```
+
+2. Copy the environment file
+```bash
+cp .env.example .env
+# Edit .env file with your settings
+```
+
+3. Build and start the Docker containers
+```bash
+docker-compose up --build
+```
+
+4. Run migrations inside the container
+```bash
+docker-compose exec web python manage.py migrate
+```
+
+5. Create a superuser
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
+
+6. Access the application at [http://localhost:8000](http://localhost:8000)
+
+#### Manual Setup
 
 1. Clone the repository
 ```bash
@@ -120,6 +154,12 @@ imhotep_smart_clinic/
 
 ### Running Tests
 
+#### Using Docker
+```bash
+docker-compose exec web python manage.py test
+```
+
+#### Without Docker
 ```bash
 python manage.py test
 ```
@@ -138,7 +178,38 @@ npm run build:css
 
 ## Contributing
 
-Contributions are welcome! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+Contributions are welcome! Follow these steps to get started:
+
+1. Fork the repository on GitHub.
+2. Clone your forked repository locally:
+   ```bash
+   git clone https://github.com/<your-username>/imhotep_smart_clinic.git
+   cd imhotep_smart_clinic
+   ```
+3. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+4. Make your changes and commit them:
+   ```bash
+   git add .
+   git commit -m "Add your commit message here"
+   ```
+5. Push your branch to your fork:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+6. Open a pull request on the main repository.
+
+### Setting Up for Development
+
+#### Using Docker
+Follow the [Docker setup](#using-docker-recommended) instructions to get started quickly.
+
+#### Without Docker
+Follow the [manual setup](#manual-setup) instructions.
+
+Please see our [Contributing Guidelines](CONTRIBUTING.md) for more details.
 
 ## Security
 
