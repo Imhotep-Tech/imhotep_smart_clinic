@@ -158,11 +158,11 @@ WSGI_APPLICATION = 'imhotep_smart_clinic.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': config('DATABASE_HOST'), 
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB', 'imhotep_clinic'),
+        'USER': os.getenv('POSTGRES_USER', 'imhotep_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'securepassword'),
+        'HOST': os.getenv('POSTGRES_HOST', 'db'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 

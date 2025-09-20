@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: imhotepclinic_db
+      POSTGRES_USER: imhotepclinic_user
+      POSTGRES_PASSWORD: imhotepclinic_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5430:5430"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U imhotepclinic_user -d imhotepclinic_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DATABASE_NAME=imhotepclinic_db
+      - DATABASE_USER=imhotepclinic_user
+      - DATABASE_PASSWORD=imhotepclinic_password
+      - DATABASE_HOST=db
+      - SECRET_KEY=dev-secret-key-not-for-production
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      bash -c "python manage.py makemigrations &&
+               python manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
+volumes:
+  postgres_data:
