@@ -183,7 +183,7 @@ Contributions are welcome! Follow these steps to get started:
 1. Fork the repository on GitHub.
 2. Clone your forked repository locally:
    ```bash
-   git clone https://github.com/<your-username>/imhotep_smart_clinic.git
+   git clone https://github.com/Imhotep-Tech/imhotep_smart_clinic.git
    cd imhotep_smart_clinic
    ```
 3. Create a new branch for your feature or bug fix:
