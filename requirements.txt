@@ -1,5 +1,5 @@
 # Django and core dependencies
-Django==5.2.7
+Django==5.2.9
 python-decouple==3.8
 Pillow==11.3.0
 weasyprint==65.1
