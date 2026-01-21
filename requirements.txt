@@ -6,7 +6,7 @@ weasyprint==65.1
 reportlab==4.0.9
 
 # Authentication
-django-allauth==65.7.0
+django-allauth==65.13.0
 
 # Production
 gunicorn==23.0.0
