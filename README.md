@@ -135,13 +135,9 @@ cp .env.example .env
 # Edit .env with your settings (see Configuration section)
 
 # 3. Start the application
-docker-compose up -d
+docker compose up -d
 
-# 4. Run initial setup
-docker-compose exec web python manage.py migrate
-docker-compose exec web python manage.py createsuperuser
-
-# 5. Access your clinic at http://localhost:8000
+# 4. Access your clinic at http://localhost:8000
 ```
 
 ### Using Python (Development)
