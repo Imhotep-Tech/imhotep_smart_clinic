@@ -19,6 +19,15 @@ class CustomPasswordChangeView(PasswordChangeView):
     template_name = 'password_change.html'
     form_class = PasswordChangeForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_demo:
+            messages.error(request, "Demo accounts cannot change passwords. Please create your own account to access all features.")
+            if request.user.is_doctor():
+                return redirect('doctor_dashboard')
+            else:
+                return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+
     def form_invalid(self, form):
         for field, errors in form.errors.items():
             for error in errors:
@@ -39,6 +48,15 @@ def update_profile(request):
         user_username = request.POST.get("username")
         user_email = request.POST.get("email")
 
+        if user.is_demo:
+            if (user_username != user.username or user_email != user.email or 
+                first_name != user.first_name or last_name != user.last_name):
+                messages.error(request, "Demo accounts cannot update profile details. Please create your own account to access all features.")
+                if user.is_doctor():
+                    return redirect('update_doctor_profile')
+                else:
+                    return redirect('login')
+        
         if first_name != user.first_name:
             user.first_name = first_name
             messages.info(request, "First name updated")

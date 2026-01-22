@@ -14,6 +14,7 @@ class User(AbstractUser):
     
     email_verify = models.BooleanField(default=False)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
+    is_demo = models.BooleanField(default=False)
     
     def is_doctor(self):
         return self.user_type == 'doctor'

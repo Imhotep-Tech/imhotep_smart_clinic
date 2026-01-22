@@ -81,6 +81,11 @@ def dashboard(request):
 
 def add_assistant(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+
+    if request.user.is_demo:
+        messages.error(request, "Demo accounts cannot add assistants. Please create your own account to access all features.")
+        return redirect('doctor_dashboard')
+
     if request.method!="POST":
         context = {
             "user_data": request.user,
