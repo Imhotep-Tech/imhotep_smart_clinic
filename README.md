@@ -135,7 +135,7 @@ cp .env.example .env
 # Edit .env with your settings (see Configuration section)
 
 # 3. Start the application
-docker compose up -d
+docker-compose up -d
 
 # 4. Access your clinic at http://localhost:8000
 ```
@@ -230,12 +230,6 @@ docker-compose up -d --build
 
 # Wait for containers to be healthy
 docker-compose ps
-
-# Run database migrations
-docker-compose exec web python manage.py migrate
-
-# Create admin user
-docker-compose exec web python manage.py createsuperuser
 
 # Collect static files (for production)
 docker-compose exec web python manage.py collectstatic --no-input
