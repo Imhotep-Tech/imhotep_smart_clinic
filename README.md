@@ -754,25 +754,6 @@ psql -U imhotepclinic_user imhotepclinic_db < backup.sql
 
 ## 🧪 Development
 
-### Running Tests
-
-```bash
-# Run all tests
-python manage.py test
-
-# Run specific app tests
-python manage.py test accounts
-python manage.py test doctor
-
-# With Docker
-docker-compose exec web python manage.py test
-
-# With coverage
-pip install coverage
-coverage run --source='.' manage.py test
-coverage report
-```
-
 ### Code Style
 
 ```bash
