@@ -26,15 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-if DEBUG:
-    # Add this to your settings
-    SITE_DOMAIN = 'http://127.0.0.1:8000'  # Replace with your actual domain
-else:
-    SITE_DOMAIN = 'https://imhotepsmartclinic.pythonanywhere.com' 
+SITE_DOMAIN = config('SITE_DOMAIN') 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.100.44', 'https://imhotepsmartclinic.pythonanywhere.com/'] 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', SITE_DOMAIN.replace('https://', '').replace('http://', '')] 
 
 if DEBUG == False:
     # Security settings - keep these as they are
@@ -125,7 +121,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'imhoteptech1@gmail.com'
+EMAIL_HOST_USER = config('MAIL_USER')
 EMAIL_HOST_PASSWORD =  config('MAIL_PASSWORD')
 
 WSGI_APPLICATION = 'imhotep_smart_clinic.wsgi.application'
@@ -133,38 +129,42 @@ WSGI_APPLICATION = 'imhotep_smart_clinic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-#Mysql database for production
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': config('DATABASE_NAME'),
-#         'USER': config('DATABASE_USER'),
-#         'PASSWORD': config('DATABASE_PASSWORD'),
-#         'HOST': config('DATABASE_HOST'),
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'charset': 'utf8mb4',  # Optional: Set the character set
-#         },
-#     }
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'imhotep_clinic'),
-        'USER': os.getenv('POSTGRES_USER', 'imhotep_user'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'securepassword'),
-        'HOST': os.getenv('POSTGRES_HOST', 'db'),
-        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+database_type = config('database_type', default='sqlite').lower()
+if database_type == 'sqlite':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+elif database_type == 'mysql':
+    #Mysql database for production
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': config('DATABASE_NAME'),
+            'USER': config('DATABASE_USER'),
+            'PASSWORD': config('DATABASE_PASSWORD'),
+            'HOST': config('DATABASE_HOST'),
+            'PORT': '3306',
+            'OPTIONS': {
+                'charset': 'utf8mb4',  # Optional: Set the character set
+            },
+        }
+    }
+
+elif database_type == 'postgresql':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB', 'imhotep_clinic'),
+            'USER': os.getenv('POSTGRES_USER', 'imhotep_user'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'securepassword'),
+            'HOST': os.getenv('POSTGRES_HOST', 'db'),
+            'PORT': os.getenv('POSTGRES_PORT', '5432'),
+        }
+    }
 
 AUTH_USER_MODEL = 'accounts.User'
 
