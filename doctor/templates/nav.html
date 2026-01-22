@@ -41,12 +41,17 @@
           </svg>
         </div>
         {% if request.user.is_doctor %}
-        <div>
+        <div class="flex-1">
           <p class="text-sm font-medium text-gray-900">Dr. {{ user.first_name }} {{ user.last_name }}</p>
           <p class="text-xs text-gray-500">{{ user.doctor_profile.specialization }}</p>
+          {% if user.is_demo %}
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 mt-1">
+            Demo Account
+          </span>
+          {% endif %}
         </div>
         {% elif request.user.is_assistant %}
-        <div>
+        <div class="flex-1">
           <p class="text-sm font-medium text-gray-900">Asst. {{ user.first_name }} {{ user.last_name }}</p>
           <p class="text-xs text-gray-500">Assistant to Dr. {{ user.assistant_profile.doctor.user.get_full_name }}</p>
         </div>
@@ -144,12 +149,17 @@
           </div>
           <!-- Update the mobile navigation profile section to match the desktop version -->
           {% if request.user.is_doctor %}
-          <div>
+          <div class="flex-1">
             <p class="text-sm font-medium text-gray-900">Dr. {{ user.first_name }} {{ user.last_name }}</p>
             <p class="text-xs text-gray-500">{{ user.doctor_profile.specialization }}</p>
+            {% if user.is_demo %}
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 mt-1">
+              Demo Account
+            </span>
+            {% endif %}
           </div>
           {% elif request.user.is_assistant %}
-          <div>
+          <div class="flex-1">
             <p class="text-sm font-medium text-gray-900">Asst. {{ user.first_name }} {{ user.last_name }}</p>
             <p class="text-xs text-gray-500">Assistant to Dr. {{ user.assistant_profile.doctor.user.get_full_name }}</p>
           </div>

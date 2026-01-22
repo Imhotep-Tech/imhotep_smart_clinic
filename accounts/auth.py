@@ -18,6 +18,7 @@ import requests
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from imhotep_smart_clinic.settings import SITE_DOMAIN
+from doctor.models import DoctorProfile
 
 #the register route
 def register(request):
@@ -232,6 +233,39 @@ def user_logout(request):
     messages.success(request, "You have been logged out.")
     return redirect("login")
 
+def demo_login(request):
+    """Login as demo doctor account"""
+    # Get or create demo account
+    demo_username = "demo_doctor"
+    demo_user = User.objects.filter(username=demo_username, is_demo=True).first()
+    
+    if not demo_user:
+        
+        demo_user = User.objects.create_user(
+            username=demo_username,
+            email="demo@imhotepsmartclinic.com",
+            password="demo123456",
+            first_name="Demo",
+            last_name="Doctor",
+            email_verify=True,
+            user_type='doctor',
+            is_demo=True
+        )
+        
+        DoctorProfile.objects.create(
+            user=demo_user,
+            specialization="General Practice"
+        )
+    
+    # Log in the demo user
+    backend = get_backends()[0]
+    demo_user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
+    login(request, demo_user)
+    
+    messages.success(request, "Logged in as Demo Doctor. Some features are restricted.")
+    messages.info(request, "Note: You cannot change password, email, username, or name in demo mode.")
+    return redirect("doctor_dashboard")
+
 class CustomPasswordResetView(PasswordResetView):
     template_name = 'password_reset.html'
     form_class = PasswordResetForm
@@ -410,7 +444,7 @@ def add_username_google_login(request):
 
     # Validate username
     if User.objects.filter(username=new_username).exists():
-        messages.error(request, "Username already taken. Please choose another one.")
+        messages.error(request, "Username already taken. Please choose another.")
         return render(request, 'add_username_google.html')
 
     # Update username in session

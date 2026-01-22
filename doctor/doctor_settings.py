@@ -58,6 +58,10 @@ def update_doctor_profile(request):
 def upload_clinic_logo(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     
+    if request.user.is_demo:
+        messages.error(request, "Demo accounts cannot update profile details. Please create your own account to access all features.")
+        return redirect('update_doctor_profile')
+
     if request.method == 'POST' and request.FILES.get('clinic_logo'):
         uploaded_file = request.FILES['clinic_logo']
         
@@ -114,6 +118,10 @@ def upload_clinic_logo(request):
 def remove_clinic_logo(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     
+    if request.user.is_demo:
+        messages.error(request, "Demo accounts cannot update profile details. Please create your own account to access all features.")
+        return redirect('update_doctor_profile')
+
     # Check if there's a logo to remove
     if doctor_profile.clinic_photo_path:
         try:
