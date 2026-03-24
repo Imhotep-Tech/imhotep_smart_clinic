@@ -32,6 +32,8 @@ SITE_DOMAIN = config('SITE_DOMAIN')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', SITE_DOMAIN.replace('https://', '').replace('http://', '')] 
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 if DEBUG == False:
     # Security settings - keep these as they are
     SECURE_SSL_REDIRECT = True
