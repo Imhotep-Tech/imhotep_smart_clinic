@@ -19,5 +19,5 @@ django-cors-headers==4.3.1
 django-storages==1.14.2  # If using cloud storage for media
 
 psycopg2-binary
-requests
+requests>=2.31.0
 jwt
