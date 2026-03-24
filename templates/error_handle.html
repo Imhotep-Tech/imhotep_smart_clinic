@@ -9,11 +9,8 @@
     <meta charset="utf-8">
     <link rel="shortcut icon" href="{% static 'logo_1_.ico' %}">
     <meta name="google-site-verification" content="t0C7WT8MTJ1gP87eh4Y7U9bkqPxRAnm1JxYLnDix6_Y" />
-    <meta name="keywords" content="7CS Loyalty App, 7cs, Loyalty App, 7 cylinders, 7 cylinders loyalty app">
 </head>
 <body>
-  {% extends "base.html" %}
-  {% block content %}
   <div class="grid h-screen place-content-center bg-white px-4">
     <div class="text-center">
       <h1 class="text-6xl font-black text-gray-300">{{ error_code }}</h1>
@@ -32,6 +29,5 @@
     }, 1000);
   })();
   </script>
-  {% endblock %}
 </body>
 </html>
