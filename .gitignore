@@ -1,5 +1,4 @@
 .env
-migrations/
 imhotep-tasks-twa/
 __pycache__/
 clinic_logos/
