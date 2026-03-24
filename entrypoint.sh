@@ -34,7 +34,7 @@ fi
 # Run migrations
 echo "Running database migrations..."
 python manage.py makemigrations accounts
-python manage.py makemigrations doctors
+python manage.py makemigrations doctor
 python manage.py makemigrations assistant
 python manage.py makemigrations
 python manage.py migrate
@@ -53,3 +53,7 @@ else:
 
 # Start the application
 exec "$@"
+
+echo "Starting Gunicorn Web Server..."
+# Start the server (Make sure the wsgi name matches your project exactly)
+exec gunicorn --bind 0.0.0.0:8000 imhotep_smart_clinic.wsgi:application
