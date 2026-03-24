@@ -1,11 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 
-# Wait for database to be ready
-echo "Waiting for database..."
-while ! nc -z db 5432; do
-  sleep 0.1
-done
-echo "Database is ready!"
+if [ "$database_type" = "postgresql" ]
+then
+    echo "Waiting for database..."
+
+    # FIX: Use $DATABASE_HOST and $DATABASE_PORT instead of "db" and "5432"
+    while ! nc -z $DATABASE_HOST $DATABASE_PORT; do
+      sleep 0.1
+    done
+
+    echo "PostgreSQL started"
+fi
 
 # Reset migrations if there are conflicts
 echo "Checking for migration conflicts..."
