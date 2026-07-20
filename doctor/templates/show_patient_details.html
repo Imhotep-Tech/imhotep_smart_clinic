@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Patient Details - Imhotep Smart Clinic{% endblock %}
@@ -107,11 +108,11 @@
                 
                 <!-- Patient Information Card -->
                 <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-4">Basic Information</h2>
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "Basic Information" %}</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Contact Information -->
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Contact Information</h3>
+                            <h3 class="text-lg font-semibold text-gray-700 mb-3">{% trans "Contact Information" %}</h3>
                             <div class="space-y-3">
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-md bg-blue-100 text-blue-600">
@@ -120,7 +121,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <h4 class="text-sm font-medium text-gray-500">Phone Number</h4>
+                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Phone Number" %}</h4>
                                         <p class="text-base font-medium">{{ patient.phone_number }}</p>
                                     </div>
                                 </div>
@@ -129,7 +130,7 @@
                         {% if request.user.is_doctor %}
                         <!-- Personal Information -->
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Personal Information</h3>
+                            <h3 class="text-lg font-semibold text-gray-700 mb-3">{% trans "Personal Information" %}</h3>
                             <div class="space-y-3">
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-md bg-purple-100 text-purple-600">
@@ -138,7 +139,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <h4 class="text-sm font-medium text-gray-500">Gender</h4>
+                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Gender" %}</h4>
                                         <p class="text-base font-medium">{{ patient.gender }}</p>
                                     </div>
                                 </div>
@@ -150,7 +151,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <h4 class="text-sm font-medium text-gray-500">Date of Birth</h4>
+                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Date of Birth" %}</h4>
                                         <p class="text-base font-medium">{{ patient.date_of_birth }}</p>
                                     </div>
                                 </div>
@@ -161,7 +162,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <h4 class="text-sm font-medium text-gray-500">Age</h4>
+                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Age" %}</h4>
                                         <p class="text-base font-medium">{{ patient_age }} years</p>
                                     </div>
                                 </div>
@@ -176,7 +177,7 @@
                 <div class="grid grid-cols-1 gap-6">
                     <div class="p-6 bg-white rounded-lg shadow-md">
                         <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-xl font-bold text-gray-800">Medical Records</h2>
+                            <h2 class="text-xl font-bold text-gray-800">{% trans "Medical Records" %}</h2>
                             <span class="text-sm font-medium text-indigo-600">Total: {{ records|length }}</span>
                         </div>
                         <div class="mt-6">
@@ -220,27 +221,17 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {% if record.prescription %}
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        Prescribed
-                                                    </span>
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{% trans "Prescribed" %}</span>
                                                 {% else %}
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                        No prescription
-                                                    </span>
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">{% trans "No prescription" %}</span>
                                                 {% endif %}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <div class="flex space-x-3">
                                                     {% if request.user.is_doctor %}
-                                                    <button type="button" onclick="openRecordDetails('{{ record.id }}')" class="text-indigo-600 hover:text-indigo-900">
-                                                        View Details
-                                                    </button>
-                                                    <a href="{% url 'update_medical_record' %}?medical_record_id={{ record.id }}" class="text-blue-600 hover:text-blue-900">
-                                                        Edit
-                                                    </a>
-                                                    <button type="button" onclick="openDeleteRecordModal('{{ record.id }}')" class="text-red-600 hover:text-red-900">
-                                                        Delete
-                                                    </button>
+                                                    <button type="button" onclick="openRecordDetails('{{ record.id }}')" class="text-indigo-600 hover:text-indigo-900">{% trans "View Details" %}</button>
+                                                    <a href="{% url 'update_medical_record' %}?medical_record_id={{ record.id }}" class="text-blue-600 hover:text-blue-900">{% trans "Edit" %}</a>
+                                                    <button type="button" onclick="openDeleteRecordModal('{{ record.id }}')" class="text-red-600 hover:text-red-900">{% trans "Delete" %}</button>
                                                     {% if record.prescription %}
                                                     <a href="{% url 'generate_prescription_pdf' record.id %}" class="text-green-600 hover:text-green-800" target="_blank">
                                                         <span class="flex items-center">
@@ -252,7 +243,7 @@
                                                     </a>
                                                     {% endif %}
                                                     {% else %}
-                                                    <span class="text-gray-400">Restricted</span>
+                                                    <span class="text-gray-400">{% trans "Restricted" %}</span>
                                                     {% endif %}
                                                 </div>
                                             </td>
@@ -271,22 +262,22 @@
                                                 </div>
                                                 <div class="space-y-4">
                                                     <div>
-                                                        <h4 class="text-sm font-medium text-gray-500">Date</h4>
+                                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Date" %}</h4>
                                                         <p class="text-base font-medium">{{ record.date }}</p>
                                                     </div>
                                                     <div>
-                                                        <h4 class="text-sm font-medium text-gray-500">Medical Details</h4>
+                                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Medical Details" %}</h4>
                                                         <div class="text-base medical-content">{{ record.details|safe }}</div>
                                                     </div>
                                                     {% if record.remarks %}
                                                     <div>
-                                                        <h4 class="text-sm font-medium text-gray-500">Remarks</h4>
+                                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Remarks" %}</h4>
                                                         <p class="text-base whitespace-pre-line">{{ record.remarks }}</p>
                                                     </div>
                                                     {% endif %}
                                                     {% if record.prescription %}
                                                     <div>
-                                                        <h4 class="text-sm font-medium text-gray-500">Prescription</h4>
+                                                        <h4 class="text-sm font-medium text-gray-500">{% trans "Prescription" %}</h4>
                                                         <div class="text-base medical-content prescription-content">{{ record.prescription|safe }}</div>
                                                     </div>
                                                     <div class="mt-4 flex justify-end">
@@ -311,23 +302,15 @@
                             <div class="py-4 flex items-center justify-between border-t border-gray-200 mt-4">
                                 <div class="flex-1 flex justify-between sm:hidden">
                                     {% if page_obj.has_previous %}
-                                    <a href="?patient_id={{ patients.0.id }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                        Previous
-                                    </a>
+                                    <a href="?patient_id={{ patients.0.id }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">{% trans "Previous" %}</a>
                                     {% else %}
-                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">
-                                        Previous
-                                    </span>
+                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">{% trans "Previous" %}</span>
                                     {% endif %}
                                     
                                     {% if page_obj.has_next %}
-                                    <a href="?patient_id={{ patients.0.id }}&page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                        Next
-                                    </a>
+                                    <a href="?patient_id={{ patients.0.id }}&page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">{% trans "Next" %}</a>
                                     {% else %}
-                                    <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">
-                                        Next
-                                    </span>
+                                    <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">{% trans "Next" %}</span>
                                     {% endif %}
                                 </div>
                                 
@@ -342,14 +325,14 @@
                                         <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                             {% if page_obj.has_previous %}
                                             <a href="?patient_id={{ patients.0.id }}&page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                                <span class="sr-only">Previous</span>
+                                                <span class="sr-only">{% trans "Previous" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                                 </svg>
                                             </a>
                                             {% else %}
                                             <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed">
-                                                <span class="sr-only">Previous</span>
+                                                <span class="sr-only">{% trans "Previous" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                                 </svg>
@@ -366,14 +349,14 @@
                                             
                                             {% if page_obj.has_next %}
                                             <a href="?patient_id={{ patients.0.id }}&page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                                <span class="sr-only">Next</span>
+                                                <span class="sr-only">{% trans "Next" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                                 </svg>
                                             </a>
                                             {% else %}
                                             <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed">
-                                                <span class="sr-only">Next</span>
+                                                <span class="sr-only">{% trans "Next" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                                 </svg>
@@ -391,8 +374,8 @@
                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
-                            <h3 class="mt-2 text-lg font-medium text-gray-900">No medical records yet</h3>
-                            <p class="mt-1 text-sm text-gray-500">Start by adding the first medical record for this patient.</p>
+                            <h3 class="mt-2 text-lg font-medium text-gray-900">{% trans "No medical records yet" %}</h3>
+                            <p class="mt-1 text-sm text-gray-500">{% trans "Start by adding the first medical record for this patient." %}</p>
                             {% if request.user.is_doctor %}
                             <div class="mt-6">
                                 <a href="{% url 'add_medical_record' %}?patient_id={{ patients.0.id }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -414,12 +397,10 @@
                     <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <h3 class="mt-4 text-xl font-medium text-gray-900">Patient not found</h3>
-                    <p class="mt-2 text-gray-500">The patient you are looking for doesn't exist or you don't have permission to view it.</p>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900">{% trans "Patient not found" %}</h3>
+                    <p class="mt-2 text-gray-500">{% trans "The patient you are looking for doesn't exist or you don't have permission to view it." %}</p>
                     <div class="mt-6">
-                        <a href="{% url 'show_patients' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Return to Patient List
-                        </a>
+                        <a href="{% url 'show_patients' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">{% trans "Return to Patient List" %}</a>
                     </div>
                 </div>
             {% endif %}
@@ -438,19 +419,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Confirm Patient Deletion</h3>
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">{% trans "Confirm Patient Deletion" %}</h3>
                 <p class="text-center text-gray-600 mb-6">
                     Are you sure you want to delete <span class="font-semibold">{{ patients.0.name }}</span>? This action cannot be undone.
                 </p>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none">
-                        Cancel
-                    </button>
+                    <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none">{% trans "Cancel" %}</button>
                     <form action="{% url 'delete_patient' %}?patient_id={{ patients.0.id }}" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none">
-                            Delete
-                        </button>
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none">{% trans "Delete" %}</button>
                     </form>
                 </div>
             </div>
@@ -469,19 +446,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Confirm Medical Record Deletion</h3>
-                <p class="text-center text-gray-600 mb-6">
-                    Are you sure you want to delete this medical record? This action cannot be undone.
-                </p>
+                <h3 class="text-xl font-bold text-center text-gray-900 mb-2">{% trans "Confirm Medical Record Deletion" %}</h3>
+                <p class="text-center text-gray-600 mb-6">{% trans "Are you sure you want to delete this medical record? This action cannot be undone." %}</p>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="closeDeleteRecordModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none">
-                        Cancel
-                    </button>
+                    <button type="button" onclick="closeDeleteRecordModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none">{% trans "Cancel" %}</button>
                     <form id="deleteRecordForm" action="" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none">
-                            Delete
-                        </button>
+                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none">{% trans "Delete" %}</button>
                     </form>
                 </div>
             </div>

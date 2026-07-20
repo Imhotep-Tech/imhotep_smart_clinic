@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" style="padding: 20px 0 0 0;">
-                                        <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #111827;">Activate Your Account</h1>
+                                        <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #111827;">{% trans "Activate Your Account" %}</h1>
                                     </td>
                                 </tr>
                             </table>
@@ -36,17 +37,17 @@
                                 <tr>
                                     <td style="padding: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 24px;">
                                         <p style="margin: 0 0 16px 0;">Hi {{ user.username }},</p>
-                                        <p style="margin: 0 0 24px 0;">Thank you for registering with Imhotep Smart Clinic. To access our patient management system and healthcare services, please activate your account by clicking the button below:</p>
+                                        <p style="margin: 0 0 24px 0;">{% trans "Thank you for registering with Imhotep Smart Clinic. To access our patient management system and healthcare services, please activate your account by clicking the button below:" %}</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="center" style="padding: 16px 0 32px 0;">
-                                        <a href="{{ domain }}{% url 'activate' uidb64=uid token=token %}" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: 500; display: inline-block; font-size: 16px;">Activate Account</a>
+                                        <a href="{{ domain }}{% url 'activate' uidb64=uid token=token %}" style="background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: 500; display: inline-block; font-size: 16px;">{% trans "Activate Account" %}</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 0; color: #6b7280; font-size: 14px; line-height: 20px;">
-                                        <p style="margin: 0 0 16px 0;">If the button above doesn't work, you can also copy and paste the following link into your browser:</p>
+                                        <p style="margin: 0 0 16px 0;">{% trans "If the button above doesn't work, you can also copy and paste the following link into your browser:" %}</p>
                                         <p style="margin: 0; word-break: break-all; color: #0d9488;">{{ domain }}{% url 'activate' uidb64=uid token=token %}</p>
                                     </td>
                                 </tr>
@@ -60,8 +61,8 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
                                     <td style="color: #6b7280; font-size: 12px; text-align: center;">
-                                        <p style="margin: 0 0 8px 0;">Imhotep Smart Clinic — Your Health, Our Priority</p>
-                                        <p style="margin: 0;">This email was sent to you because you registered for a healthcare account.</p>
+                                        <p style="margin: 0 0 8px 0;">{% trans "Imhotep Smart Clinic — Your Health, Our Priority" %}</p>
+                                        <p style="margin: 0;">{% trans "This email was sent to you because you registered for a healthcare account." %}</p>
                                     </td>
                                 </tr>
                             </table>

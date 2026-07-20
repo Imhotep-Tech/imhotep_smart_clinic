@@ -11,6 +11,7 @@ import io
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.translation import gettext_lazy as _
 from datetime import timedelta
 
 @login_required
@@ -27,10 +28,10 @@ def update_doctor_profile(request):
             
         try:
             doctor_profile.save()
-            messages.success(request, 'Your professional details were successfully updated!')
+            messages.success(request, _('Your professional details were successfully updated!'))
             return redirect('update_doctor_profile')
         except Exception as e:
-            messages.error(request, f'Error updating doctor profile: {str(e)}')
+            messages.error(request, _(f'Error updating doctor profile: {str(e)}'))
     
     # Get all appointment times and paginate
     appointment_times_list = AppointmentTimes.objects.filter(doctor=doctor_profile).order_by('day_of_the_week', 'start_time')
@@ -59,7 +60,7 @@ def upload_clinic_logo(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     
     if request.user.is_demo:
-        messages.error(request, "Demo accounts cannot update profile details. Please create your own account to access all features.")
+        messages.error(request, _("Demo accounts cannot update profile details. Please create your own account to access all features."))
         return redirect('update_doctor_profile')
 
     if request.method == 'POST' and request.FILES.get('clinic_logo'):
@@ -68,12 +69,12 @@ def upload_clinic_logo(request):
         # Validate file type
         allowed_types = ['image/jpeg', 'image/png']
         if uploaded_file.content_type not in allowed_types:
-            messages.error(request, 'Only JPEG, or PNG images are allowed')
+            messages.error(request, _('Only JPEG, or PNG images are allowed'))
             return redirect('update_doctor_profile')
         
         # Validate file size (max 500KB)
         if uploaded_file.size > 500 * 1024:  # 500KB
-            messages.error(request, 'Image size should not exceed 500KB')
+            messages.error(request, _('Image size should not exceed 500KB'))
             return redirect('update_doctor_profile')
         
         try:
@@ -107,9 +108,9 @@ def upload_clinic_logo(request):
             doctor_profile.clinic_photo_path = saved_path
             doctor_profile.save()
             
-            messages.success(request, 'Clinic logo uploaded successfully!')
+            messages.success(request, _('Clinic logo uploaded successfully!'))
         except Exception as e:
-            messages.error(request, f'Error uploading logo: {str(e)}')
+            messages.error(request, _(f'Error uploading logo: {str(e)}'))
     
     return redirect('update_doctor_profile')
 
@@ -119,7 +120,7 @@ def remove_clinic_logo(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
     
     if request.user.is_demo:
-        messages.error(request, "Demo accounts cannot update profile details. Please create your own account to access all features.")
+        messages.error(request, _("Demo accounts cannot update profile details. Please create your own account to access all features."))
         return redirect('update_doctor_profile')
 
     # Check if there's a logo to remove
@@ -133,11 +134,11 @@ def remove_clinic_logo(request):
             doctor_profile.clinic_photo_path = ''
             doctor_profile.save()
             
-            messages.success(request, 'Clinic logo removed successfully!')
+            messages.success(request, _('Clinic logo removed successfully!'))
         except Exception as e:
-            messages.error(request, f'Error removing logo: {str(e)}')
+            messages.error(request, _(f'Error removing logo: {str(e)}'))
     else:
-        messages.info(request, 'No logo to remove.')
+        messages.info(request, _('No logo to remove.'))
     
     return redirect('update_doctor_profile')
 
@@ -167,10 +168,10 @@ def set_appointment_times(request):
         
             try:
                 new_appointment_time.save()
-                messages.success(request, 'Your appointment time were successfully added!')
+                messages.success(request, _('Your appointment time were successfully added!'))
                 return redirect('update_doctor_profile')
             except Exception as e:
-                messages.error(request, f'Error updating doctor profile: {str(e)}')
+                messages.error(request, _(f'Error updating doctor profile: {str(e)}'))
                 return redirect('update_doctor_profile')
     
     context = {
@@ -199,10 +200,10 @@ def update_appointment_times(request):
         
         try:
             appointment_time.save()
-            messages.success(request, 'Your appointment time were successfully updated!')
+            messages.success(request, _('Your appointment time were successfully updated!'))
             return redirect('update_doctor_profile')
         except Exception as e:
-            messages.error(request, f'Error updating doctor profile: {str(e)}')
+            messages.error(request, _(f'Error updating doctor profile: {str(e)}'))
             return redirect('update_doctor_profile')
     
     appointment_id = request.GET.get('appointment_id')
@@ -226,10 +227,10 @@ def deactivate_appointment_times(request):
         
         try:
             appointment_time.save()
-            messages.success(request, 'Your appointment time were successfully updated!')
+            messages.success(request, _('Your appointment time were successfully updated!'))
             return redirect('update_doctor_profile')
         except Exception as e:
-            messages.error(request, f'Error updating doctor profile: {str(e)}')
+            messages.error(request, _(f'Error updating doctor profile: {str(e)}'))
             return redirect('update_doctor_profile')
 
     return redirect('update_doctor_profile')

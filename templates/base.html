@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,6 +47,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
+                darkMode: 'class',
                 theme: {
                     extend: {
                         colors: {
@@ -80,8 +81,16 @@
         </script>
         
         {% block extra_head %}{% endblock %}
+        
+        <script>
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
     </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200">
   <div id="page-loader" aria-hidden="true">
     <div class="spinner" role="status" aria-label="Loading"></div>
   </div>

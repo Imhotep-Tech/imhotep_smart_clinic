@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,10 +14,10 @@
   <div class="grid h-screen place-content-center bg-white px-4">
     <div class="text-center">
       <h1 class="text-6xl font-black text-gray-300">{{ error_code }}</h1>
-      <p class="text-2xl font-bold tracking-tight">Uh‑oh!</p>
+      <p class="text-2xl font-bold tracking-tight">{% trans "Uh‑oh!" %}</p>
       <p class="mt-3 text-muted">{{ error_description }}</p>
       <p class="mt-2">Redirecting to the homepage in <span id="countdown">10</span> seconds…</p>
-      <a href="/" class="btn btn-primary mt-3">Go Back Home</a>
+      <a href="/" class="btn btn-primary mt-3">{% trans "Go Back Home" %}</a>
     </div>
   </div>
   <script>

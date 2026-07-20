@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,10 +168,10 @@
             </div>
         </div>
         
-        <h1 class="prescription-title">PRESCRIPTION</h1>
+        <h1 class="prescription-title">{% trans "PRESCRIPTION" %}</h1>
         
         <div class="patient-info">
-            <h3>Patient Information</h3>
+            <h3>{% trans "Patient Information" %}</h3>
             <p>Name: <span {% if has_arabic_name %}class="rtl"{% endif %}>{{ patient.name }}</span></p>
             <p>Gender: {{ patient.gender }}</p>
             {% if patient.date_of_birth %}
@@ -180,7 +181,7 @@
         
         {% if medical_record.prescription %}
         <div class="prescription-content rx-symbol">
-            <h3>Prescription:</h3>
+            <h3>{% trans "Prescription:" %}</h3>
             <div {% if has_arabic %}class="rtl"{% endif %}>
                 {{ medical_record.prescription|safe }}
             </div>
@@ -188,14 +189,14 @@
         {% endif %}
         
         <div class="signature">
-            <p>Doctor's Signature:</p>
+            <p>{% trans "Doctor's Signature:" %}</p>
             <p {% if has_arabic_doctor_name %}class="rtl"{% endif %}>Dr. {{ doctor_name }}</p>
             <p {% if has_arabic_specialization %}class="rtl"{% endif %}>Specialization: {{ doctor_specialization }}</p>
         </div>
         
         <div class="footer">
-            <p>This is a computer-generated prescription and does not require a physical signature.</p>
-            <p class="clinic-name">Imhotep Smart Clinic</p>
+            <p>{% trans "This is a computer-generated prescription and does not require a physical signature." %}</p>
+            <p class="clinic-name">{% trans "Imhotep Smart Clinic" %}</p>
         </div>
     </div>
 </body>

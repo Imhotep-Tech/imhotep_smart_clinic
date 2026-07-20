@@ -12,6 +12,7 @@ from reportlab.lib.units import inch, mm
 import os
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils.translation import gettext_lazy as _
 from weasyprint import HTML, CSS
 
 @doctor_required
@@ -38,12 +39,12 @@ def add_medical_record(request):
 
         try:
             new_record.save()
-            messages.success(request, f"Patient Record for {patient.name} Added successfully!")
+            messages.success(request, _(f"Patient Record for {patient.name} Added successfully!"))
             patient_id = patient.id
             url = reverse('show_patient_details') + f'?patient_id={patient_id}'
             return redirect(url)
         except Exception as e:
-            messages.error(request, f"Something went wrong while saving the new record for patient: {str(e)}")
+            messages.error(request, _(f"Something went wrong while saving the new record for patient: {str(e)}"))
             return redirect("doctor_dashboard")
     else:
         patient_id = request.GET.get('patient_id')
@@ -87,11 +88,11 @@ def update_medical_record(request):
 
     try:
         medical_record.save()
-        messages.success(request, "Medical record updated successfully!")
+        messages.success(request, _("Medical record updated successfully!"))
         url = reverse('show_patient_details') + f'?patient_id={patient_id}'
         return redirect(url)
     except Exception as e:
-        messages.error(request, f"Something went wrong while updating the medical record: {str(e)}")
+        messages.error(request, _(f"Something went wrong while updating the medical record: {str(e)}"))
         url = reverse('show_patient_details') + f'?patient_id={patient_id}'
         return redirect(url)
 
@@ -108,15 +109,15 @@ def delete_medical_record(request):
             name = medical_record.patient.name
             date = medical_record.date
             medical_record.delete()
-            messages.success(request, f"Record deleted for {name} with date {date} successfully!")
+            messages.success(request, _(f"Record deleted for {name} with date {date} successfully!"))
             url = reverse('show_patient_details') + f'?patient_id={patient_id}'
             return redirect(url)
         except Exception as e:
-            messages.error(request, f"Something went wrong while deleting the medical record: {str(e)}")
+            messages.error(request, _(f"Something went wrong while deleting the medical record: {str(e)}"))
             url = reverse('show_patient_details') + f'?patient_id={patient_id}'
             return redirect(url)
     else:
-        messages.error(request, "Method Not allowed")
+        messages.error(request, _("Method Not allowed"))
         return redirect("doctor_dashboard")
 
 @login_required

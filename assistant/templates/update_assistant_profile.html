@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Assistant Profile Settings - Imhotep Smart Clinic{% endblock %}
@@ -13,20 +14,20 @@
         <div class="container mx-auto max-w-3xl">
             <!-- Header -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Assistant Profile Settings</h1>
-                <p class="text-gray-600">Manage your account information</p>
+                <h1 class="text-3xl font-bold text-gray-800">{% trans "Assistant Profile Settings" %}</h1>
+                <p class="text-gray-600">{% trans "Manage your account information" %}</p>
             </div>
 
             <!-- Personal Information Section -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Personal Information</h2>
+                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">{% trans "Personal Information" %}</h2>
                 
                 <form method="POST" action="{% url 'update_assistant_profile' %}">
                     {% csrf_token %}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <!-- First Name Field -->
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">{% trans "First Name" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -39,7 +40,7 @@
                         
                         <!-- Last Name Field -->
                         <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Last Name" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,7 +54,7 @@
                     
                     <!-- Email Address Field -->
                     <div class="mb-6">
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Email Address" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,12 +63,12 @@
                             </div>
                             <input type="email" name="email" id="email" value="{{ user_data.email }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="your.email@example.com" readonly>
                         </div>
-                        <p class="mt-1 text-xs text-gray-500">Email cannot be changed as it's linked to your account</p>
+                        <p class="mt-1 text-xs text-gray-500">{% trans "Email cannot be changed as it's linked to your account" %}</p>
                     </div>
                     
                     <!-- Associated Doctor Information -->
                     <div class="mb-6 p-4 bg-blue-50 rounded-md border border-blue-200">
-                        <h3 class="text-md font-medium text-blue-800 mb-2">Associated Doctor Information</h3>
+                        <h3 class="text-md font-medium text-blue-800 mb-2">{% trans "Associated Doctor Information" %}</h3>
                         <p class="text-sm text-blue-700">
                             You are working as an assistant for: <span class="font-semibold">Dr. {{ assistant_profile.doctor.user.get_full_name }}</span>
                         </p>
@@ -75,25 +76,21 @@
                     
                     <!-- Submit Button -->
                     <div class="flex justify-end">
-                        <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm transition-colors">
-                            Update Account Information
-                        </button>
+                        <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Update Account Information" %}</button>
                     </div>
                 </form>
             </div>
             
             <!-- Password Management Section -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Password Management</h2>
+                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">{% trans "Password Management" %}</h2>
                 
                 <div class="flex items-center justify-between">
                     <div>
-                        <h3 class="text-lg font-medium text-gray-700">Change Your Password</h3>
-                        <p class="text-sm text-gray-500">Update your password to maintain account security</p>
+                        <h3 class="text-lg font-medium text-gray-700">{% trans "Change Your Password" %}</h3>
+                        <p class="text-sm text-gray-500">{% trans "Update your password to maintain account security" %}</p>
                     </div>
-                    <a href="{% url 'password_change' %}" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md shadow-sm transition-colors">
-                        Change Password
-                    </a>
+                    <a href="{% url 'password_change' %}" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md shadow-sm transition-colors">{% trans "Change Password" %}</a>
                 </div>
             </div>
         </div>

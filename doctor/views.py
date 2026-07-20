@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from accounts.decorators import doctor_required
 from datetime import datetime, date, timedelta
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 @login_required
 @doctor_required
@@ -83,7 +84,7 @@ def add_assistant(request):
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
 
     if request.user.is_demo:
-        messages.error(request, "Demo accounts cannot add assistants. Please create your own account to access all features.")
+        messages.error(request, _("Demo accounts cannot add assistants. Please create your own account to access all features."))
         return redirect('doctor_dashboard')
 
     if request.method!="POST":
@@ -107,17 +108,17 @@ def add_assistant(request):
 
         # Check if email contains '@' (this should always be true with our format)
         if not '@' in email:
-            messages.error(request, "Email generation failed. Please try a different username.")
+            messages.error(request, _("Email generation failed. Please try a different username."))
             return render(request, "add_assistant.html", {"user_data": request.user})
 
         # Check if username already exists
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already taken, please choose another one!')
+            messages.error(request, _('Username already taken, please choose another one!'))
             return render(request, "add_assistant.html", {"user_data": request.user})
 
         # Check if email already exists
         if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already taken, please choose another username!')
+            messages.error(request, _('Email already taken, please choose another username!'))
             return render(request, "add_assistant.html", {"user_data": request.user})
 
         # Create a new user
@@ -133,7 +134,7 @@ def add_assistant(request):
         user.save()
 
         if not doctor_profile:
-            messages.error(request, 'Doctor profile not found. Assistant creation failed.')
+            messages.error(request, _('Doctor profile not found. Assistant creation failed.'))
             user.delete()
             return redirect("add_assistant")
             
@@ -144,5 +145,5 @@ def add_assistant(request):
         
         assistant.save()
 
-        messages.success(request, "Assistant account created successfully!")
+        messages.success(request, _("Assistant account created successfully!"))
         return redirect("doctor_dashboard")

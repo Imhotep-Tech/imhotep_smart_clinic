@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Edit Medical Record - Imhotep Smart Clinic{% endblock %}
@@ -27,7 +28,7 @@
         <div class="container mx-auto max-w-3xl">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-800">Edit Medical Record</h1>
+                <h1 class="text-3xl font-bold text-gray-800">{% trans "Edit Medical Record" %}</h1>
                 <p class="text-gray-600">Update medical record for {{ patient_name }}</p>
             </div>
 
@@ -48,7 +49,7 @@
                     
                     <!-- Date Field -->
                     <div class="mb-6">
-                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Date" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -61,17 +62,17 @@
                     
                     <!-- Details Field -->
                     <div class="mb-6">
-                        <label for="details-editor" class="block text-sm font-medium text-gray-700 mb-1">Medical Details</label>
+                        <label for="details-editor" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Medical Details" %}</label>
                         <div class="editor-container rounded-md border border-gray-300">
                             <div id="details-editor"></div>
                         </div>
                         <input type="hidden" name="details" id="details-input">
-                        <p class="mt-1 text-xs text-gray-500">Use the toolbar to format text with bullet points, bold, or underline.</p>
+                        <p class="mt-1 text-xs text-gray-500">{% trans "Use the toolbar to format text with bullet points, bold, or underline." %}</p>
                     </div>
 
                     <!-- Remarks Field -->
                     <div class="mb-6">
-                        <label for="remarks" class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
+                        <label for="remarks" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Remarks" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <textarea name="remarks" id="remarks" rows="3" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Additional remarks or observations">{{ medical_record.remarks }}</textarea>
                         </div>
@@ -79,22 +80,18 @@
 
                     <!-- Prescription Field -->
                     <div class="mb-6">
-                        <label for="prescription-editor" class="block text-sm font-medium text-gray-700 mb-1">Prescription</label>
+                        <label for="prescription-editor" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Prescription" %}</label>
                         <div class="editor-container rounded-md border border-gray-300">
                             <div id="prescription-editor"></div>
                         </div>
                         <input type="hidden" name="prescription" id="prescription-input">
-                        <p class="mt-1 text-xs text-gray-500">Add formatted medication instructions with proper emphasis on dosage.</p>
+                        <p class="mt-1 text-xs text-gray-500">{% trans "Add formatted medication instructions with proper emphasis on dosage." %}</p>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="flex justify-end">
-                        <a href="{% url 'show_patient_details' %}?patient_id={{ patient_id }}" class="mr-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Cancel
-                        </a>
-                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Update Record
-                        </button>
+                        <a href="{% url 'show_patient_details' %}?patient_id={{ patient_id }}" class="mr-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{% trans "Cancel" %}</a>
+                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{% trans "Update Record" %}</button>
                     </div>
                 </form>
             </div>

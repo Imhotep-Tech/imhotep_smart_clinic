@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Choose Username - Imhotep Smart Clinic{% endblock %}
 
@@ -13,18 +14,14 @@
           </svg>
         </div>
         
-        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">
-          Choose a Username
-        </h1>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          The username from your Google account is already taken
-        </p>
+        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">{% trans "Choose a Username" %}</h1>
+        <p class="mt-2 text-center text-sm text-gray-600">{% trans "The username from your Google account is already taken" %}</p>
 
         <form action="{% url 'add_username_google_login' %}" class="mt-8 space-y-5" method="post">
           {% csrf_token %}
           
           <div>
-            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <label for="username" class="block text-sm font-medium text-gray-700">{% trans "Username" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,19 +33,17 @@
           </div>
 
           <div class="text-xs text-gray-500">
-            <p>After choosing a username, you'll be asked to select your role (patient or doctor) and provide a few more details.</p>
+            <p>{% trans "After choosing a username, you'll be asked to select your role (patient or doctor) and provide a few more details." %}</p>
           </div>
 
           <div>
-            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">
-              Continue
-            </button>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">{% trans "Continue" %}</button>
           </div>
         </form>
 
         <p class="mt-6 text-center text-sm text-gray-600">
           Changed your mind?
-          <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">Back to login</a>
+          <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">{% trans "Back to login" %}</a>
         </p>
       </div>
     </div>

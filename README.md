@@ -752,6 +752,35 @@ pg_dump -U imhotepclinic_user imhotepclinic_db > backup.sql
 psql -U imhotepclinic_user imhotepclinic_db < backup.sql
 ```
 
+### 🌍 Translation & Localization
+
+If you modify the UI or need to update translations for supported languages (like Arabic or French), you must extract the new text and compile the message files.
+
+**Using Docker (Recommended):**
+```bash
+# 1. Extract new translation strings
+docker-compose exec backend python manage.py makemessages -l ar -l fr
+
+# 2. Add your translations in the .po files located in locale/<lang>/LC_MESSAGES/django.po
+
+# 3. Compile the translations
+docker-compose exec backend python manage.py compilemessages
+```
+*(Note: The command is `docker-compose exec backend ...` because `backend` is the name of your web service in `docker-compose.yml`)*
+
+**Using Manual Setup:**
+```bash
+# Ensure your virtual environment is activated
+source venv/bin/activate
+
+# Extract strings
+python manage.py makemessages -l ar -l fr
+
+# Compile translations
+python manage.py compilemessages
+```
+*(Note: macOS users may need to run `brew install gettext` if `makemessages` fails).*
+
 ## 🧪 Development
 
 ### Code Style

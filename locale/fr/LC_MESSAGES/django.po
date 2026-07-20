@@ -1,0 +1,1898 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-20 19:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: accounts/admin.py:16
+msgid "Personal info"
+msgstr ""
+
+#: accounts/admin.py:17
+msgid "Imhotep Clinic info"
+msgstr ""
+
+#: accounts/admin.py:18
+msgid "Permissions"
+msgstr ""
+
+#: accounts/admin.py:19
+msgid "Important dates"
+msgstr ""
+
+#: accounts/auth.py:43 accounts/auth.py:470
+msgid "Please select a valid user type."
+msgstr ""
+
+#: accounts/auth.py:53 accounts/user_profile.py:91
+msgid "Email must include @!"
+msgstr ""
+
+#: accounts/auth.py:58 accounts/user_profile.py:103 doctor/views.py:116
+msgid "Username already taken, please choose another one!"
+msgstr ""
+
+#: accounts/auth.py:63
+msgid "Email already taken, please choose another one or login!"
+msgstr ""
+
+#: accounts/auth.py:82 accounts/auth.py:489
+msgid "Specialization is required for doctors."
+msgstr ""
+
+#: accounts/auth.py:112
+msgid ""
+"Account created successfully! Please check your email to verify your account."
+msgstr ""
+
+#: accounts/auth.py:138
+msgid ""
+"Thank you for your email confirmation. You can now log in to your account."
+msgstr ""
+
+#: accounts/auth.py:141 accounts/user_profile.py:198
+msgid "Activation link is invalid!"
+msgstr ""
+
+#: accounts/auth.py:165 accounts/auth.py:201 accounts/auth.py:404
+msgid "Login successful!"
+msgstr ""
+
+#: accounts/auth.py:187 accounts/auth.py:220
+msgid "E-mail not verified!"
+msgstr ""
+
+#: accounts/auth.py:188 accounts/auth.py:221
+msgid "Please check your email to verify your account."
+msgstr ""
+
+#: accounts/auth.py:191
+msgid "Invalid username or password!"
+msgstr ""
+
+#: accounts/auth.py:224 accounts/auth.py:226
+msgid "Invalid E-mail or password!"
+msgstr ""
+
+#: accounts/auth.py:234
+msgid "You have been logged out."
+msgstr ""
+
+#: accounts/auth.py:266
+msgid "Logged in as Demo Doctor. Some features are restricted."
+msgstr ""
+
+#: accounts/auth.py:267
+msgid ""
+"Note: You cannot change password, email, username, or name in demo mode."
+msgstr ""
+
+#: accounts/auth.py:365
+msgid "Google login was canceled. Please try again."
+msgstr ""
+
+#: accounts/auth.py:431
+#, python-brace-format
+msgid "An error occurred during Google login. Please try again. {e}"
+msgstr ""
+
+#: accounts/auth.py:441 accounts/auth.py:463
+msgid "Session expired. Please try again."
+msgstr ""
+
+#: accounts/auth.py:448
+msgid "Username already taken. Please choose another."
+msgstr ""
+
+#: accounts/auth.py:516
+msgid "Account created successfully!"
+msgstr ""
+
+#: accounts/decorators.py:10 accounts/decorators.py:26
+#: accounts/decorators.py:46
+msgid "Please log in to access this page."
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:28
+msgid "Verify Your New Email Address"
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:42
+msgid ""
+"You recently requested to change your email address for your Imhotep Smart "
+"Clinic account. To verify this new email address, please click the button "
+"below:"
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:47
+msgid "Verify Email Address"
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:52
+#: accounts/templates/activate_mail_send.html:50
+#: accounts/templates/password_reset_email.html:52
+msgid ""
+"If the button above doesn't work, you can also copy and paste the following "
+"link into your browser:"
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:58
+msgid ""
+"If you didn't request this email change, you can safely ignore this email. "
+"Your account will continue using your current email address."
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:71
+#: accounts/templates/activate_mail_send.html:64
+#: accounts/templates/password_reset_email.html:71
+msgid "Imhotep Smart Clinic — Your Health, Our Priority"
+msgstr ""
+
+#: accounts/templates/activate_mail_change_send.html:72
+msgid "This email was sent to verify your email address change request."
+msgstr ""
+
+#: accounts/templates/activate_mail_send.html:26
+msgid "Activate Your Account"
+msgstr ""
+
+#: accounts/templates/activate_mail_send.html:40
+msgid ""
+"Thank you for registering with Imhotep Smart Clinic. To access our patient "
+"management system and healthcare services, please activate your account by "
+"clicking the button below:"
+msgstr ""
+
+#: accounts/templates/activate_mail_send.html:45
+msgid "Activate Account"
+msgstr ""
+
+#: accounts/templates/activate_mail_send.html:65
+msgid ""
+"This email was sent to you because you registered for a healthcare account."
+msgstr ""
+
+#: accounts/templates/add_details_google.html:15
+msgid "Complete Your Profile"
+msgstr ""
+
+#: accounts/templates/add_details_google.html:16
+msgid "We need a few more details to set up your account"
+msgstr ""
+
+#: accounts/templates/add_details_google.html:31
+#: accounts/templates/register.html:96
+msgid "I am a"
+msgstr ""
+
+#: accounts/templates/add_details_google.html:49
+#: accounts/templates/register.html:114
+#: doctor/templates/update_doctor_profile.html:84
+msgid "Medical Specialization"
+msgstr ""
+
+#: accounts/templates/add_details_google.html:64
+#: accounts/templates/register.html:129 doctor/templates/add_patient.html:74
+#: doctor/templates/edit_patient.html:83
+#: doctor/templates/show_patient_details.html:154
+msgid "Date of Birth"
+msgstr ""
+
+#: accounts/templates/add_details_google.html:77
+msgid "Complete Registration"
+msgstr ""
+
+#: accounts/templates/add_details_google.html:83
+#: accounts/templates/add_username_google.html:46
+msgid "Back to login"
+msgstr ""
+
+#: accounts/templates/add_username_google.html:17
+msgid "Choose a Username"
+msgstr ""
+
+#: accounts/templates/add_username_google.html:18
+msgid "The username from your Google account is already taken"
+msgstr ""
+
+#: accounts/templates/add_username_google.html:24
+#: accounts/templates/register.html:44 doctor/templates/add_assistant.html:48
+#: doctor/templates/update_doctor_profile.html:390
+msgid "Username"
+msgstr ""
+
+#: accounts/templates/add_username_google.html:36
+msgid ""
+"After choosing a username, you'll be asked to select your role (patient or "
+"doctor) and provide a few more details."
+msgstr ""
+
+#: accounts/templates/add_username_google.html:40
+msgid "Continue"
+msgstr ""
+
+#: accounts/templates/login.html:16
+msgid "Welcome to Imhotep Clinic"
+msgstr ""
+
+#: accounts/templates/login.html:17
+msgid "Sign in to access the patient management system"
+msgstr ""
+
+#: accounts/templates/login.html:36
+msgid "Or sign in with email"
+msgstr ""
+
+#: accounts/templates/login.html:44
+msgid "Username or Email"
+msgstr ""
+
+#: accounts/templates/login.html:57 accounts/templates/register.html:143
+#: doctor/templates/add_assistant.html:88
+msgid "Password"
+msgstr ""
+
+#: accounts/templates/login.html:58
+msgid "Forgot password?"
+msgstr ""
+
+#: accounts/templates/login.html:77 accounts/templates/password_reset.html:47
+#: accounts/templates/password_reset_complete.html:19
+#: accounts/templates/register.html:193
+msgid "Sign in"
+msgstr ""
+
+#: accounts/templates/login.html:86
+msgid "Or try demo"
+msgstr ""
+
+#: accounts/templates/login.html:101
+msgid "Register here"
+msgstr ""
+
+#: accounts/templates/password_change.html:15
+#: assistant/templates/update_assistant_profile.html:90
+#: doctor/templates/update_doctor_profile.html:428
+msgid "Change Your Password"
+msgstr ""
+
+#: accounts/templates/password_change.html:16
+msgid "Create a new secure password for your account"
+msgstr ""
+
+#: accounts/templates/password_change.html:24
+msgid "Current Password"
+msgstr ""
+
+#: accounts/templates/password_change.html:43
+#: accounts/templates/password_reset_confirm.html:22
+msgid "New Password"
+msgstr ""
+
+#: accounts/templates/password_change.html:58
+msgid "Password must be at least 8 characters long"
+msgstr ""
+
+#: accounts/templates/password_change.html:63
+#: accounts/templates/password_reset_confirm.html:47
+msgid "Confirm New Password"
+msgstr ""
+
+#: accounts/templates/password_change.html:81
+#: accounts/templates/password_reset_confirm.html:72
+msgid "Change my password"
+msgstr ""
+
+#: accounts/templates/password_change.html:86
+msgid "Return to previous page"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:16
+msgid "Demo Account Restriction"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:17 accounts/user_profile.py:25
+msgid ""
+"Demo accounts cannot change passwords. Please create your own account to "
+"access all features."
+msgstr ""
+
+#: accounts/templates/password_change_done.html:20
+#: accounts/templates/password_change_done.html:41
+#: accounts/templates/password_change_done.html:43
+msgid "Return to dashboard"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:21
+msgid "Create your own account"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:36
+msgid "Password Changed Successfully"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:37
+msgid ""
+"Your password has been changed. You can now use your new password to log in "
+"to your account."
+msgstr ""
+
+#: accounts/templates/password_change_done.html:45
+msgid "Return to home page"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:49
+#: accounts/templates/password_change_done.html:51
+msgid "Update profile"
+msgstr ""
+
+#: accounts/templates/password_change_done.html:56
+msgid ""
+"For security reasons, you might be asked to log in again in some parts of "
+"the application."
+msgstr ""
+
+#: accounts/templates/password_reset.html:15
+#: accounts/templates/password_reset_email.html:47
+msgid "Reset Password"
+msgstr ""
+
+#: accounts/templates/password_reset.html:16
+msgid "Enter your email to receive password reset instructions"
+msgstr ""
+
+#: accounts/templates/password_reset.html:22
+#: accounts/templates/register.html:83
+msgid "Email"
+msgstr ""
+
+#: accounts/templates/password_reset.html:41
+msgid "Reset my password"
+msgstr ""
+
+#: accounts/templates/password_reset_complete.html:15
+msgid "Password Reset Complete"
+msgstr ""
+
+#: accounts/templates/password_reset_complete.html:16
+msgid ""
+"Your password has been successfully reset. You can now log in with your new "
+"password."
+msgstr ""
+
+#: accounts/templates/password_reset_confirm.html:15
+msgid "Set New Password"
+msgstr ""
+
+#: accounts/templates/password_reset_confirm.html:16
+msgid "Create a strong password for your Imhotep Smart Clinic account"
+msgstr ""
+
+#: accounts/templates/password_reset_done.html:15
+msgid "Recovery Email Sent"
+msgstr ""
+
+#: accounts/templates/password_reset_done.html:17
+msgid "We've emailed you instructions for resetting your password."
+msgstr ""
+
+#: accounts/templates/password_reset_done.html:18
+msgid ""
+"You should receive the email shortly. Please check your inbox and "
+"professional spam folder."
+msgstr ""
+
+#: accounts/templates/password_reset_email.html:28
+msgid "Reset Your Password"
+msgstr ""
+
+#: accounts/templates/password_reset_email.html:41
+msgid "Hello,"
+msgstr ""
+
+#: accounts/templates/password_reset_email.html:42
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"Imhotep Smart Clinic account. Please click the button below to set a new "
+"password for accessing the patient management system:"
+msgstr ""
+
+#: accounts/templates/password_reset_email.html:58
+msgid ""
+"If you didn't request a password reset, you can safely ignore this email. "
+"Your account security is important to us."
+msgstr ""
+
+#: accounts/templates/password_reset_email.html:72
+msgid ""
+"This email was sent because a password reset was requested for your account."
+msgstr ""
+
+#: accounts/templates/register.html:16
+msgid "Join Imhotep Smart Clinic"
+msgstr ""
+
+#: accounts/templates/register.html:17
+msgid ""
+"Access patient records, manage appointments, and provide quality healthcare"
+msgstr ""
+
+#: accounts/templates/register.html:36
+msgid "Or register with email"
+msgstr ""
+
+#: accounts/templates/register.html:57
+#: assistant/templates/update_assistant_profile.html:30
+#: doctor/templates/add_assistant.html:62
+#: doctor/templates/update_doctor_profile.html:363
+msgid "First Name"
+msgstr ""
+
+#: accounts/templates/register.html:70
+#: assistant/templates/update_assistant_profile.html:43
+#: doctor/templates/add_assistant.html:75
+#: doctor/templates/update_doctor_profile.html:376
+msgid "Last Name"
+msgstr ""
+
+#: accounts/templates/register.html:162
+msgid "Confirm Password"
+msgstr ""
+
+#: accounts/templates/register.html:181
+msgid "terms of service"
+msgstr ""
+
+#: accounts/templates/register.html:183
+msgid "privacy policy"
+msgstr ""
+
+#: accounts/templates/register.html:187
+msgid "Create your account"
+msgstr ""
+
+#: accounts/user_profile.py:55 doctor/doctor_settings.py:63
+#: doctor/doctor_settings.py:123
+msgid ""
+"Demo accounts cannot update profile details. Please create your own account "
+"to access all features."
+msgstr ""
+
+#: accounts/user_profile.py:63
+msgid "First name updated"
+msgstr ""
+
+#: accounts/user_profile.py:66
+msgid "Last name updated"
+msgstr ""
+
+#: accounts/user_profile.py:71
+msgid "Nothing in the credentials has been updated!"
+msgstr ""
+
+#: accounts/user_profile.py:116
+msgid "Email already taken, please choose another one!"
+msgstr ""
+
+#: accounts/user_profile.py:146
+msgid ""
+"Email submitted successfully! Please check your email to verify your Email."
+msgstr ""
+
+#: accounts/user_profile.py:156
+msgid "Your profile was successfully updated!"
+msgstr ""
+
+#: accounts/user_profile.py:189
+msgid ""
+"Thank you for your email confirmation. Your email has been updated "
+"successfully."
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:19
+msgid ""
+"As an assistant, you can help manage appointments and patient information. "
+"Use the navigation menu on the left to access different sections."
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:25
+msgid "Manage Appointments"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:26
+msgid "View and schedule patient appointments"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:30
+#: doctor/templates/doctor_dashboard.html:73
+msgid "Patient Records"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:31
+msgid "Access patient information"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:35
+#: doctor/templates/nav.html:108 doctor/templates/nav.html:233
+msgid "My Profile"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:36
+msgid "Update your personal information"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:42
+msgid "Assistant Guidelines"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:45
+msgid "Your Permissions"
+msgstr ""
+
+#: assistant/templates/assistant_dashboard.html:55
+msgid "Limitations"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:17
+msgid "Assistant Profile Settings"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:18
+msgid "Manage your account information"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:23
+#: doctor/templates/show_patient_details.html:133
+#: doctor/templates/update_doctor_profile.html:356
+msgid "Personal Information"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:57
+#: doctor/templates/update_doctor_profile.html:403
+msgid "Email Address"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:66
+msgid "Email cannot be changed as it's linked to your account"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:71
+msgid "Associated Doctor Information"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:79
+#: doctor/templates/update_doctor_profile.html:417
+msgid "Update Account Information"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:86
+#: doctor/templates/update_doctor_profile.html:424
+msgid "Password Management"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:91
+#: doctor/templates/update_doctor_profile.html:429
+msgid "Update your password to maintain account security"
+msgstr ""
+
+#: assistant/templates/update_assistant_profile.html:93
+msgid "Change Password"
+msgstr ""
+
+#: assistant/views.py:38
+msgid "Your personal information was successfully updated!"
+msgstr ""
+
+#: assistant/views.py:40
+msgid "Error updating profile: {str(e)}"
+msgstr ""
+
+#: doctor/appointments.py:38
+msgid "Invalid date format. Please use YYYY-MM-DD."
+msgstr ""
+
+#: doctor/appointments.py:76 doctor/appointments.py:224
+msgid "No appointment specified."
+msgstr ""
+
+#: doctor/appointments.py:85
+msgid "Error retrieving appointment details: {str(e)}"
+msgstr ""
+
+#: doctor/appointments.py:179
+msgid "There is already an appointment scheduled at this time."
+msgstr ""
+
+#: doctor/appointments.py:191
+#, python-brace-format
+msgid "Appointment for {patient.name} scheduled successfully!"
+msgstr ""
+
+#: doctor/appointments.py:195
+msgid "Error scheduling appointment: {str(e)}"
+msgstr ""
+
+#: doctor/appointments.py:250
+msgid "Date and time are required."
+msgstr ""
+
+#: doctor/appointments.py:259
+msgid "Cannot schedule appointments in the past."
+msgstr ""
+
+#: doctor/appointments.py:270
+msgid "There is another appointment already scheduled at this time."
+msgstr ""
+
+#: doctor/appointments.py:278
+#, python-brace-format
+msgid "Appointment for {appointment.patient.name} updated successfully!"
+msgstr ""
+
+#: doctor/appointments.py:282
+msgid "Invalid date or time format."
+msgstr ""
+
+#: doctor/appointments.py:286
+msgid "Method not allowed."
+msgstr ""
+
+#: doctor/appointments.py:290
+msgid "Error updating appointment: {str(e)}"
+msgstr ""
+
+#: doctor/appointments.py:306
+#, python-brace-format
+msgid "Appointment deleted for {name} with date {date} successfully!"
+msgstr ""
+
+#: doctor/appointments.py:309 doctor/medical_records.py:116
+msgid "Something went wrong while deleting the medical record: {str(e)}"
+msgstr ""
+
+#: doctor/appointments.py:312 doctor/medical_records.py:120
+#: doctor/patients.py:204
+msgid "Method Not allowed"
+msgstr ""
+
+#: doctor/appointments.py:320
+msgid "Method not allowed"
+msgstr ""
+
+#: doctor/appointments.py:336
+#, python-brace-format
+msgid ""
+"Appointment with {appointment.patient.name} marked as {appointment.status}."
+msgstr ""
+
+#: doctor/appointments.py:341
+msgid "Error updating appointment status: {str(e)}"
+msgstr ""
+
+#: doctor/doctor_settings.py:31
+msgid "Your professional details were successfully updated!"
+msgstr ""
+
+#: doctor/doctor_settings.py:34 doctor/doctor_settings.py:174
+#: doctor/doctor_settings.py:206 doctor/doctor_settings.py:233
+msgid "Error updating doctor profile: {str(e)}"
+msgstr ""
+
+#: doctor/doctor_settings.py:72
+msgid "Only JPEG, or PNG images are allowed"
+msgstr ""
+
+#: doctor/doctor_settings.py:77
+msgid "Image size should not exceed 500KB"
+msgstr ""
+
+#: doctor/doctor_settings.py:111
+msgid "Clinic logo uploaded successfully!"
+msgstr ""
+
+#: doctor/doctor_settings.py:113
+msgid "Error uploading logo: {str(e)}"
+msgstr ""
+
+#: doctor/doctor_settings.py:137
+msgid "Clinic logo removed successfully!"
+msgstr ""
+
+#: doctor/doctor_settings.py:139
+msgid "Error removing logo: {str(e)}"
+msgstr ""
+
+#: doctor/doctor_settings.py:141
+msgid "No logo to remove."
+msgstr ""
+
+#: doctor/doctor_settings.py:171
+msgid "Your appointment time were successfully added!"
+msgstr ""
+
+#: doctor/doctor_settings.py:203 doctor/doctor_settings.py:230
+msgid "Your appointment time were successfully updated!"
+msgstr ""
+
+#: doctor/medical_records.py:42
+#, python-brace-format
+msgid "Patient Record for {patient.name} Added successfully!"
+msgstr ""
+
+#: doctor/medical_records.py:47
+msgid "Something went wrong while saving the new record for patient: {str(e)}"
+msgstr ""
+
+#: doctor/medical_records.py:91
+msgid "Medical record updated successfully!"
+msgstr ""
+
+#: doctor/medical_records.py:95
+msgid "Something went wrong while updating the medical record: {str(e)}"
+msgstr ""
+
+#: doctor/medical_records.py:112
+#, python-brace-format
+msgid "Record deleted for {name} with date {date} successfully!"
+msgstr ""
+
+#: doctor/patients.py:42
+msgid "Patient Added successfully!"
+msgstr ""
+
+#: doctor/patients.py:47 doctor/patients.py:182 doctor/patients.py:200
+msgid "Something went wrong while saving the new patient data: {str(e)}"
+msgstr ""
+
+#: doctor/patients.py:178
+msgid "Patient Updated successfully!"
+msgstr ""
+
+#: doctor/patients.py:197
+#, python-brace-format
+msgid "Patient {name} Delete successfully!"
+msgstr ""
+
+#: doctor/templates/add_assistant.html:17 doctor/templates/nav.html:100
+#: doctor/templates/nav.html:225
+msgid "Add Assistant"
+msgstr ""
+
+#: doctor/templates/add_assistant.html:18
+msgid "Create an account for a clinic assistant"
+msgstr ""
+
+#: doctor/templates/add_assistant.html:57
+msgid "Email will be automatically generated as username@doctor-username.com"
+msgstr ""
+
+#: doctor/templates/add_assistant.html:108
+msgid "About Assistants"
+msgstr ""
+
+#: doctor/templates/add_assistant.html:122
+#: doctor/templates/add_medical_record.html:94
+#: doctor/templates/add_patient.html:87
+#: doctor/templates/appointment_list.html:346
+#: doctor/templates/edit_medical_record.html:93
+#: doctor/templates/edit_patient.html:96
+#: doctor/templates/schedule_appointment.html:111
+#: doctor/templates/set_appointment_times.html:122
+#: doctor/templates/show_patient_details.html:427
+#: doctor/templates/show_patient_details.html:452
+#: doctor/templates/update_appointment_doctor.html:113
+#: doctor/templates/update_appointment_times.html:140
+msgid "Cancel"
+msgstr ""
+
+#: doctor/templates/add_assistant.html:123
+msgid "Create Assistant"
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:31
+msgid "Add Medical Record"
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:53
+#: doctor/templates/appointment_list.html:35
+#: doctor/templates/edit_medical_record.html:52
+#: doctor/templates/show_patient_details.html:265
+msgid "Date"
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:66
+#: doctor/templates/edit_medical_record.html:65
+#: doctor/templates/show_patient_details.html:269
+msgid "Medical Details"
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:71
+#: doctor/templates/edit_medical_record.html:70
+msgid "Use the toolbar to format text with bullet points, bold, or underline."
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:76
+#: doctor/templates/edit_medical_record.html:75
+#: doctor/templates/show_patient_details.html:274
+msgid "Remarks"
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:84
+#: doctor/templates/edit_medical_record.html:83
+#: doctor/templates/show_patient_details.html:280
+msgid "Prescription"
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:89
+#: doctor/templates/edit_medical_record.html:88
+msgid "Add formatted medication instructions with proper emphasis on dosage."
+msgstr ""
+
+#: doctor/templates/add_medical_record.html:95
+msgid "Save Record"
+msgstr ""
+
+#: doctor/templates/add_patient.html:17
+msgid "Add New Patient"
+msgstr ""
+
+#: doctor/templates/add_patient.html:18
+msgid "Create a new patient record in your practice"
+msgstr ""
+
+#: doctor/templates/add_patient.html:27 doctor/templates/edit_patient.html:37
+msgid "Form data is automatically saved as you type"
+msgstr ""
+
+#: doctor/templates/add_patient.html:31 doctor/templates/edit_patient.html:41
+msgid "Patient Name"
+msgstr ""
+
+#: doctor/templates/add_patient.html:44 doctor/templates/edit_patient.html:54
+#: doctor/templates/show_patient_details.html:124
+msgid "Phone Number"
+msgstr ""
+
+#: doctor/templates/add_patient.html:57 doctor/templates/edit_patient.html:67
+#: doctor/templates/show_patient_details.html:142
+msgid "Gender"
+msgstr ""
+
+#: doctor/templates/add_patient.html:88
+msgid "Add Patient"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:18 doctor/templates/nav.html:83
+#: doctor/templates/nav.html:208
+msgid "Appointments"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:19
+msgid "Manage your patient appointments"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:39
+msgid "Status"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:54
+msgid "Clear"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:63
+msgid "All Appointments"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:64
+msgid "Scheduled"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:65
+msgid "Completed"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:115
+#: doctor/templates/appointment_list.html:258
+#: doctor/templates/doctor_dashboard.html:180
+msgid "View"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:117
+#: doctor/templates/appointment_list.html:260
+msgid "Update"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:119
+#: doctor/templates/appointment_list.html:262
+#: doctor/templates/appointment_list.html:349
+#: doctor/templates/show_patient_details.html:234
+#: doctor/templates/show_patient_details.html:430
+#: doctor/templates/show_patient_details.html:455
+msgid "Delete"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:125
+#: doctor/templates/appointment_list.html:268
+msgid "Mark Completed"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:131
+msgid "Unmark Scheduled"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:143
+#: doctor/templates/appointment_list.html:284
+#: doctor/templates/appointment_list.html:324
+msgid "No appointments found"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:144
+#: doctor/templates/appointment_list.html:285
+#: doctor/templates/appointment_list.html:325
+msgid "Get started by creating a new appointment."
+msgstr ""
+
+#: doctor/templates/appointment_list.html:165
+#: doctor/templates/appointment_list.html:167
+#: doctor/templates/appointment_list.html:188
+#: doctor/templates/appointment_list.html:195
+#: doctor/templates/appointment_list.html:303
+#: doctor/templates/appointment_list.html:305
+#: doctor/templates/doctor_dashboard.html:225
+#: doctor/templates/doctor_dashboard.html:227
+#: doctor/templates/doctor_dashboard.html:248
+#: doctor/templates/doctor_dashboard.html:255
+#: doctor/templates/show_patient_details.html:305
+#: doctor/templates/show_patient_details.html:307
+#: doctor/templates/show_patient_details.html:328
+#: doctor/templates/show_patient_details.html:335
+#: doctor/templates/show_patients.html:145
+#: doctor/templates/show_patients.html:147
+#: doctor/templates/show_patients.html:168
+#: doctor/templates/show_patients.html:175
+#: doctor/templates/update_doctor_profile.html:180
+#: doctor/templates/update_doctor_profile.html:182
+#: doctor/templates/update_doctor_profile.html:203
+#: doctor/templates/update_doctor_profile.html:210
+#: doctor/templates/update_doctor_profile.html:299
+#: doctor/templates/update_doctor_profile.html:301
+msgid "Previous"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:171
+#: doctor/templates/appointment_list.html:173
+#: doctor/templates/appointment_list.html:212
+#: doctor/templates/appointment_list.html:219
+#: doctor/templates/appointment_list.html:309
+#: doctor/templates/appointment_list.html:311
+#: doctor/templates/doctor_dashboard.html:231
+#: doctor/templates/doctor_dashboard.html:233
+#: doctor/templates/doctor_dashboard.html:272
+#: doctor/templates/doctor_dashboard.html:279
+#: doctor/templates/show_patient_details.html:311
+#: doctor/templates/show_patient_details.html:313
+#: doctor/templates/show_patient_details.html:352
+#: doctor/templates/show_patient_details.html:359
+#: doctor/templates/show_patients.html:151
+#: doctor/templates/show_patients.html:153
+#: doctor/templates/show_patients.html:192
+#: doctor/templates/show_patients.html:199
+#: doctor/templates/update_doctor_profile.html:186
+#: doctor/templates/update_doctor_profile.html:188
+#: doctor/templates/update_doctor_profile.html:227
+#: doctor/templates/update_doctor_profile.html:234
+#: doctor/templates/update_doctor_profile.html:305
+#: doctor/templates/update_doctor_profile.html:307
+msgid "Next"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:274
+msgid "Mark Scheduled"
+msgstr ""
+
+#: doctor/templates/appointment_list.html:343
+msgid "Confirm Delete"
+msgstr ""
+
+#: doctor/templates/doctor_dashboard.html:50
+msgid "Total Patients"
+msgstr ""
+
+#: doctor/templates/doctor_dashboard.html:97
+#: doctor/templates/doctor_dashboard.html:133
+msgid "Today's Appointments"
+msgstr ""
+
+#: doctor/templates/doctor_dashboard.html:121
+msgid "Avg. Patients/Day"
+msgstr ""
+
+#: doctor/templates/doctor_dashboard.html:213
+#: doctor/templates/show_patient_details.html:232
+#: doctor/templates/show_patients.html:133
+msgid "View Details"
+msgstr ""
+
+#: doctor/templates/doctor_dashboard.html:297
+msgid "No appointments today"
+msgstr ""
+
+#: doctor/templates/doctor_dashboard.html:298
+msgid "Get started by scheduling an appointment."
+msgstr ""
+
+#: doctor/templates/edit_medical_record.html:31
+msgid "Edit Medical Record"
+msgstr ""
+
+#: doctor/templates/edit_medical_record.html:94
+msgid "Update Record"
+msgstr ""
+
+#: doctor/templates/edit_patient.html:17
+msgid "Edit Patient"
+msgstr ""
+
+#: doctor/templates/edit_patient.html:18
+msgid "Update patient information"
+msgstr ""
+
+#: doctor/templates/edit_patient.html:97
+msgid "Update Patient"
+msgstr ""
+
+#: doctor/templates/nav.html:25 doctor/templates/nav.html:149
+#: doctor/templates/prescription_pdf.html:199 templates/footer.html:10
+#: templates/landing_page.html:66
+msgid "Imhotep Smart Clinic"
+msgstr ""
+
+#: doctor/templates/nav.html:48 doctor/templates/nav.html:173
+msgid "Demo Account"
+msgstr ""
+
+#: doctor/templates/nav.html:67 doctor/templates/nav.html:192
+msgid "Dashboard"
+msgstr ""
+
+#: doctor/templates/nav.html:75 doctor/templates/nav.html:200
+msgid "Patients"
+msgstr ""
+
+#: doctor/templates/nav.html:93 doctor/templates/nav.html:218
+msgid "Settings"
+msgstr ""
+
+#: doctor/templates/nav.html:117 doctor/templates/nav.html:242
+msgid "Language"
+msgstr ""
+
+#: doctor/templates/nav.html:137 doctor/templates/nav.html:262
+msgid "Logout"
+msgstr ""
+
+#: doctor/templates/prescription_pdf.html:171
+msgid "PRESCRIPTION"
+msgstr ""
+
+#: doctor/templates/prescription_pdf.html:174
+msgid "Patient Information"
+msgstr ""
+
+#: doctor/templates/prescription_pdf.html:184
+msgid "Prescription:"
+msgstr ""
+
+#: doctor/templates/prescription_pdf.html:192
+msgid "Doctor's Signature:"
+msgstr ""
+
+#: doctor/templates/prescription_pdf.html:198
+msgid ""
+"This is a computer-generated prescription and does not require a physical "
+"signature."
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:17
+#: doctor/templates/schedule_appointment.html:112
+msgid "Schedule Appointment"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:18
+msgid "Book a new appointment for a patient"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:38
+msgid "Select Patient"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:53
+msgid "+ Add a new patient"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:61
+#: doctor/templates/update_appointment_doctor.html:57
+msgid "Appointment Date"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:70
+#: doctor/templates/update_appointment_doctor.html:71
+msgid "Select a date to see available time slots"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:75
+#: doctor/templates/update_appointment_doctor.html:76
+msgid "Available Time Slots"
+msgstr ""
+
+#: doctor/templates/schedule_appointment.html:98
+msgid "About Scheduling"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:17
+msgid "Set Appointment Times"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:18
+msgid "Define when you're available for patient appointments"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:33
+msgid "New Appointment Schedule"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:40
+#: doctor/templates/update_appointment_times.html:50
+msgid "Day of the Week"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:63
+#: doctor/templates/update_appointment_times.html:72
+msgid "Start Time"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:76
+#: doctor/templates/update_appointment_times.html:85
+msgid "End Time"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:90
+#: doctor/templates/update_appointment_times.html:99
+msgid "Time Between Appointments (minutes)"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:106
+#: doctor/templates/update_appointment_times.html:114
+msgid "This determines how long each appointment slot will be"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:111
+msgid "Tips for Setting Appointment Times"
+msgstr ""
+
+#: doctor/templates/set_appointment_times.html:123
+msgid "Create Schedule"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:111
+msgid "Basic Information"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:115
+msgid "Contact Information"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:165
+msgid "Age"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:180
+msgid "Medical Records"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:224
+msgid "Prescribed"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:226
+msgid "No prescription"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:233
+#: doctor/templates/update_doctor_profile.html:162
+#: doctor/templates/update_doctor_profile.html:283
+msgid "Edit"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:246
+msgid "Restricted"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:377
+msgid "No medical records yet"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:378
+msgid "Start by adding the first medical record for this patient."
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:400
+msgid "Patient not found"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:401
+msgid ""
+"The patient you are looking for doesn't exist or you don't have permission "
+"to view it."
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:403
+msgid "Return to Patient List"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:422
+msgid "Confirm Patient Deletion"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:449
+msgid "Confirm Medical Record Deletion"
+msgstr ""
+
+#: doctor/templates/show_patient_details.html:450
+msgid ""
+"Are you sure you want to delete this medical record? This action cannot be "
+"undone."
+msgstr ""
+
+#: doctor/templates/show_patients.html:18
+msgid "My Patients"
+msgstr ""
+
+#: doctor/templates/show_patients.html:19
+msgid "Manage your patient records"
+msgstr ""
+
+#: doctor/templates/show_patients.html:30
+msgid "Sort by"
+msgstr ""
+
+#: doctor/templates/show_patients.html:53
+msgid "Search Patients"
+msgstr ""
+
+#: doctor/templates/show_patients.html:72
+msgid "Search"
+msgstr ""
+
+#: doctor/templates/show_patients.html:73
+msgid "Reset"
+msgstr ""
+
+#: doctor/templates/show_patients.html:83
+msgid "Patient List"
+msgstr ""
+
+#: doctor/templates/show_patients.html:217
+msgid "No matching patients found"
+msgstr ""
+
+#: doctor/templates/show_patients.html:218
+msgid "Try a different search term or check your spelling."
+msgstr ""
+
+#: doctor/templates/show_patients.html:220
+msgid "No patients yet"
+msgstr ""
+
+#: doctor/templates/show_patients.html:221
+msgid "Start by adding your first patient record."
+msgstr ""
+
+#: doctor/templates/update_appointment_doctor.html:17
+#: doctor/templates/update_appointment_doctor.html:114
+msgid "Update Appointment"
+msgstr ""
+
+#: doctor/templates/update_appointment_doctor.html:38
+msgid "Patient"
+msgstr ""
+
+#: doctor/templates/update_appointment_doctor.html:99
+msgid "About Updating Appointments"
+msgstr ""
+
+#: doctor/templates/update_appointment_times.html:17
+msgid "Update Appointment Schedule"
+msgstr ""
+
+#: doctor/templates/update_appointment_times.html:18
+msgid "Modify your existing appointment availability"
+msgstr ""
+
+#: doctor/templates/update_appointment_times.html:34
+msgid "Edit Appointment Schedule"
+msgstr ""
+
+#: doctor/templates/update_appointment_times.html:119
+msgid "Status:"
+msgstr ""
+
+#: doctor/templates/update_appointment_times.html:141
+msgid "Update Schedule"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:17
+msgid "Doctor Profile Settings"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:18
+msgid "Manage your account information and professional details"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:23
+msgid "Clinic Logo"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:43
+msgid "Upload New Logo"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:51
+msgid "Maximum size: 500KB. Recommended dimensions: 300x300px"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:52
+msgid "Allowed formats: JPEG, PNG"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:56
+msgid "Upload Logo"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:60
+msgid "Remove Logo"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:77
+msgid "Professional Information"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:97
+msgid "Update Professional Details"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:106
+msgid "Appointment Schedules"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:107
+msgid "Set your availability for patient appointments"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:273
+msgid "Time Range"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:277
+msgid "Duration"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:318
+msgid "No appointment schedules"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:319
+msgid "Get started by creating a new appointment schedule."
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:340
+msgid "Managing Your Appointment Schedules"
+msgstr ""
+
+#: doctor/templates/update_doctor_profile.html:412
+msgid "Changing your email will require verification"
+msgstr ""
+
+#: doctor/views.py:87
+msgid ""
+"Demo accounts cannot add assistants. Please create your own account to "
+"access all features."
+msgstr ""
+
+#: doctor/views.py:111
+msgid "Email generation failed. Please try a different username."
+msgstr ""
+
+#: doctor/views.py:121
+msgid "Email already taken, please choose another username!"
+msgstr ""
+
+#: doctor/views.py:137
+msgid "Doctor profile not found. Assistant creation failed."
+msgstr ""
+
+#: doctor/views.py:148
+msgid "Assistant account created successfully!"
+msgstr ""
+
+#: imhotep_smart_clinic/settings.py:197
+msgid "English"
+msgstr ""
+
+#: imhotep_smart_clinic/settings.py:198
+msgid "Arabic"
+msgstr ""
+
+#: imhotep_smart_clinic/settings.py:199
+msgid "French"
+msgstr ""
+
+#: templates/error_handle.html:17
+msgid "Uh‑oh!"
+msgstr ""
+
+#: templates/error_handle.html:20
+msgid "Go Back Home"
+msgstr ""
+
+#: templates/footer.html:11
+msgid "Version 1.1.0"
+msgstr ""
+
+#: templates/footer.html:30
+msgid "Imhotep Tech"
+msgstr ""
+
+#: templates/footer.html:37 templates/terms.html:13
+msgid "Terms of Service"
+msgstr ""
+
+#: templates/footer.html:38 templates/privacy.html:13 templates/terms.html:44
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/footer.html:44
+msgid "X (Twitter)"
+msgstr ""
+
+#: templates/footer.html:50
+msgid "Instagram"
+msgstr ""
+
+#: templates/footer.html:56
+msgid "GitHub"
+msgstr ""
+
+#: templates/footer.html:65
+msgid "&copy; 2026 Imhotep Tech. All rights reserved."
+msgstr ""
+
+#: templates/landing_page.html:83
+msgid "Sign In"
+msgstr ""
+
+#: templates/landing_page.html:84
+msgid "Register"
+msgstr ""
+
+#: templates/landing_page.html:94
+msgid "Management Platform"
+msgstr ""
+
+#: templates/landing_page.html:96
+msgid ""
+"Streamline your medical practice with our comprehensive clinic management "
+"system. Connect with patients, manage appointments, and access medical "
+"records seamlessly."
+msgstr ""
+
+#: templates/landing_page.html:98 templates/landing_page.html:259
+msgid "Get Started Free"
+msgstr ""
+
+#: templates/landing_page.html:116
+msgid "Powerful Features for Modern Healthcare"
+msgstr ""
+
+#: templates/landing_page.html:118
+msgid ""
+"Our platform is designed to streamline your workflow and enhance patient care"
+msgstr ""
+
+#: templates/landing_page.html:129
+msgid "Smart Appointment Management"
+msgstr ""
+
+#: templates/landing_page.html:130
+msgid ""
+"Schedule and manage appointments with an intuitive interface. Reduce no-"
+"shows with automated reminders."
+msgstr ""
+
+#: templates/landing_page.html:140
+msgid "Digital Medical Records"
+msgstr ""
+
+#: templates/landing_page.html:141
+msgid ""
+"Keep detailed patient records in one secure location. Access history, "
+"prescriptions, and test results instantly."
+msgstr ""
+
+#: templates/landing_page.html:151
+msgid "Patient Management"
+msgstr ""
+
+#: templates/landing_page.html:152
+msgid ""
+"Comprehensive profiles for each patient with medical history, contact "
+"information, and care plans."
+msgstr ""
+
+#: templates/landing_page.html:162
+msgid "Secure & Compliant"
+msgstr ""
+
+#: templates/landing_page.html:163
+msgid ""
+"Built with security at its core. Compliant with healthcare data protection "
+"regulations and standards."
+msgstr ""
+
+#: templates/landing_page.html:173
+msgid "Analytics & Insights"
+msgstr ""
+
+#: templates/landing_page.html:174
+msgid ""
+"Data-driven insights to help optimize your practice, track patient trends, "
+"and improve care outcomes."
+msgstr ""
+
+#: templates/landing_page.html:184
+msgid "Communication Tools"
+msgstr ""
+
+#: templates/landing_page.html:185
+msgid ""
+"Streamlined communication between healthcare providers and staff to enhance "
+"coordination of care."
+msgstr ""
+
+#: templates/landing_page.html:196
+msgid "Why Choose Imhotep Smart Clinic?"
+msgstr ""
+
+#: templates/landing_page.html:198
+msgid "Our platform offers numerous benefits for healthcare professionals"
+msgstr ""
+
+#: templates/landing_page.html:212
+msgid "Improved Efficiency"
+msgstr ""
+
+#: templates/landing_page.html:213
+#, python-format
+msgid ""
+"Reduce administrative burden and paperwork with our intuitive digital "
+"system. Save up to 30%% of staff time."
+msgstr ""
+
+#: templates/landing_page.html:226
+msgid "Enhanced Patient Care"
+msgstr ""
+
+#: templates/landing_page.html:227
+msgid ""
+"Access complete patient history and data instantly, leading to better-"
+"informed clinical decisions and improved outcomes."
+msgstr ""
+
+#: templates/landing_page.html:240
+msgid "Reduced Errors"
+msgstr ""
+
+#: templates/landing_page.html:241
+msgid ""
+"Digital records eliminate common issues associated with paper-based systems, "
+"such as misplaced files or illegible handwriting."
+msgstr ""
+
+#: templates/landing_page.html:254
+msgid "Ready to transform your medical practice?"
+msgstr ""
+
+#: templates/landing_page.html:256
+msgid ""
+"Join thousands of healthcare professionals who have already improved their "
+"practice with Imhotep Smart Clinic."
+msgstr ""
+
+#: templates/landing_page.html:262
+msgid "Contact Us"
+msgstr ""
+
+#: templates/offline.html:24
+msgid "You Are Offline"
+msgstr ""
+
+#: templates/offline.html:25
+msgid ""
+"It seems you have lost your internet connection. Please check your "
+"connection and try again."
+msgstr ""
+
+#: templates/privacy.html:20 templates/terms.html:20
+msgid "1. Introduction"
+msgstr ""
+
+#: templates/privacy.html:21
+msgid ""
+"At Imhotep Smart Clinic, we take your privacy seriously. This Privacy Policy "
+"explains how we collect, use, disclose, and safeguard your information when "
+"you use our website, services, and applications (collectively, the "
+msgstr ""
+
+#: templates/privacy.html:22
+msgid ""
+"Please read this privacy policy carefully. If you do not agree with the "
+"terms of this privacy policy, please do not access our Services."
+msgstr ""
+
+#: templates/privacy.html:24
+msgid "2. Information We Collect"
+msgstr ""
+
+#: templates/privacy.html:26
+msgid "2.1 Personal Information"
+msgstr ""
+
+#: templates/privacy.html:27
+msgid ""
+"We may collect personal information that you voluntarily provide to us when "
+"you register for our Services, express an interest in obtaining information "
+"about us or our products and Services, or otherwise contact us. The personal "
+"information we collect may include:"
+msgstr ""
+
+#: templates/privacy.html:36
+msgid "2.2 Automatically Collected Information"
+msgstr ""
+
+#: templates/privacy.html:37
+msgid ""
+"When you access our Services, we may automatically collect certain "
+"information about your device, including:"
+msgstr ""
+
+#: templates/privacy.html:45
+msgid "3. How We Use Your Information"
+msgstr ""
+
+#: templates/privacy.html:46
+msgid "We use the information we collect for various purposes, including to:"
+msgstr ""
+
+#: templates/privacy.html:57
+msgid "4. Disclosure of Your Information"
+msgstr ""
+
+#: templates/privacy.html:58
+msgid "We may share your information with:"
+msgstr ""
+
+#: templates/privacy.html:66
+msgid "5. Security of Your Information"
+msgstr ""
+
+#: templates/privacy.html:67
+msgid ""
+"We use administrative, technical, and physical security measures to protect "
+"your personal information. While we have taken reasonable steps to secure "
+"the personal information you provide to us, please be aware that no security "
+"measures are perfect or impenetrable, and we cannot guarantee the absolute "
+"security of your information."
+msgstr ""
+
+#: templates/privacy.html:69
+msgid "6. HIPAA Compliance"
+msgstr ""
+
+#: templates/privacy.html:70
+msgid ""
+"As a healthcare service provider, we are committed to complying with the "
+"Health Insurance Portability and Accountability Act (HIPAA). We implement "
+"policies and procedures to safeguard protected health information (PHI) and "
+"maintain HIPAA compliance."
+msgstr ""
+
+#: templates/privacy.html:72
+msgid "7. Your Rights"
+msgstr ""
+
+#: templates/privacy.html:73
+msgid "You have certain rights regarding your personal information, including:"
+msgstr ""
+
+#: templates/privacy.html:81
+msgid "8. Children's Privacy"
+msgstr ""
+
+#: templates/privacy.html:82
+msgid ""
+"Our Services are not intended for individuals under the age of 18 without "
+"parental consent. We do not knowingly collect personal information from "
+"children under 18 years of age without appropriate parental or guardian "
+"consent."
+msgstr ""
+
+#: templates/privacy.html:84
+msgid "9. Changes to This Privacy Policy"
+msgstr ""
+
+#: templates/privacy.html:85
+msgid ""
+"We may update our Privacy Policy from time to time. We will notify you of "
+"any changes by posting the new Privacy Policy on this page and updating the "
+msgstr ""
+
+#: templates/privacy.html:87
+msgid "10. Contact Us"
+msgstr ""
+
+#: templates/privacy.html:88
+msgid ""
+"If you have questions or concerns about this Privacy Policy or our data "
+"practices, please contact us at privacy@imhoteptech.com."
+msgstr ""
+
+#: templates/terms.html:21
+msgid ""
+"Welcome to Imhotep Smart Clinic. These Terms of Service govern your use of "
+"our website, services, and applications (collectively, the "
+msgstr ""
+
+#: templates/terms.html:22
+msgid ""
+"By accessing or using our Services, you agree to be bound by these Terms. If "
+"you disagree with any part of the terms, you do not have permission to "
+"access the Services."
+msgstr ""
+
+#: templates/terms.html:24
+msgid "2. Use of Services"
+msgstr ""
+
+#: templates/terms.html:25
+msgid ""
+"Our Services are designed to facilitate healthcare management and "
+"coordination between patients and healthcare providers. You agree to use the "
+"Services only for lawful and legitimate purposes and in accordance with "
+"these Terms."
+msgstr ""
+
+#: templates/terms.html:27
+msgid "2.1 Medical Information"
+msgstr ""
+
+#: templates/terms.html:28
+msgid ""
+"The medical information provided through our Services is not intended to "
+"replace professional medical advice, diagnosis, or treatment. Always seek "
+"the advice of your physician or other qualified health provider with any "
+"questions you may have regarding a medical condition."
+msgstr ""
+
+#: templates/terms.html:30
+msgid "2.2 Account Responsibility"
+msgstr ""
+
+#: templates/terms.html:31
+msgid ""
+"If you create an account with us, you are responsible for maintaining the "
+"confidentiality of your account and password and for restricting access to "
+"your computer or device. You agree to accept responsibility for all "
+"activities that occur under your account."
+msgstr ""
+
+#: templates/terms.html:33
+msgid "3. User Obligations"
+msgstr ""
+
+#: templates/terms.html:34
+msgid "As a user of our Services, you agree not to:"
+msgstr ""
+
+#: templates/terms.html:43
+msgid "4. Privacy"
+msgstr ""
+
+#: templates/terms.html:46
+msgid "5. Intellectual Property"
+msgstr ""
+
+#: templates/terms.html:47
+msgid ""
+"The Services and their original content, features, and functionality are "
+"owned by Imhotep Tech and are protected by international copyright, "
+"trademark, patent, trade secret, and other intellectual property laws."
+msgstr ""
+
+#: templates/terms.html:49
+msgid "6. Termination"
+msgstr ""
+
+#: templates/terms.html:50
+msgid ""
+"We may terminate or suspend your account and access to the Services "
+"immediately, without prior notice or liability, for any reason whatsoever, "
+"including without limitation if you breach the Terms."
+msgstr ""
+
+#: templates/terms.html:52
+msgid "7. Limitation of Liability"
+msgstr ""
+
+#: templates/terms.html:53
+msgid ""
+"In no event shall Imhotep Tech, nor its directors, employees, partners, "
+"agents, suppliers, or affiliates, be liable for any indirect, incidental, "
+"special, consequential, or punitive damages, including without limitation, "
+"loss of profits, data, use, goodwill, or other intangible losses, resulting "
+"from your access to or use of or inability to access or use the Services."
+msgstr ""
+
+#: templates/terms.html:55
+msgid "8. Changes to Terms"
+msgstr ""
+
+#: templates/terms.html:56
+msgid ""
+"We reserve the right to modify or replace these Terms at any time. If a "
+"revision is material, we will provide at least 30 days' notice prior to any "
+"new terms taking effect. What constitutes a material change will be "
+"determined at our sole discretion."
+msgstr ""
+
+#: templates/terms.html:58
+msgid "9. Contact Us"
+msgstr ""
+
+#: templates/terms.html:59
+msgid ""
+"If you have any questions about these Terms, please contact us at "
+"info@imhoteptech.com."
+msgstr ""

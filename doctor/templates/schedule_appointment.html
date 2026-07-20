@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Schedule Appointment - Imhotep Smart Clinic{% endblock %}
@@ -13,8 +14,8 @@
         <div class="container mx-auto max-w-4xl">
             <!-- Header -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Schedule Appointment</h1>
-                <p class="text-gray-600">Book a new appointment for a patient</p>
+                <h1 class="text-3xl font-bold text-gray-800">{% trans "Schedule Appointment" %}</h1>
+                <p class="text-gray-600">{% trans "Book a new appointment for a patient" %}</p>
             </div>
 
             <!-- Breadcrumb Navigation -->
@@ -34,7 +35,7 @@
                     
                     <!-- Patient Selection -->
                     <div>
-                        <label for="patient" class="block text-sm font-medium text-gray-700 mb-1">Select Patient</label>
+                        <label for="patient" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Select Patient" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,9 +50,7 @@
                             </select>
                         </div>
                         <p class="mt-1 text-xs text-gray-500">
-                            <a href="{% url 'add_patient' %}" class="text-blue-600 hover:text-blue-800">
-                                + Add a new patient
-                            </a> if not in the list.
+                            <a href="{% url 'add_patient' %}" class="text-blue-600 hover:text-blue-800">{% trans "+ Add a new patient" %}</a> if not in the list.
                         </p>
                     </div>
                     
@@ -59,7 +58,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Date Selection -->
                         <div>
-                            <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Appointment Date</label>
+                            <label for="date" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Appointment Date" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,12 +67,12 @@
                                 </div>
                                 <input type="date" name="date" id="date" min="{{ min_date|date:'Y-m-d' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required onchange="fetchAvailableTimes(this.value)">
                             </div>
-                            <p class="mt-1 text-xs text-gray-500">Select a date to see available time slots</p>
+                            <p class="mt-1 text-xs text-gray-500">{% trans "Select a date to see available time slots" %}</p>
                         </div>
                         
                         <!-- Time Slot Selection -->
                         <div>
-                            <label for="time_slot" class="block text-sm font-medium text-gray-700 mb-1">Available Time Slots</label>
+                            <label for="time_slot" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Available Time Slots" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,7 +95,7 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-blue-800">About Scheduling</h3>
+                                <h3 class="text-sm font-medium text-blue-800">{% trans "About Scheduling" %}</h3>
                                 <div class="mt-2 text-sm text-blue-700">
                                     <ul class="list-disc pl-5 space-y-1">
                                         <li>Available time slots are based on your schedule settings</li>
@@ -109,12 +108,8 @@
                     
                     <!-- Submit Button -->
                     <div class="flex justify-end space-x-3 pt-4">
-                        <a href="{% url 'appointment_list' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">
-                            Cancel
-                        </a>
-                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">
-                            Schedule Appointment
-                        </button>
+                        <a href="{% url 'appointment_list' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">{% trans "Cancel" %}</a>
+                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Schedule Appointment" %}</button>
                     </div>
                 </form>
             </div>

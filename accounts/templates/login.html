@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load socialaccount %}
 {% block content %}
 
@@ -12,12 +13,8 @@
           </svg>
         </div>
         
-        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">
-          Welcome to Imhotep Clinic
-        </h1>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Sign in to access the patient management system
-        </p>
+        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">{% trans "Welcome to Imhotep Clinic" %}</h1>
+        <p class="mt-2 text-center text-sm text-gray-600">{% trans "Sign in to access the patient management system" %}</p>
 
         <div class="mt-6">
           <a href="{% url 'google_login' %}" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -36,7 +33,7 @@
             <div class="w-full border-t border-gray-300"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Or sign in with email</span>
+            <span class="px-2 bg-white text-gray-500">{% trans "Or sign in with email" %}</span>
           </div>
         </div>
 
@@ -44,7 +41,7 @@
           {% csrf_token %}
           
           <div>
-            <label for="Email" class="block text-sm font-medium text-gray-700">Username or Email</label>
+            <label for="Email" class="block text-sm font-medium text-gray-700">{% trans "Username or Email" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,8 +54,8 @@
 
           <div>
             <div class="flex justify-between">
-              <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-              <a href="{% url 'password_reset' %}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Forgot password?</a>
+              <label for="password" class="block text-sm font-medium text-gray-700">{% trans "Password" %}</label>
+              <a href="{% url 'password_reset' %}" class="text-sm font-medium text-blue-600 hover:text-blue-500">{% trans "Forgot password?" %}</a>
             </div>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -77,9 +74,7 @@
           </div>
 
           <div>
-            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">
-              Sign in
-            </button>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">{% trans "Sign in" %}</button>
           </div>
         </form>
 
@@ -88,7 +83,7 @@
             <div class="w-full border-t border-gray-300"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Or try demo</span>
+            <span class="px-2 bg-white text-gray-500">{% trans "Or try demo" %}</span>
           </div>
         </div>
 
@@ -103,7 +98,7 @@
 
         <p class="mt-6 text-center text-sm text-gray-600">
             Don't have an account?
-          <a href="/register" class="font-medium text-blue-600 hover:text-blue-500">Register here</a>
+          <a href="/register" class="font-medium text-blue-600 hover:text-blue-500">{% trans "Register here" %}</a>
         </p>
       </div>
     </div>

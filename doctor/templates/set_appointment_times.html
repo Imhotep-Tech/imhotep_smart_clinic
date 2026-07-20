@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Set Appointment Times - Imhotep Smart Clinic{% endblock %}
@@ -13,8 +14,8 @@
         <div class="container mx-auto max-w-3xl">
             <!-- Header -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Set Appointment Times</h1>
-                <p class="text-gray-600">Define when you're available for patient appointments</p>
+                <h1 class="text-3xl font-bold text-gray-800">{% trans "Set Appointment Times" %}</h1>
+                <p class="text-gray-600">{% trans "Define when you're available for patient appointments" %}</p>
             </div>
 
             <!-- Breadcrumb Navigation -->
@@ -29,14 +30,14 @@
 
             <!-- Schedule Form -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">New Appointment Schedule</h2>
+                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">{% trans "New Appointment Schedule" %}</h2>
                 
                 <form method="POST" action="{% url 'set_appointment_times' %}" class="space-y-6">
                     {% csrf_token %}
                     
                     <!-- Day of the Week -->
                     <div>
-                        <label for="day_of_the_week" class="block text-sm font-medium text-gray-700 mb-1">Day of the Week</label>
+                        <label for="day_of_the_week" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Day of the Week" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +60,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Start Time -->
                         <div>
-                            <label for="start_time" class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                            <label for="start_time" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Start Time" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,7 +73,7 @@
                         
                         <!-- End Time -->
                         <div>
-                            <label for="end_time" class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                            <label for="end_time" class="block text-sm font-medium text-gray-700 mb-1">{% trans "End Time" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,7 +87,7 @@
                     
                     <!-- Separation Time (in minutes) -->
                     <div>
-                        <label for="separation_time" class="block text-sm font-medium text-gray-700 mb-1">Time Between Appointments (minutes)</label>
+                        <label for="separation_time" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Time Between Appointments (minutes)" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,12 +103,12 @@
                                 <option value="01:00:00">60 minutes</option>
                             </select>
                         </div>
-                        <p class="mt-1 text-xs text-gray-500">This determines how long each appointment slot will be</p>
+                        <p class="mt-1 text-xs text-gray-500">{% trans "This determines how long each appointment slot will be" %}</p>
                     </div>
                     
                     <!-- Tips Section -->
                     <div class="bg-blue-50 p-4 rounded-md border border-blue-200 mt-4">
-                        <h3 class="text-sm font-medium text-blue-800 mb-2">Tips for Setting Appointment Times</h3>
+                        <h3 class="text-sm font-medium text-blue-800 mb-2">{% trans "Tips for Setting Appointment Times" %}</h3>
                         <ul class="text-sm text-blue-700 space-y-1 list-disc list-inside">
                             <li>Consider adding buffer time between appointments for breaks</li>
                             <li>Appointments will be available in intervals based on your selected duration</li>
@@ -118,12 +119,8 @@
                     
                     <!-- Submit Button -->
                     <div class="flex justify-end space-x-3 pt-4">
-                        <a href="{% url 'update_doctor_profile' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">
-                            Cancel
-                        </a>
-                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">
-                            Create Schedule
-                        </button>
+                        <a href="{% url 'update_doctor_profile' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">{% trans "Cancel" %}</a>
+                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Create Schedule" %}</button>
                     </div>
                 </form>
             </div>

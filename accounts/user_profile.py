@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 # Password reset views
 class CustomPasswordChangeView(PasswordChangeView):
@@ -21,7 +22,7 @@ class CustomPasswordChangeView(PasswordChangeView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.is_demo:
-            messages.error(request, "Demo accounts cannot change passwords. Please create your own account to access all features.")
+            messages.error(request, _("Demo accounts cannot change passwords. Please create your own account to access all features."))
             if request.user.is_doctor():
                 return redirect('doctor_dashboard')
             else:
@@ -51,7 +52,7 @@ def update_profile(request):
         if user.is_demo:
             if (user_username != user.username or user_email != user.email or 
                 first_name != user.first_name or last_name != user.last_name):
-                messages.error(request, "Demo accounts cannot update profile details. Please create your own account to access all features.")
+                messages.error(request, _("Demo accounts cannot update profile details. Please create your own account to access all features."))
                 if user.is_doctor():
                     return redirect('update_doctor_profile')
                 else:
@@ -59,15 +60,15 @@ def update_profile(request):
         
         if first_name != user.first_name:
             user.first_name = first_name
-            messages.info(request, "First name updated")
+            messages.info(request, _("First name updated"))
         if last_name != user.last_name:
             user.last_name = last_name
-            messages.info(request, "Last name updated")
+            messages.info(request, _("Last name updated"))
 
         user.save()
         
         if user.email == user_email and user.username == user_username:
-            messages.info(request, "Nothing in the credentials has been updated!")
+            messages.info(request, _("Nothing in the credentials has been updated!"))
             if user.is_doctor():
                 return redirect('update_doctor_profile')
             elif user.is_assistant():
@@ -87,7 +88,7 @@ def update_profile(request):
         
         # Check if email contains '@'
         if not '@' in user_email:
-            messages.error(request, "Email must include @!")
+            messages.error(request, _("Email must include @!"))
             if user.is_doctor():
                 return redirect('update_doctor_profile')
             elif user.is_assistant():
@@ -99,7 +100,7 @@ def update_profile(request):
 
             # Check if username already exists
             if User.objects.filter(username=user_username).exists():
-                messages.error(request, 'Username already taken, please choose another one!')
+                messages.error(request, _('Username already taken, please choose another one!'))
                 if user.is_doctor():
                     return redirect('update_doctor_profile')
                 elif user.is_assistant():
@@ -112,7 +113,7 @@ def update_profile(request):
         if user_email and user_email != user.email:
             # Check if email already exists
             if User.objects.filter(email=user_email).exists():
-                messages.error(request, 'Email already taken, please choose another one!')
+                messages.error(request, _('Email already taken, please choose another one!'))
                 if user.is_doctor():
                     return redirect('update_doctor_profile')
                 elif user.is_assistant():
@@ -142,7 +143,7 @@ def update_profile(request):
             })
             
             send_mail(mail_subject, '', 'no-reply@imhotep.com', [user_email], html_message=message)
-            messages.success(request, "Email submitted successfully! Please check your email to verify your Email.")
+            messages.success(request, _("Email submitted successfully! Please check your email to verify your Email."))
             
             if user.is_doctor():
                 return redirect('update_doctor_profile')
@@ -152,7 +153,7 @@ def update_profile(request):
                 return redirect('login')
                 
         user.save()
-        messages.success(request, 'Your profile was successfully updated!')
+        messages.success(request, _('Your profile was successfully updated!'))
         
         if user.is_doctor():
             return redirect('update_doctor_profile')
@@ -185,7 +186,7 @@ def activate_profile_update(request, uidb64, token, new_email):
         
         # Log the user in
         login(request, user)
-        messages.success(request, "Thank you for your email confirmation. Your email has been updated successfully.")
+        messages.success(request, _("Thank you for your email confirmation. Your email has been updated successfully."))
         
         if user.is_doctor():
             return redirect('doctor_dashboard')
@@ -194,5 +195,5 @@ def activate_profile_update(request, uidb64, token, new_email):
         else:
             return redirect('login')
     else:
-        messages.error(request, "Activation link is invalid!")
+        messages.error(request, _("Activation link is invalid!"))
         return redirect('login')

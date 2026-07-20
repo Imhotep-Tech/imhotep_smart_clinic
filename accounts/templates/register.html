@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load socialaccount %}
 
 {% block content %}
@@ -12,12 +13,8 @@
           </svg>
         </div>
         
-        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">
-          Join Imhotep Smart Clinic
-        </h1>
-        <p class="mt-2 text-center text-sm text-gray-600">
-          Access patient records, manage appointments, and provide quality healthcare
-        </p>
+        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">{% trans "Join Imhotep Smart Clinic" %}</h1>
+        <p class="mt-2 text-center text-sm text-gray-600">{% trans "Access patient records, manage appointments, and provide quality healthcare" %}</p>
 
         <div class="mt-6">
           <a href="{% url 'google_login' %}" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -36,7 +33,7 @@
             <div class="w-full border-t border-gray-300"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Or register with email</span>
+            <span class="px-2 bg-white text-gray-500">{% trans "Or register with email" %}</span>
           </div>
         </div>
 
@@ -44,7 +41,7 @@
           {% csrf_token %}
           
           <div>
-            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+            <label for="username" class="block text-sm font-medium text-gray-700">{% trans "Username" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,7 +54,7 @@
 
           <!-- First Name field -->
           <div>
-            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
+            <label for="first_name" class="block text-sm font-medium text-gray-700">{% trans "First Name" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,7 +67,7 @@
 
           <!-- Last Name field -->
           <div>
-            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
+            <label for="last_name" class="block text-sm font-medium text-gray-700">{% trans "Last Name" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,7 +80,7 @@
 
           <!-- Fixed Email field structure -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <label for="email" class="block text-sm font-medium text-gray-700">{% trans "Email" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,7 +93,7 @@
 
           <!-- User Type Selection -->
           <div>
-            <label for="user_type" class="block text-sm font-medium text-gray-700">I am a</label>
+            <label for="user_type" class="block text-sm font-medium text-gray-700">{% trans "I am a" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -114,7 +111,7 @@
           <!-- Doctor Fields (Hidden by default) -->
           <div id="doctor_fields" class="hidden space-y-5">
             <div>
-              <label for="specialization" class="block text-sm font-medium text-gray-700">Medical Specialization</label>
+              <label for="specialization" class="block text-sm font-medium text-gray-700">{% trans "Medical Specialization" %}</label>
               <div class="mt-1 relative rounded-md shadow-sm">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -129,7 +126,7 @@
           <!-- Patient Fields (Hidden by default) -->
           <div id="patient_fields" class="hidden space-y-5">
             <div>
-              <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+              <label for="date_of_birth" class="block text-sm font-medium text-gray-700">{% trans "Date of Birth" %}</label>
               <div class="mt-1 relative rounded-md shadow-sm">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,7 +140,7 @@
 
           <!-- Fixed Password field structure -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <label for="password" class="block text-sm font-medium text-gray-700">{% trans "Password" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -162,7 +159,7 @@
 
           <!-- Fixed Confirm Password field structure -->
           <div>
-            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <label for="confirm_password" class="block text-sm font-medium text-gray-700">{% trans "Confirm Password" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -181,21 +178,19 @@
 
           <div class="text-xs text-gray-500">
             By creating an account, you agree to our
-            <a href="/terms" class="text-blue-600 hover:text-blue-800 font-medium">terms of service</a>
+            <a href="/terms" class="text-blue-600 hover:text-blue-800 font-medium">{% trans "terms of service" %}</a>
             and
-            <a href="/privacy" class="text-blue-600 hover:text-blue-800 font-medium">privacy policy</a>.
+            <a href="/privacy" class="text-blue-600 hover:text-blue-800 font-medium">{% trans "privacy policy" %}</a>.
           </div>
 
           <div>
-            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">
-              Create your account
-            </button>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:-translate-y-1">{% trans "Create your account" %}</button>
           </div>
         </form>
 
         <p class="mt-6 text-center text-sm text-gray-600">
           Already have an account?
-          <a href="/login" class="font-medium text-blue-600 hover:text-blue-500">Sign in</a>
+          <a href="/login" class="font-medium text-blue-600 hover:text-blue-500">{% trans "Sign in" %}</a>
         </p>
       </div>
     </div>

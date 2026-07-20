@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Privacy Policy - Imhotep Smart Clinic{% endblock %}
@@ -9,21 +10,21 @@
     <div class="container mx-auto px-4 max-w-5xl">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Privacy Policy</h1>
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">{% trans "Privacy Policy" %}</h1>
             <p class="text-lg text-gray-600">Last updated: {% now "F j, Y" %}</p>
         </div>
         
         <!-- Content -->
         <div class="bg-white rounded-lg shadow-md p-8">
             <div class="prose max-w-none">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">1. Introduction</h2>
-                <p class="mb-4">At Imhotep Smart Clinic, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, services, and applications (collectively, the "Services").</p>
-                <p class="mb-4">Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access our Services.</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">{% trans "1. Introduction" %}</h2>
+                <p class="mb-4">{% trans "At Imhotep Smart Clinic, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, services, and applications (collectively, the "Services")." %}</p>
+                <p class="mb-4">{% trans "Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access our Services." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">2. Information We Collect</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "2. Information We Collect" %}</h2>
                 
-                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">2.1 Personal Information</h3>
-                <p class="mb-4">We may collect personal information that you voluntarily provide to us when you register for our Services, express an interest in obtaining information about us or our products and Services, or otherwise contact us. The personal information we collect may include:</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">{% trans "2.1 Personal Information" %}</h3>
+                <p class="mb-4">{% trans "We may collect personal information that you voluntarily provide to us when you register for our Services, express an interest in obtaining information about us or our products and Services, or otherwise contact us. The personal information we collect may include:" %}</p>
                 <ul class="list-disc pl-5 mb-4">
                     <li class="mb-2">Name, email address, and contact details</li>
                     <li class="mb-2">Date of birth and gender</li>
@@ -32,8 +33,8 @@
                     <li class="mb-2">Account credentials</li>
                 </ul>
                 
-                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">2.2 Automatically Collected Information</h3>
-                <p class="mb-4">When you access our Services, we may automatically collect certain information about your device, including:</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">{% trans "2.2 Automatically Collected Information" %}</h3>
+                <p class="mb-4">{% trans "When you access our Services, we may automatically collect certain information about your device, including:" %}</p>
                 <ul class="list-disc pl-5 mb-4">
                     <li class="mb-2">Device type and operating system</li>
                     <li class="mb-2">Browser information</li>
@@ -41,8 +42,8 @@
                     <li class="mb-2">Usage data and interaction with our Services</li>
                 </ul>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">3. How We Use Your Information</h2>
-                <p class="mb-4">We use the information we collect for various purposes, including to:</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "3. How We Use Your Information" %}</h2>
+                <p class="mb-4">{% trans "We use the information we collect for various purposes, including to:" %}</p>
                 <ul class="list-disc pl-5 mb-4">
                     <li class="mb-2">Provide, operate, and maintain our Services</li>
                     <li class="mb-2">Improve, personalize, and expand our Services</li>
@@ -53,8 +54,8 @@
                     <li class="mb-2">Ensure compliance with regulatory requirements</li>
                 </ul>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">4. Disclosure of Your Information</h2>
-                <p class="mb-4">We may share your information with:</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "4. Disclosure of Your Information" %}</h2>
+                <p class="mb-4">{% trans "We may share your information with:" %}</p>
                 <ul class="list-disc pl-5 mb-4">
                     <li class="mb-2">Healthcare providers directly involved in your care</li>
                     <li class="mb-2">Third-party service providers who assist us in operating our Services</li>
@@ -62,14 +63,14 @@
                     <li class="mb-2">Business partners with your consent</li>
                 </ul>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">5. Security of Your Information</h2>
-                <p class="mb-4">We use administrative, technical, and physical security measures to protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that no security measures are perfect or impenetrable, and we cannot guarantee the absolute security of your information.</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "5. Security of Your Information" %}</h2>
+                <p class="mb-4">{% trans "We use administrative, technical, and physical security measures to protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that no security measures are perfect or impenetrable, and we cannot guarantee the absolute security of your information." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">6. HIPAA Compliance</h2>
-                <p class="mb-4">As a healthcare service provider, we are committed to complying with the Health Insurance Portability and Accountability Act (HIPAA). We implement policies and procedures to safeguard protected health information (PHI) and maintain HIPAA compliance.</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "6. HIPAA Compliance" %}</h2>
+                <p class="mb-4">{% trans "As a healthcare service provider, we are committed to complying with the Health Insurance Portability and Accountability Act (HIPAA). We implement policies and procedures to safeguard protected health information (PHI) and maintain HIPAA compliance." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">7. Your Rights</h2>
-                <p class="mb-4">You have certain rights regarding your personal information, including:</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "7. Your Rights" %}</h2>
+                <p class="mb-4">{% trans "You have certain rights regarding your personal information, including:" %}</p>
                 <ul class="list-disc pl-5 mb-4">
                     <li class="mb-2">The right to access your personal information</li>
                     <li class="mb-2">The right to request correction of inaccurate information</li>
@@ -77,14 +78,14 @@
                     <li class="mb-2">The right to request restrictions on processing of your information</li>
                 </ul>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">8. Children's Privacy</h2>
-                <p class="mb-4">Our Services are not intended for individuals under the age of 18 without parental consent. We do not knowingly collect personal information from children under 18 years of age without appropriate parental or guardian consent.</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "8. Children's Privacy" %}</h2>
+                <p class="mb-4">{% trans "Our Services are not intended for individuals under the age of 18 without parental consent. We do not knowingly collect personal information from children under 18 years of age without appropriate parental or guardian consent." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">9. Changes to This Privacy Policy</h2>
-                <p class="mb-4">We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this page.</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "9. Changes to This Privacy Policy" %}</h2>
+                <p class="mb-4">{% trans "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date at the top of this page." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">10. Contact Us</h2>
-                <p class="mb-4">If you have questions or concerns about this Privacy Policy or our data practices, please contact us at privacy@imhoteptech.com.</p>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "10. Contact Us" %}</h2>
+                <p class="mb-4">{% trans "If you have questions or concerns about this Privacy Policy or our data practices, please contact us at privacy@imhoteptech.com." %}</p>
             </div>
         </div>
         

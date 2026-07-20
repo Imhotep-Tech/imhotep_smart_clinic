@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.translation import gettext_lazy as _
 
 @doctor_or_assistant_required
 @login_required
@@ -34,7 +35,7 @@ def appointment_list(request):
             filter_date = datetime.datetime.strptime(date_filter, '%Y-%m-%d').date()
             appointments_list = appointments_list.filter(date=filter_date)
         except ValueError:
-            messages.error(request, "Invalid date format. Please use YYYY-MM-DD.")
+            messages.error(request, _("Invalid date format. Please use YYYY-MM-DD."))
     
     if status_filter:
         appointments_list = appointments_list.filter(status=status_filter)
@@ -72,7 +73,7 @@ def appointment_detail(request):
     appointment_id = request.GET.get('appointment_id')
     
     if not appointment_id:
-        messages.error(request, "No appointment specified.")
+        messages.error(request, _("No appointment specified."))
         return redirect('appointment_list')
     
     try:
@@ -81,7 +82,7 @@ def appointment_detail(request):
         url = reverse('show_patient_details') + f'?patient_id={patient_id}'
         return redirect(url)
     except Exception as e:
-        messages.error(request, f"Error retrieving appointment details: {str(e)}")
+        messages.error(request, _(f"Error retrieving appointment details: {str(e)}"))
         return redirect('appointment_list')
 
 @doctor_or_assistant_required
@@ -175,7 +176,7 @@ def schedule_appointment(request):
             ).exists()
             
             if existing_appointment:
-                messages.error(request, "There is already an appointment scheduled at this time.")
+                messages.error(request, _("There is already an appointment scheduled at this time."))
                 return redirect("schedule_appointment")
             
             # Create new appointment
@@ -187,11 +188,11 @@ def schedule_appointment(request):
                 status="scheduled"
             )
             
-            messages.success(request, f"Appointment for {patient.name} scheduled successfully!")
+            messages.success(request, _(f"Appointment for {patient.name} scheduled successfully!"))
             return redirect("appointment_list")
             
         except Exception as e:
-            messages.error(request, f"Error scheduling appointment: {str(e)}")
+            messages.error(request, _(f"Error scheduling appointment: {str(e)}"))
             return redirect("schedule_appointment")
     else:
         # GET request - show the form
@@ -220,7 +221,7 @@ def update_appointment_doctor(request):
     # Get parameters and validate
     appointment_id = request.GET.get('appointment_id')
     if not appointment_id:
-        messages.error(request, "No appointment specified.")
+        messages.error(request, _("No appointment specified."))
         return redirect('appointment_list')
     
     try:
@@ -246,7 +247,7 @@ def update_appointment_doctor(request):
             start_time = request.POST.get("details")
             
             if not date or not start_time:
-                messages.error(request, "Date and time are required.")
+                messages.error(request, _("Date and time are required."))
                 return redirect(f"{reverse('update_appointment_doctor')}?appointment_id={appointment_id}")
             
             try:
@@ -255,7 +256,7 @@ def update_appointment_doctor(request):
                 
                 # Check if date is in the past
                 if parsed_date < timezone.now().date():
-                    messages.error(request, "Cannot schedule appointments in the past.")
+                    messages.error(request, _("Cannot schedule appointments in the past."))
                     return redirect(f"{reverse('update_appointment_doctor')}?appointment_id={appointment_id}")
                 
                 # Check if time slot is available (excluding this appointment)
@@ -266,7 +267,7 @@ def update_appointment_doctor(request):
                 ).exclude(id=appointment_id).exists()
                 
                 if existing_appointment:
-                    messages.error(request, "There is another appointment already scheduled at this time.")
+                    messages.error(request, _("There is another appointment already scheduled at this time."))
                     return redirect(f"{reverse('update_appointment_doctor')}?appointment_id={appointment_id}")
                 
                 # Update appointment
@@ -274,19 +275,19 @@ def update_appointment_doctor(request):
                 appointment.start_time = start_time
                 appointment.save()
                 
-                messages.success(request, f"Appointment for {appointment.patient.name} updated successfully!")
+                messages.success(request, _(f"Appointment for {appointment.patient.name} updated successfully!"))
                 return redirect("appointment_list")
                 
             except ValueError:
-                messages.error(request, "Invalid date or time format.")
+                messages.error(request, _("Invalid date or time format."))
                 return redirect(f"{reverse('update_appointment_doctor')}?appointment_id={appointment_id}")
         
         else:
-            messages.error(request, "Method not allowed.")
+            messages.error(request, _("Method not allowed."))
             return redirect("appointment_list")
             
     except Exception as e:
-        messages.error(request, f"Error updating appointment: {str(e)}")
+        messages.error(request, _(f"Error updating appointment: {str(e)}"))
         return redirect("appointment_list")
 
 @login_required
@@ -302,13 +303,13 @@ def delete_appointment_doctor(request):
             name = appointment.patient.name
             date = appointment.date
             appointment.delete()
-            messages.success(request, f"Appointment deleted for {name} with date {date} successfully!")
+            messages.success(request, _(f"Appointment deleted for {name} with date {date} successfully!"))
             return redirect('appointment_list')
         except Exception as e:
-            messages.error(request, f"Something went wrong while deleting the medical record: {str(e)}")
+            messages.error(request, _(f"Something went wrong while deleting the medical record: {str(e)}"))
             return redirect('appointment_list')
     else:
-        messages.error(request, "Method Not allowed")
+        messages.error(request, _("Method Not allowed"))
         return redirect("doctor_dashboard")
 
 @doctor_or_assistant_required
@@ -316,7 +317,7 @@ def delete_appointment_doctor(request):
 def mark_appointment(request):
     """View to mark an appointment as completed."""
     if request.method != 'POST':
-        messages.error(request, "Method not allowed")
+        messages.error(request, _("Method not allowed"))
         return redirect("appointment_list")
     
     doctor = get_object_or_404(DoctorProfile, user=request.user)
@@ -332,10 +333,10 @@ def mark_appointment(request):
             appointment.status = 'scheduled'
             
         appointment.save()
-        messages.success(request, f"Appointment with {appointment.patient.name} marked as {appointment.status}.")
+        messages.success(request, _(f"Appointment with {appointment.patient.name} marked as {appointment.status}."))
 
         return redirect("appointment_list")
 
     except Exception as e:
-        messages.error(request, f"Error updating appointment status: {str(e)}")
+        messages.error(request, _(f"Error updating appointment status: {str(e)}"))
         return redirect("appointment_list")
