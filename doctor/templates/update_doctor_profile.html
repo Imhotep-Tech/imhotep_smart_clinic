@@ -109,7 +109,7 @@
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
-                        Add New Schedule
+                        {% trans "Add New Schedule" %}
                     </a>
                 </div>
                 
@@ -120,11 +120,11 @@
                             <table class="min-w-full divide-y divide-gray-200 table-fixed">
                                 <thead class="bg-gray-50 dark:bg-gray-900">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Day</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Time Range</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">Duration</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Status</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Actions</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">{% trans "Day" %}</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">{% trans "Time Range" %}</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5">{% trans "Duration" %}</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">{% trans "Status" %}</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">{% trans "Actions" %}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
@@ -155,7 +155,7 @@
                                                 {% else %}
                                                     bg-red-100 text-red-800
                                                 {% endif %}">
-                                                {{ schedule.activated_status|yesno:"Active,Inactive" }}
+                                                {% if schedule.activated_status %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -163,7 +163,7 @@
                                             <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ schedule.id }}" class="inline">
                                                 {% csrf_token %}
                                                 <button type="submit" class="text-{% if schedule.activated_status %}red{% else %}green{% endif %}-600 hover:text-{% if schedule.activated_status %}red{% else %}green{% endif %}-900">
-                                                    {{ schedule.activated_status|yesno:"Deactivate,Activate" }}
+                                                    {% if schedule.activated_status %}{% trans "Deactivate" %}{% else %}{% trans "Activate" %}{% endif %}
                                                 </button>
                                             </form>
                                         </td>
@@ -264,7 +264,7 @@
                                         {% else %}
                                             bg-red-100 text-red-800
                                         {% endif %}">
-                                        {{ schedule.activated_status|yesno:"Active,Inactive" }}
+                                        {% if schedule.activated_status %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}
                                     </span>
                                 </div>
                                 
@@ -284,7 +284,7 @@
                                     <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ schedule.id }}" class="flex-1">
                                         {% csrf_token %}
                                         <button type="submit" class="w-full px-3 py-2 text-sm {% if schedule.activated_status %}bg-red-50 text-red-600 hover:bg-red-100{% else %}bg-green-50 text-green-600 hover:bg-green-100{% endif %} rounded-md transition-colors">
-                                            {{ schedule.activated_status|yesno:"Deactivate,Activate" }}
+                                            {% if schedule.activated_status %}{% trans "Deactivate" %}{% else %}{% trans "Activate" %}{% endif %}
                                         </button>
                                     </form>
                                 </div>
@@ -322,7 +322,7 @@
                                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
-                                New Schedule
+                                {% trans "New Schedule" %}
                             </a>
                         </div>
                     </div>
@@ -432,7 +432,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
-                        Change Password
+                        {% trans "Change Password" %}
                     </a>
                 </div>
             </div>

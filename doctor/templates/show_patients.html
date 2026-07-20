@@ -29,12 +29,12 @@
                         {% endif %}
                         <label for="sort_with" class="text-sm text-gray-600 dark:text-gray-400">{% trans "Sort by" %}</label>
                         <select name="sort_with" id="sort_with" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" onchange="this.form.submit()">
-                            <option value="name" {% if sort_with == 'name' %}selected{% endif %}>Name (A→Z)</option>
-                            <option value="-name" {% if sort_with == '-name' %}selected{% endif %}>Name (Z→A)</option>
-                            <option value="date_of_birth" {% if sort_with == 'date_of_birth' %}selected{% endif %}>Birthdate (Oldest)</option>
-                            <option value="-date_of_birth" {% if sort_with == '-date_of_birth' %}selected{% endif %}>Birthdate (Newest)</option>
-                            <option value="date_added" {% if sort_with == 'date_added' %}selected{% endif %}>Date Added (Oldest)</option>
-                            <option value="-date_added" {% if sort_with == '-date_added' %}selected{% endif %}>Date Added (Newest)</option>
+                            <option value="name" {% if sort_with == 'name' %}selected{% endif %}>{% trans "Name (A→Z)" %}</option>
+                            <option value="-name" {% if sort_with == '-name' %}selected{% endif %}>{% trans "Name (Z→A)" %}</option>
+                            <option value="date_of_birth" {% if sort_with == 'date_of_birth' %}selected{% endif %}>{% trans "Birthdate (Oldest)" %}</option>
+                            <option value="-date_of_birth" {% if sort_with == '-date_of_birth' %}selected{% endif %}>{% trans "Birthdate (Newest)" %}</option>
+                            <option value="date_added" {% if sort_with == 'date_added' %}selected{% endif %}>{% trans "Date Added (Oldest)" %}</option>
+                            <option value="-date_added" {% if sort_with == '-date_added' %}selected{% endif %}>{% trans "Date Added (Newest)" %}</option>
                         </select>
                     </form>
 
@@ -42,7 +42,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
-                        Add New Patient
+                        {% trans "Add New Patient" %}
                     </a>
                 </div>
             </div>
@@ -56,8 +56,8 @@
                             <form action="{% url 'search_patient' %}" method="GET" class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                                 <div class="w-full sm:w-40">
                                     <select id="searchType" onchange="updateSearchField(this.value)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                        <option value="name" {% if search_type == 'name' %}selected{% endif %}>Search by Name</option>
-                                        <option value="phone" {% if search_type == 'phone' %}selected{% endif %}>Search by Phone</option>
+                                        <option value="name" {% if search_type == 'name' %}selected{% endif %}>{% trans "Search by Name" %}</option>
+                                        <option value="phone" {% if search_type == 'phone' %}selected{% endif %}>{% trans "Search by Phone" %}</option>
                                     </select>
                                 </div>
                                 <div class="flex-grow relative">
@@ -87,7 +87,7 @@
                             {% elif filter_phone %}
                                 <span class="text-sm text-gray-600 dark:text-gray-400 mr-3">Search results for phone: "{{ filter_phone }}"</span>
                             {% endif %}
-                            <span class="text-sm font-medium text-indigo-600">Total: {{ patients|length }}</span>
+                            <span class="text-sm font-medium text-indigo-600">{% trans "Total:" %} {{ patients|length }}</span>
                         </div>
                     </div>
                 
@@ -96,12 +96,12 @@
                             <table class="min-w-full divide-y divide-gray-200 table-fixed">
                                 <thead class="bg-gray-50 dark:bg-gray-900">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Gender</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Phone</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Date of Birth</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Date Added</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">{% trans "Name" %}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">{% trans "Gender" %}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">{% trans "Phone" %}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">{% trans "Date of Birth" %}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">{% trans "Date Added" %}</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">{% trans "Actions" %}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
@@ -242,10 +242,10 @@
         const searchInput = document.getElementById('searchInput');
         if (searchType === 'name') {
             searchInput.name = 'patient_name';
-            searchInput.placeholder = 'Enter patient name...';
+            searchInput.placeholder = '{% trans "Enter patient name..." %}';
         } else if (searchType === 'phone') {
             searchInput.name = 'patient_phone';
-            searchInput.placeholder = 'Enter phone number...';
+            searchInput.placeholder = '{% trans "Enter phone number..." %}';
         }
     }
 </script>

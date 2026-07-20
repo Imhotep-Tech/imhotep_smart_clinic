@@ -203,7 +203,7 @@ msgstr ""
 #: accounts/templates/register.html:114
 #: doctor/templates/update_doctor_profile.html:84
 msgid "Medical Specialization"
-msgstr ""
+msgstr "التخصص الطبي"
 
 #: accounts/templates/add_details_google.html:64
 #: accounts/templates/register.html:129 doctor/templates/add_patient.html:74
@@ -579,7 +579,7 @@ msgstr ""
 #: doctor/templates/show_patient_details.html:133
 #: doctor/templates/update_doctor_profile.html:356
 msgid "Personal Information"
-msgstr ""
+msgstr "المعلومات الشخصية"
 
 #: assistant/templates/update_assistant_profile.html:57
 #: doctor/templates/update_doctor_profile.html:403
@@ -597,17 +597,17 @@ msgstr ""
 #: assistant/templates/update_assistant_profile.html:79
 #: doctor/templates/update_doctor_profile.html:417
 msgid "Update Account Information"
-msgstr ""
+msgstr "تحديث معلومات الحساب"
 
 #: assistant/templates/update_assistant_profile.html:86
 #: doctor/templates/update_doctor_profile.html:424
 msgid "Password Management"
-msgstr ""
+msgstr "إدارة كلمة المرور"
 
 #: assistant/templates/update_assistant_profile.html:91
 #: doctor/templates/update_doctor_profile.html:429
 msgid "Update your password to maintain account security"
-msgstr ""
+msgstr "قم بتحديث كلمة المرور الخاصة بك للحفاظ على أمان الحساب"
 
 #: assistant/templates/update_assistant_profile.html:93
 msgid "Change Password"
@@ -1045,7 +1045,7 @@ msgstr "متوسط المرضى/اليوم"
 #: doctor/templates/show_patient_details.html:232
 #: doctor/templates/show_patients.html:133
 msgid "View Details"
-msgstr ""
+msgstr "عرض التفاصيل"
 
 #: doctor/templates/doctor_dashboard.html:297
 msgid "No appointments today"
@@ -1236,7 +1236,7 @@ msgstr ""
 #: doctor/templates/update_doctor_profile.html:162
 #: doctor/templates/update_doctor_profile.html:283
 msgid "Edit"
-msgstr ""
+msgstr "تعديل"
 
 #: doctor/templates/show_patient_details.html:246
 msgid "Restricted"
@@ -1280,47 +1280,47 @@ msgstr ""
 
 #: doctor/templates/show_patients.html:18
 msgid "My Patients"
-msgstr ""
+msgstr "مرضاي"
 
 #: doctor/templates/show_patients.html:19
 msgid "Manage your patient records"
-msgstr ""
+msgstr "إدارة سجلات مرضاك"
 
 #: doctor/templates/show_patients.html:30
 msgid "Sort by"
-msgstr ""
+msgstr "ترتيب حسب"
 
 #: doctor/templates/show_patients.html:53
 msgid "Search Patients"
-msgstr ""
+msgstr "البحث عن المرضى"
 
 #: doctor/templates/show_patients.html:72
 msgid "Search"
-msgstr ""
+msgstr "بحث"
 
 #: doctor/templates/show_patients.html:73
 msgid "Reset"
-msgstr ""
+msgstr "إعادة ضبط"
 
 #: doctor/templates/show_patients.html:83
 msgid "Patient List"
-msgstr ""
+msgstr "قائمة المرضى"
 
 #: doctor/templates/show_patients.html:217
 msgid "No matching patients found"
-msgstr ""
+msgstr "لم يتم العثور على مرضى مطابقين"
 
 #: doctor/templates/show_patients.html:218
 msgid "Try a different search term or check your spelling."
-msgstr ""
+msgstr "حاول استخدام مصطلح بحث مختلف أو تحقق من الإملاء."
 
 #: doctor/templates/show_patients.html:220
 msgid "No patients yet"
-msgstr ""
+msgstr "لا يوجد مرضى بعد"
 
 #: doctor/templates/show_patients.html:221
 msgid "Start by adding your first patient record."
-msgstr ""
+msgstr "ابدأ بإضافة أول سجل مريض."
 
 #: doctor/templates/update_appointment_doctor.html:17
 #: doctor/templates/update_appointment_doctor.html:114
@@ -1357,51 +1357,51 @@ msgstr ""
 
 #: doctor/templates/update_doctor_profile.html:17
 msgid "Doctor Profile Settings"
-msgstr ""
+msgstr "إعدادات الملف الشخصي للطبيب"
 
 #: doctor/templates/update_doctor_profile.html:18
 msgid "Manage your account information and professional details"
-msgstr ""
+msgstr "إدارة معلومات حسابك وتفاصيلك المهنية"
 
 #: doctor/templates/update_doctor_profile.html:23
 msgid "Clinic Logo"
-msgstr ""
+msgstr "شعار العيادة"
 
 #: doctor/templates/update_doctor_profile.html:43
 msgid "Upload New Logo"
-msgstr ""
+msgstr "تحميل شعار جديد"
 
 #: doctor/templates/update_doctor_profile.html:51
 msgid "Maximum size: 500KB. Recommended dimensions: 300x300px"
-msgstr ""
+msgstr "الحجم الأقصى: 500 كيلوبايت. الأبعاد الموصى بها: 300x300 بكسل"
 
 #: doctor/templates/update_doctor_profile.html:52
 msgid "Allowed formats: JPEG, PNG"
-msgstr ""
+msgstr "الصيغ المسموح بها: JPEG، PNG"
 
 #: doctor/templates/update_doctor_profile.html:56
 msgid "Upload Logo"
-msgstr ""
+msgstr "تحميل الشعار"
 
 #: doctor/templates/update_doctor_profile.html:60
 msgid "Remove Logo"
-msgstr ""
+msgstr "إزالة الشعار"
 
 #: doctor/templates/update_doctor_profile.html:77
 msgid "Professional Information"
-msgstr ""
+msgstr "المعلومات المهنية"
 
 #: doctor/templates/update_doctor_profile.html:97
 msgid "Update Professional Details"
-msgstr ""
+msgstr "تحديث التفاصيل المهنية"
 
 #: doctor/templates/update_doctor_profile.html:106
 msgid "Appointment Schedules"
-msgstr ""
+msgstr "جداول المواعيد"
 
 #: doctor/templates/update_doctor_profile.html:107
 msgid "Set your availability for patient appointments"
-msgstr ""
+msgstr "حدد مدى توفرك لمواعيد المرضى"
 
 #: doctor/templates/update_doctor_profile.html:273
 msgid "Time Range"
@@ -1413,19 +1413,19 @@ msgstr ""
 
 #: doctor/templates/update_doctor_profile.html:318
 msgid "No appointment schedules"
-msgstr ""
+msgstr "لا توجد جداول مواعيد"
 
 #: doctor/templates/update_doctor_profile.html:319
 msgid "Get started by creating a new appointment schedule."
-msgstr ""
+msgstr "ابدأ بإنشاء جدول مواعيد جديد."
 
 #: doctor/templates/update_doctor_profile.html:340
 msgid "Managing Your Appointment Schedules"
-msgstr ""
+msgstr "إدارة جداول المواعيد الخاصة بك"
 
 #: doctor/templates/update_doctor_profile.html:412
 msgid "Changing your email will require verification"
-msgstr ""
+msgstr "سيتطلب تغيير بريدك الإلكتروني التحقق"
 
 #: doctor/views.py:87
 msgid ""
@@ -1913,3 +1913,79 @@ msgstr "عرض الجدول"
 
 msgid "Sign in with Google"
 msgstr "تسجيل الدخول بواسطة جوجل"
+
+
+msgid "Add New Schedule"
+msgstr "إضافة جدول جديد"
+
+msgid "Day"
+msgstr "اليوم"
+
+msgid "Actions"
+msgstr "الإجراءات"
+
+msgid "Active"
+msgstr "نشط"
+
+msgid "Inactive"
+msgstr "غير نشط"
+
+msgid "Deactivate"
+msgstr "تعطيل"
+
+msgid "Activate"
+msgstr "تفعيل"
+
+msgid "New Schedule"
+msgstr "جدول جديد"
+
+msgid "Name (A→Z)"
+msgstr "الاسم (أ→ي)"
+
+msgid "Name (Z→A)"
+msgstr "الاسم (ي→أ)"
+
+msgid "Birthdate (Oldest)"
+msgstr "تاريخ الميلاد (الأقدم)"
+
+msgid "Birthdate (Newest)"
+msgstr "تاريخ الميلاد (الأحدث)"
+
+msgid "Date Added (Oldest)"
+msgstr "تاريخ الإضافة (الأقدم)"
+
+msgid "Date Added (Newest)"
+msgstr "تاريخ الإضافة (الأحدث)"
+
+msgid "Search by Name"
+msgstr "البحث بالاسم"
+
+msgid "Search by Phone"
+msgstr "البحث برقم الهاتف"
+
+msgid "Enter patient name..."
+msgstr "أدخل اسم المريض..."
+
+msgid "Enter phone number..."
+msgstr "أدخل رقم الهاتف..."
+
+msgid "Total:"
+msgstr "الإجمالي:"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Phone"
+msgstr "رقم الهاتف"
+
+msgid "Date Added"
+msgstr "تاريخ الإضافة"
+
+msgid "Share Feedback"
+msgstr "مشاركة الملاحظات"
+
+msgid "View Source"
+msgstr "عرض المصدر"
+
+msgid "© 2026 Imhotep Tech. All rights reserved."
+msgstr "© 2026 إمحوتب تك. جميع الحقوق محفوظة."
