@@ -5,7 +5,7 @@
 {% block title %}Doctor Dashboard - Imhotep Smart Clinic{% endblock %}
 
 {% block content %}
-<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 dark:from-gray-900 to-blue-50 dark:to-gray-900">
     <!-- Include navigation -->
     {% include "nav.html" %}
 
@@ -15,8 +15,8 @@
             <!-- Header with greeting and quick actions -->
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-800">Welcome back, Dr. {{ user_data.first_name }}</h1>
-                    <p class="text-gray-600">{{ today_date|date:"l, F j, Y" }}</p>
+                    <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Welcome back, Dr. {{ user_data.first_name }}</h1>
+                    <p class="text-gray-600 dark:text-gray-400">{{ today_date|date:"l, F j, Y" }}</p>
                 </div>
                 <div class="mt-4 md:mt-0 flex space-x-3">
                     <a href="{% url 'add_patient' %}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center transition-all">
@@ -39,7 +39,7 @@
             <!-- Stats Overview -->
             <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                 <!-- Patients -->
-                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-green-500 hover:shadow-lg transition-all">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md border-l-4 border-green-500 hover:shadow-lg transition-all">
                     <div class="flex items-center">
                         <div class="p-3.5 mr-4 bg-green-100 rounded-full">
                             <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,8 +47,8 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-600">{% trans "Total Patients" %}</p>
-                            <p class="text-3xl font-semibold text-gray-900">{{ number_of_patients }}</p>
+                            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{% trans "Total Patients" %}</p>
+                            <p class="text-3xl font-semibold text-gray-900 dark:text-gray-100">{{ number_of_patients }}</p>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -62,7 +62,7 @@
                 </div>
 
                 <!-- Patient Records -->
-                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-amber-500 hover:shadow-lg transition-all">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md border-l-4 border-amber-500 hover:shadow-lg transition-all">
                     <div class="flex items-center">
                         <div class="p-3.5 mr-4 bg-amber-100 rounded-full">
                             <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,8 +70,8 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-600">{% trans "Patient Records" %}</p>
-                            <p class="text-3xl font-semibold text-gray-900">{{ number_of_patients_records }}</p>
+                            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{% trans "Patient Records" %}</p>
+                            <p class="text-3xl font-semibold text-gray-900 dark:text-gray-100">{{ number_of_patients_records }}</p>
                             <p class="text-xs text-amber-600 mt-1">
                                 {% if latest_update == "today" %}
                                     Today
@@ -86,7 +86,7 @@
                 </div>
 
                 <!-- Appointments Today -->
-                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-blue-500 hover:shadow-lg transition-all">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md border-l-4 border-blue-500 hover:shadow-lg transition-all">
                     <div class="flex items-center">
                         <div class="p-3.5 mr-4 bg-blue-100 rounded-full">
                             <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,8 +94,8 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-600">{% trans "Today's Appointments" %}</p>
-                            <p class="text-3xl font-semibold text-gray-900">{{ todays_appointments.total }}</p>
+                            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{% trans "Today's Appointments" %}</p>
+                            <p class="text-3xl font-semibold text-gray-900 dark:text-gray-100">{{ todays_appointments.total }}</p>
                             <p class="text-xs text-blue-600 mt-1">{{ todays_appointments.completed }} completed</p>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                 </div>
 
                 <!-- Analytics -->
-                <div class="p-6 bg-white rounded-lg shadow-md border-l-4 border-purple-500 hover:shadow-lg transition-all">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md border-l-4 border-purple-500 hover:shadow-lg transition-all">
                     <div class="flex items-center">
                         <div class="p-3.5 mr-4 bg-purple-100 rounded-full">
                             <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,8 +118,8 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-600">{% trans "Avg. Patients/Day" %}</p>
-                            <p class="text-3xl font-semibold text-gray-900">{{ avg_patients_per_day }}</p>
+                            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{% trans "Avg. Patients/Day" %}</p>
+                            <p class="text-3xl font-semibold text-gray-900 dark:text-gray-100">{{ avg_patients_per_day }}</p>
                         </div>
                     </div>
                 </div>
@@ -128,9 +128,9 @@
             <!-- Main Dashboard Content -->
             <div class="grid grid-cols-1 gap-6">
                 <!-- Upcoming Appointments Today -->
-                <div class="p-6 bg-white rounded-lg shadow-md">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-bold text-gray-800">{% trans "Today's Appointments" %}</h2>
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">{% trans "Today's Appointments" %}</h2>
                         <span class="text-sm font-medium text-indigo-600">{{ today_date|date:"F d, Y" }}</span>
                     </div>
                     
@@ -138,7 +138,7 @@
                     <!-- Desktop Table (hidden on mobile) -->
                     <div class="hidden md:block overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                            <thead class="bg-gray-50 dark:bg-gray-900">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
@@ -146,11 +146,11 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                                 {% for appointment in page_obj %}
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ appointment.date|date:"M d, Y" }}</div>
+                                        <div class="text-sm text-gray-900 dark:text-gray-100">{{ appointment.date|date:"M d, Y" }}</div>
                                         <div class="text-sm text-gray-500">{{ appointment.start_time|time:"g:i A" }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -159,7 +159,7 @@
                                                 <span class="text-indigo-800 font-medium">{{ appointment.patient.name|slice:":1" }}</span>
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">{{ appointment.patient.name }}</div>
+                                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ appointment.patient.name }}</div>
                                                 {% if appointment.patient.phone_number %}
                                                 <div class="text-sm text-gray-500">{{ appointment.patient.phone_number }}</div>
                                                 {% endif %}
@@ -195,7 +195,7 @@
                                         <span class="text-indigo-800 font-medium">{{ appointment.patient.name|slice:":1" }}</span>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900 truncate">{{ appointment.patient.name }}</p>
+                                        <p class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ appointment.patient.name }}</p>
                                         <p class="text-sm text-gray-500">{{ appointment.date|date:"M d, Y" }} at {{ appointment.start_time|time:"g:i A" }}</p>
                                     </div>
                                     <div>
@@ -219,24 +219,24 @@
                     
                     <!-- Pagination -->
                     {% if page_obj.has_other_pages %}
-                    <div class="py-4 flex items-center justify-between border-t border-gray-200 mt-4">
+                    <div class="py-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 mt-4">
                         <div class="flex-1 flex justify-between sm:hidden">
                             {% if page_obj.has_previous %}
-                            <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">{% trans "Previous" %}</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900">{% trans "Previous" %}</a>
                             {% else %}
-                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">{% trans "Previous" %}</span>
+                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-50 dark:bg-gray-900 cursor-not-allowed">{% trans "Previous" %}</span>
                             {% endif %}
                             
                             {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">{% trans "Next" %}</a>
+                            <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900">{% trans "Next" %}</a>
                             {% else %}
-                            <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">{% trans "Next" %}</span>
+                            <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-50 dark:bg-gray-900 cursor-not-allowed">{% trans "Next" %}</span>
                             {% endif %}
                         </div>
                         
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
-                                <p class="text-sm text-gray-700">
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
                                     Showing <span class="font-medium">{{ page_obj.start_index }}</span> to <span class="font-medium">{{ page_obj.end_index }}</span> of <span class="font-medium">{{ page_obj.paginator.count }}</span> appointments
                                 </p>
                             </div>
@@ -244,14 +244,14 @@
                             <div>
                                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                     {% if page_obj.has_previous %}
-                                    <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:bg-gray-900">
                                         <span class="sr-only">{% trans "Previous" %}</span>
                                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                         </svg>
                                     </a>
                                     {% else %}
-                                    <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed">
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-sm font-medium text-gray-300 cursor-not-allowed">
                                         <span class="sr-only">{% trans "Previous" %}</span>
                                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -261,21 +261,21 @@
                                     
                                     {% for i in page_obj.paginator.page_range %}
                                         {% if page_obj.number == i %}
-                                        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600">{{ i }}</span>
+                                        <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 text-sm font-medium text-blue-600">{{ i }}</span>
                                         {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                                        <a href="?page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">{{ i }}</a>
+                                        <a href="?page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-900">{{ i }}</a>
                                         {% endif %}
                                     {% endfor %}
                                     
                                     {% if page_obj.has_next %}
-                                    <a href="?page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <a href="?page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:bg-gray-900">
                                         <span class="sr-only">{% trans "Next" %}</span>
                                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                         </svg>
                                     </a>
                                     {% else %}
-                                    <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed">
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-sm font-medium text-gray-300 cursor-not-allowed">
                                         <span class="sr-only">{% trans "Next" %}</span>
                                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -294,7 +294,7 @@
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900">{% trans "No appointments today" %}</h3>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{% trans "No appointments today" %}</h3>
                         <p class="mt-1 text-sm text-gray-500">{% trans "Get started by scheduling an appointment." %}</p>
                         <div class="mt-6">
                             <a href="{% url 'schedule_appointment' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

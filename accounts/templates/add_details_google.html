@@ -2,8 +2,8 @@
 {% load i18n %}
 
 {% block content %}
-<section class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md mx-auto bg-white rounded-xl shadow-xl overflow-hidden md:max-w-2xl">
+<section class="min-h-screen bg-gradient-to-br from-gray-50 dark:from-gray-900 to-blue-50 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden md:max-w-2xl">
     <div class="md:flex">
       <div class="p-8 w-full">
         <div class="flex justify-center">
@@ -12,14 +12,14 @@
           </svg>
         </div>
         
-        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900">{% trans "Complete Your Profile" %}</h1>
-        <p class="mt-2 text-center text-sm text-gray-600">{% trans "We need a few more details to set up your account" %}</p>
+        <h1 class="mt-4 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-100">{% trans "Complete Your Profile" %}</h1>
+        <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">{% trans "We need a few more details to set up your account" %}</p>
 
         <form action="{% url 'add_details_google_login' %}" class="mt-6 space-y-5" method="post">
           {% csrf_token %}
 
           <!-- Welcome message with user's name -->
-          <div class="bg-blue-50 p-4 rounded-lg">
+          <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 p-4 rounded-lg">
             <p class="text-center text-blue-800">
               Welcome, {% if user_info.first_name %}{{ user_info.first_name }}{% else %}{{ user_info.username }}{% endif %}!
               <br>Please tell us more about yourself.
@@ -28,14 +28,14 @@
 
           <!-- User Type Selection -->
           <div>
-            <label for="user_type" class="block text-sm font-medium text-gray-700">{% trans "I am a" %}</label>
+            <label for="user_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "I am a" %}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <select id="user_type" name="user_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+              <select id="user_type" name="user_type" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" required>
                 <option value="" selected disabled>Select your role</option>
                 <!-- <option value="patient">Patient</option> -->
                 <option value="doctor">Doctor</option>
@@ -46,14 +46,14 @@
           <!-- Doctor Fields (Hidden by default) -->
           <div id="doctor_fields" class="hidden space-y-5">
             <div>
-              <label for="specialization" class="block text-sm font-medium text-gray-700">{% trans "Medical Specialization" %}</label>
+              <label for="specialization" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Medical Specialization" %}</label>
               <div class="mt-1 relative rounded-md shadow-sm">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
                 </div>
-                <input type="text" name="specialization" id="specialization" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc.">
+                <input type="text" name="specialization" id="specialization" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc.">
               </div>
             </div>
           </div>
@@ -61,14 +61,14 @@
           <!-- Patient Fields (Hidden by default) -->
           <div id="patient_fields" class="hidden space-y-5">
             <div>
-              <label for="date_of_birth" class="block text-sm font-medium text-gray-700">{% trans "Date of Birth" %}</label>
+              <label for="date_of_birth" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{% trans "Date of Birth" %}</label>
               <div class="mt-1 relative rounded-md shadow-sm">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <input type="date" name="date_of_birth" id="date_of_birth" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md">
+                <input type="date" name="date_of_birth" id="date_of_birth" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md">
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@
           </div>
         </form>
 
-        <p class="mt-6 text-center text-sm text-gray-600">
+        <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
           Changed your mind?
           <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">{% trans "Back to login" %}</a>
         </p>

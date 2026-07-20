@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 dark:from-gray-900 to-blue-50 dark:to-gray-900">
     <!-- Include navigation -->
     {% include "nav.html" %}
 
@@ -28,8 +28,8 @@
         <div class="container mx-auto max-w-3xl">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-800">{% trans "Edit Medical Record" %}</h1>
-                <p class="text-gray-600">Update medical record for {{ patient_name }}</p>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200">{% trans "Edit Medical Record" %}</h1>
+                <p class="text-gray-600 dark:text-gray-400">Update medical record for {{ patient_name }}</p>
             </div>
 
             <!-- Back Navigation -->
@@ -43,27 +43,27 @@
             </div>
 
             <!-- Edit Medical Record Form -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
                 <form method="POST" action="{% url 'update_medical_record' %}?medical_record_id={{ medical_record.id }}" id="editMedicalRecordForm">
                     {% csrf_token %}
                     
                     <!-- Date Field -->
                     <div class="mb-6">
-                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Date" %}</label>
+                        <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Date" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <input type="date" name="date" id="date" value="{{ medical_record.date|date:'Y-m-d' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                            <input type="date" name="date" id="date" value="{{ medical_record.date|date:'Y-m-d' }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" required>
                         </div>
                     </div>
                     
                     <!-- Details Field -->
                     <div class="mb-6">
-                        <label for="details-editor" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Medical Details" %}</label>
-                        <div class="editor-container rounded-md border border-gray-300">
+                        <label for="details-editor" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Medical Details" %}</label>
+                        <div class="editor-container rounded-md border border-gray-300 dark:border-gray-600">
                             <div id="details-editor"></div>
                         </div>
                         <input type="hidden" name="details" id="details-input">
@@ -72,16 +72,16 @@
 
                     <!-- Remarks Field -->
                     <div class="mb-6">
-                        <label for="remarks" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Remarks" %}</label>
+                        <label for="remarks" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Remarks" %}</label>
                         <div class="relative rounded-md shadow-sm">
-                            <textarea name="remarks" id="remarks" rows="3" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 rounded-md" placeholder="Additional remarks or observations">{{ medical_record.remarks }}</textarea>
+                            <textarea name="remarks" id="remarks" rows="3" class="focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="Additional remarks or observations">{{ medical_record.remarks }}</textarea>
                         </div>
                     </div>
 
                     <!-- Prescription Field -->
                     <div class="mb-6">
-                        <label for="prescription-editor" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Prescription" %}</label>
-                        <div class="editor-container rounded-md border border-gray-300">
+                        <label for="prescription-editor" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Prescription" %}</label>
+                        <div class="editor-container rounded-md border border-gray-300 dark:border-gray-600">
                             <div id="prescription-editor"></div>
                         </div>
                         <input type="hidden" name="prescription" id="prescription-input">
@@ -90,7 +90,7 @@
 
                     <!-- Submit Button -->
                     <div class="flex justify-end">
-                        <a href="{% url 'show_patient_details' %}?patient_id={{ patient_id }}" class="mr-4 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{% trans "Cancel" %}</a>
+                        <a href="{% url 'show_patient_details' %}?patient_id={{ patient_id }}" class="mr-4 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{% trans "Cancel" %}</a>
                         <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{% trans "Update Record" %}</button>
                     </div>
                 </form>

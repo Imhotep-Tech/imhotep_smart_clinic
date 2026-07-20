@@ -6,31 +6,31 @@
 {% block meta_description %}Terms and conditions for using Imhotep Smart Clinic services and platform.{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12">
+<div class="min-h-screen bg-gradient-to-br from-gray-50 dark:from-gray-900 to-blue-50 dark:to-gray-900 py-12">
     <div class="container mx-auto px-4 max-w-5xl">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">{% trans "Terms of Service" %}</h1>
-            <p class="text-lg text-gray-600">Last updated: {% now "F j, Y" %}</p>
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">{% trans "Terms of Service" %}</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Last updated: {% now "F j, Y" %}</p>
         </div>
         
         <!-- Content -->
-        <div class="bg-white rounded-lg shadow-md p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
             <div class="prose max-w-none">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">{% trans "1. Introduction" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">{% trans "1. Introduction" %}</h2>
                 <p class="mb-4">{% trans "Welcome to Imhotep Smart Clinic. These Terms of Service govern your use of our website, services, and applications (collectively, the "Services") provided by Imhotep Tech ("we," "us," or "our")." %}</p>
                 <p class="mb-4">{% trans "By accessing or using our Services, you agree to be bound by these Terms. If you disagree with any part of the terms, you do not have permission to access the Services." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "2. Use of Services" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "2. Use of Services" %}</h2>
                 <p class="mb-4">{% trans "Our Services are designed to facilitate healthcare management and coordination between patients and healthcare providers. You agree to use the Services only for lawful and legitimate purposes and in accordance with these Terms." %}</p>
                 
-                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">{% trans "2.1 Medical Information" %}</h3>
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 mt-6">{% trans "2.1 Medical Information" %}</h3>
                 <p class="mb-4">{% trans "The medical information provided through our Services is not intended to replace professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition." %}</p>
                 
-                <h3 class="text-xl font-semibold text-gray-800 mb-3 mt-6">{% trans "2.2 Account Responsibility" %}</h3>
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-3 mt-6">{% trans "2.2 Account Responsibility" %}</h3>
                 <p class="mb-4">{% trans "If you create an account with us, you are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer or device. You agree to accept responsibility for all activities that occur under your account." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "3. User Obligations" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "3. User Obligations" %}</h2>
                 <p class="mb-4">{% trans "As a user of our Services, you agree not to:" %}</p>
                 <ul class="list-disc pl-5 mb-4">
                     <li class="mb-2">Use the Services in any way that violates any applicable laws or regulations</li>
@@ -40,22 +40,22 @@
                     <li class="mb-2">Collect or track the personal information of others</li>
                 </ul>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "4. Privacy" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "4. Privacy" %}</h2>
                 <p class="mb-4">Your privacy is important to us. Our <a href="/privacy" class="text-blue-600 hover:text-blue-800">{% trans "Privacy Policy" %}</a> explains how we collect, use, and protect your information when you use our Services.</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "5. Intellectual Property" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "5. Intellectual Property" %}</h2>
                 <p class="mb-4">{% trans "The Services and their original content, features, and functionality are owned by Imhotep Tech and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "6. Termination" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "6. Termination" %}</h2>
                 <p class="mb-4">{% trans "We may terminate or suspend your account and access to the Services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "7. Limitation of Liability" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "7. Limitation of Liability" %}</h2>
                 <p class="mb-4">{% trans "In no event shall Imhotep Tech, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Services." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "8. Changes to Terms" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "8. Changes to Terms" %}</h2>
                 <p class="mb-4">{% trans "We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion." %}</p>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">{% trans "9. Contact Us" %}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 mt-8">{% trans "9. Contact Us" %}</h2>
                 <p class="mb-4">{% trans "If you have any questions about these Terms, please contact us at info@imhoteptech.com." %}</p>
             </div>
         </div>

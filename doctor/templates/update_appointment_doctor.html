@@ -5,7 +5,7 @@
 {% block title %}Update Appointment - Imhotep Smart Clinic{% endblock %}
 
 {% block content %}
-<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 dark:from-gray-900 to-blue-50 dark:to-gray-900">
     <!-- Include navigation -->
     {% include "nav.html" %}
 
@@ -14,12 +14,12 @@
         <div class="container mx-auto max-w-4xl">
             <!-- Header -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">{% trans "Update Appointment" %}</h1>
-                <p class="text-gray-600">Modify appointment details for {{ appointments.patient.name }}</p>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200">{% trans "Update Appointment" %}</h1>
+                <p class="text-gray-600 dark:text-gray-400">Modify appointment details for {{ appointments.patient.name }}</p>
             </div>
 
             <!-- Breadcrumb Navigation -->
-            <div class="flex items-center text-sm text-gray-600 mb-6">
+            <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-6">
                 <a href="{% url 'appointment_list' %}" class="hover:text-blue-600 transition-colors">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -29,19 +29,19 @@
             </div>
 
             <!-- Appointment Form -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
                 <form method="POST" action="{% url 'update_appointment_doctor' %}?appointment_id={{ appointments.id }}" class="space-y-6">
                     {% csrf_token %}
                     
                     <!-- Patient Information (Non-editable) -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">{% trans "Patient" %}</label>
-                        <div class="flex items-center p-3 bg-gray-50 rounded-md border border-gray-200">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Patient" %}</label>
+                        <div class="flex items-center p-3 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700">
                             <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
                                 <span class="text-indigo-800 font-medium">{{ appointments.patient.name|slice:":1" }}</span>
                             </div>
                             <div class="ml-3">
-                                <p class="text-sm font-medium text-gray-900">{{ appointments.patient.name }}</p>
+                                <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ appointments.patient.name }}</p>
                                 {% if appointments.patient.phone_number %}
                                 <p class="text-xs text-gray-500">{{ appointments.patient.phone_number }}</p>
                                 {% endif %}
@@ -54,7 +54,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Date Selection -->
                         <div>
-                            <label for="date" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Appointment Date" %}</label>
+                            <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Appointment Date" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,7 +64,7 @@
                                 <input type="date" name="date" id="date" 
                                        value="{{ appointments.date|date:'Y-m-d' }}" 
                                        min="{{ min_date|date:'Y-m-d' }}" 
-                                       class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" 
+                                       class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" 
                                        required 
                                        onchange="fetchAvailableTimes(this.value)">
                             </div>
@@ -73,14 +73,14 @@
                         
                         <!-- Time Slot Selection -->
                         <div>
-                            <label for="details" class="block text-sm font-medium text-gray-700 mb-1">{% trans "Available Time Slots" %}</label>
+                            <label for="details" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Available Time Slots" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </div>
-                                <select name="details" id="details" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" required>
+                                <select name="details" id="details" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" required>
                                     <option value="{{ appointments.start_time|time:'H:i:s' }}" selected>{{ appointments.start_time|time:'g:i A' }} (Current)</option>
                                 </select>
                             </div>
@@ -88,7 +88,7 @@
                     </div>
                     
                     <!-- Info Card -->
-                    <div class="bg-blue-50 p-4 rounded-md border border-blue-200 mt-4">
+                    <div class="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 p-4 rounded-md border border-blue-200 mt-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
@@ -110,7 +110,7 @@
                     
                     <!-- Submit Button -->
                     <div class="flex justify-end space-x-3 pt-4">
-                        <a href="{% url 'appointment_list' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md shadow-sm transition-colors">{% trans "Cancel" %}</a>
+                        <a href="{% url 'appointment_list' %}" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 dark:text-gray-200 font-medium rounded-md shadow-sm transition-colors">{% trans "Cancel" %}</a>
                         <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Update Appointment" %}</button>
                     </div>
                 </form>
