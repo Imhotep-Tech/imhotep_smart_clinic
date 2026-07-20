@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from accounts.decorators import assistant_required
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from .models import AssistantProfile
 from doctor.models import DoctorProfile
 
@@ -34,9 +35,9 @@ def update_assistant_profile(request):
         
         try:
             user.save()
-            messages.success(request, 'Your personal information was successfully updated!')
+            messages.success(request, _('Your personal information was successfully updated!'))
         except Exception as e:
-            messages.error(request, f'Error updating profile: {str(e)}')
+            messages.error(request, _(f'Error updating profile: {str(e)}'))
     
     context = {
         "user_data": request.user,

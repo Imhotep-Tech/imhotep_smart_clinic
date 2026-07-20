@@ -17,6 +17,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 import requests
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.utils.translation import gettext_lazy as _
 from imhotep_smart_clinic.settings import SITE_DOMAIN
 from doctor.models import DoctorProfile
 
@@ -39,7 +40,7 @@ def register(request):
         last_name = request.POST.get('last_name')
 
         if user_type not in ['doctor', 'patient']:
-            messages.error(request, "Please select a valid user type.")
+            messages.error(request, _("Please select a valid user type."))
             return render(request, "register.html")
 
         # Check if username contains '@'
@@ -49,17 +50,17 @@ def register(request):
 
         # Check if email contains '@'
         if not '@' in email:
-            messages.error(request, "Email must include @!")
+            messages.error(request, _("Email must include @!"))
             return render(request, "register.html")
 
         # Check if username already exists
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already taken, please choose another one!')
+            messages.error(request, _('Username already taken, please choose another one!'))
             return render(request, "register.html")
 
         # Check if email already exists
         if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already taken, please choose another one or login!')
+            messages.error(request, _('Email already taken, please choose another one or login!'))
             return render(request, "register.html")
 
         # Create a new user
@@ -78,7 +79,7 @@ def register(request):
             from doctor.models import DoctorProfile
             specialization = request.POST.get('specialization')
             if not specialization:
-                messages.error(request, 'Specialization is required for doctors.')
+                messages.error(request, _('Specialization is required for doctors.'))
                 user.delete()  # Clean up the created user
                 return render(request, "register.html")
                 
@@ -108,7 +109,7 @@ def register(request):
         })
         send_mail(mail_subject, message, 'imhoteptech1@gmail.com', [email], html_message=message)
 
-        messages.success(request, "Account created successfully! Please check your email to verify your account.")
+        messages.success(request, _("Account created successfully! Please check your email to verify your account."))
         return redirect("login")
 
     return render(request, "register.html")
@@ -134,10 +135,10 @@ def activate(request, uidb64, token):
 
         # Log the user in
         login(request, user)
-        messages.success(request, "Thank you for your email confirmation. You can now log in to your account.")
+        messages.success(request, _("Thank you for your email confirmation. You can now log in to your account."))
         return redirect('login')
     else:
-        messages.success(request, "Activation link is invalid!")
+        messages.success(request, _("Activation link is invalid!"))
         return redirect('login')
 
 #the login route
@@ -161,7 +162,7 @@ def user_login(request):
             if user is not None:
                 if user.email_verify == True:
                     login(request, user)
-                    messages.success(request, "Login successful!")
+                    messages.success(request, _("Login successful!"))
 
                     if request.user.is_doctor():
                         return redirect("doctor_dashboard")
@@ -183,11 +184,11 @@ def user_login(request):
                     })
                     send_mail(mail_subject, message, 'imhoteptech1@gmail.com', [user.email], html_message=message)
 
-                    messages.error(request, "E-mail not verified!")
-                    messages.info(request, "Please check your email to verify your account.")
+                    messages.error(request, _("E-mail not verified!"))
+                    messages.info(request, _("Please check your email to verify your account."))
                     return redirect("login")
             else:
-                messages.error(request, "Invalid username or password!")
+                messages.error(request, _("Invalid username or password!"))
         else:
             # Authenticate using email
             user = User.objects.filter(email=user_username_mail).first()
@@ -197,7 +198,7 @@ def user_login(request):
                 if user is not None:
                     if user.email_verify == True:
                         login(request, user)
-                        messages.success(request, "Login successful!")
+                        messages.success(request, _("Login successful!"))
                         if request.user.is_doctor():
                             return redirect("doctor_dashboard")
                         
@@ -216,13 +217,13 @@ def user_login(request):
                         })
                         send_mail(mail_subject, message, 'imhoteptech1@gmail.com', [user.email], html_message=message)
 
-                        messages.error(request, "E-mail not verified!")
-                        messages.info(request, "Please check your email to verify your account.")
+                        messages.error(request, _("E-mail not verified!"))
+                        messages.info(request, _("Please check your email to verify your account."))
                         return redirect("login")
                 else:
-                    messages.error(request, "Invalid E-mail or password!")
+                    messages.error(request, _("Invalid E-mail or password!"))
             else:
-                messages.error(request, "Invalid E-mail or password!")
+                messages.error(request, _("Invalid E-mail or password!"))
 
     return render(request, "login.html")
 
@@ -230,7 +231,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    messages.success(request, "You have been logged out.")
+    messages.success(request, _("You have been logged out."))
     return redirect("login")
 
 def demo_login(request):
@@ -262,8 +263,8 @@ def demo_login(request):
     demo_user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
     login(request, demo_user)
     
-    messages.success(request, "Logged in as Demo Doctor. Some features are restricted.")
-    messages.info(request, "Note: You cannot change password, email, username, or name in demo mode.")
+    messages.success(request, _("Logged in as Demo Doctor. Some features are restricted."))
+    messages.info(request, _("Note: You cannot change password, email, username, or name in demo mode."))
     return redirect("doctor_dashboard")
 
 class CustomPasswordResetView(PasswordResetView):
@@ -361,7 +362,7 @@ def google_callback(request):
     code = request.GET.get('code')
     
     if not code:
-        messages.error(request, "Google login was canceled. Please try again.")
+        messages.error(request, _("Google login was canceled. Please try again."))
         return redirect('login')
 
     # Exchange code for access token
@@ -400,7 +401,7 @@ def google_callback(request):
             user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
             # User exists, log them in
             login(request, user)
-            messages.success(request, "Login successful!")
+            messages.success(request, _("Login successful!"))
             if request.user.is_doctor():
                 return redirect("doctor_dashboard")
             
@@ -427,7 +428,7 @@ def google_callback(request):
         return redirect('add_details_google_login')
 
     except Exception as e:
-        messages.error(request, f"An error occurred during Google login. Please try again. {e}")
+        messages.error(request, _(f"An error occurred during Google login. Please try again. {e}"))
         return redirect('login')
 
 def add_username_google_login(request):
@@ -437,14 +438,14 @@ def add_username_google_login(request):
 
     user_info = request.session.get('google_user_info', {})
     if not user_info:
-        messages.error(request, "Session expired. Please try again.")
+        messages.error(request, _("Session expired. Please try again."))
         return redirect('login')
 
     new_username = request.POST.get('username')
 
     # Validate username
     if User.objects.filter(username=new_username).exists():
-        messages.error(request, "Username already taken. Please choose another.")
+        messages.error(request, _("Username already taken. Please choose another."))
         return render(request, 'add_username_google.html')
 
     # Update username in session
@@ -459,14 +460,14 @@ def add_details_google_login(request):
     user_info = request.session.get('google_user_info', {})
     
     if not user_info:
-        messages.error(request, "Session expired. Please try again.")
+        messages.error(request, _("Session expired. Please try again."))
         return redirect('login')
     
     if request.method == "POST":
         user_type = request.POST.get('user_type')
         
         if user_type not in ['doctor', 'patient']:
-            messages.error(request, "Please select a valid user type.")
+            messages.error(request, _("Please select a valid user type."))
             return render(request, 'add_details_google.html', {'user_info': user_info})
         
         # Create the user
@@ -485,7 +486,7 @@ def add_details_google_login(request):
             from doctor.models import DoctorProfile
             specialization = request.POST.get('specialization')
             if not specialization:
-                messages.error(request, 'Specialization is required for doctors.')
+                messages.error(request, _('Specialization is required for doctors.'))
                 user.delete()  # Clean up the created user
                 return render(request, 'add_details_google.html', {'user_info': user_info})
                 
@@ -512,7 +513,7 @@ def add_details_google_login(request):
         user.backend = f'{backend.__module__}.{backend.__class__.__name__}'
         login(request, user)
         
-        messages.success(request, "Account created successfully!")
+        messages.success(request, _("Account created successfully!"))
         if request.user.is_doctor():
             return redirect("doctor_dashboard")
         

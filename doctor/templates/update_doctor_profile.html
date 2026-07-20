@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Doctor Profile Settings - Imhotep Smart Clinic{% endblock %}
 
 {% block content %}
-<div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+<div class="flex min-h-screen bg-gradient-to-br from-gray-50 dark:from-gray-900 to-blue-50 dark:to-gray-900">
     <!-- Include navigation -->
     {% include "nav.html" %}
 
@@ -13,17 +14,17 @@
         <div class="container mx-auto max-w-3xl">
             <!-- Header -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Doctor Profile Settings</h1>
-                <p class="text-gray-600">Manage your account information and professional details</p>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200">{% trans "Doctor Profile Settings" %}</h1>
+                <p class="text-gray-600 dark:text-gray-400">{% trans "Manage your account information and professional details" %}</p>
             </div>
 
             <!-- Clinic Logo Section -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Clinic Logo</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4 pb-2 border-b">{% trans "Clinic Logo" %}</h2>
                 
                 <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
                     <!-- Current Logo Display -->
-                    <div class="flex-shrink-0 w-40 h-40 bg-gray-100 rounded-lg overflow-hidden border border-gray-200 flex items-center justify-center">
+                    <div class="flex-shrink-0 w-40 h-40 bg-gray-100 dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 flex items-center justify-center">
                         {% if doctor_profile.clinic_photo_path %}
                             <img src="{{ MEDIA_URL }}{{ doctor_profile.clinic_photo_path }}" alt="Clinic Logo" class="max-w-full max-h-full object-contain">
                         {% else %}
@@ -39,28 +40,24 @@
                             
                             <!-- Upload Field -->
                             <div>
-                                <label for="clinic_logo" class="block text-sm font-medium text-gray-700 mb-1">Upload New Logo</label>
+                                <label for="clinic_logo" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Upload New Logo" %}</label>
                                 <input type="file" name="clinic_logo" id="clinic_logo" accept="image/jpeg,image/png,image/gif" 
                                        class="block w-full text-sm text-gray-500
                                               file:mr-4 file:py-2 file:px-4
                                               file:rounded file:border-0
                                               file:text-sm file:font-medium
-                                              file:bg-blue-50 file:text-blue-700
+                                              file:bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 file:text-blue-700
                                               hover:file:bg-blue-100">
-                                <p class="mt-1 text-xs text-gray-500">Maximum size: 500KB. Recommended dimensions: 300x300px</p>
-                                <p class="text-xs text-gray-500">Allowed formats: JPEG, PNG</p>
+                                <p class="mt-1 text-xs text-gray-500">{% trans "Maximum size: 500KB. Recommended dimensions: 300x300px" %}</p>
+                                <p class="text-xs text-gray-500">{% trans "Allowed formats: JPEG, PNG" %}</p>
                             </div>
                             
                             <!-- Submit Button -->
-                            <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">
-                                Upload Logo
-                            </button>
+                            <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Upload Logo" %}</button>
                             
                             {% if doctor_profile.clinic_photo_path %}
                             <!-- Reset Button -->
-                            <button type="button" onclick="confirmRemoveLogo()" class="ml-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md shadow-sm transition-colors">
-                                Remove Logo
-                            </button>
+                            <button type="button" onclick="confirmRemoveLogo()" class="ml-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 dark:text-gray-300 font-medium rounded-md shadow-sm transition-colors">{% trans "Remove Logo" %}</button>
                             
                             <script>
                                 function confirmRemoveLogo() {
@@ -76,40 +73,38 @@
             </div>
 
             <!-- Doctor-specific information (handled by doctor_settings.py) -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Professional Information</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4 pb-2 border-b">{% trans "Professional Information" %}</h2>
                 
                 <form method="POST" action="{% url 'update_doctor_profile' %}">
                     {% csrf_token %}
                     
                     <!-- Specialization Field -->
                     <div class="mb-6">
-                        <label for="specialization" class="block text-sm font-medium text-gray-700 mb-1">Medical Specialization</label>
+                        <label for="specialization" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Medical Specialization" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                                 </svg>
                             </div>
-                            <input type="text" name="specialization" id="specialization" value="{{ doctor_profile.specialization }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc." required>
+                            <input type="text" name="specialization" id="specialization" value="{{ doctor_profile.specialization }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="e.g., Cardiology, Pediatrics, etc." required>
                         </div>
                     </div>
                     
                     <!-- Submit Button -->
                     <div class="flex justify-end">
-                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">
-                            Update Professional Details
-                        </button>
+                        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Update Professional Details" %}</button>
                     </div>
                 </form>
             </div>
 
 
             
-            <div class="p-6 bg-white rounded-lg shadow-md mb-6">
+            <div class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md mb-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                    <h2 class="text-xl font-medium text-gray-800">Appointment Schedules</h2>
-                    <p class="text-sm text-gray-600 order-3 sm:order-2">Set your availability for patient appointments</p>
+                    <h2 class="text-xl font-medium text-gray-800 dark:text-gray-200">{% trans "Appointment Schedules" %}</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 order-3 sm:order-2">{% trans "Set your availability for patient appointments" %}</p>
                     <a href="{% url 'set_appointment_times' %}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors text-sm font-medium order-2 sm:order-3">
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -123,7 +118,7 @@
                     <div class="hidden md:block">
                         <div class="overflow-x-auto max-w-full">
                             <table class="min-w-full divide-y divide-gray-200 table-fixed">
-                                <thead class="bg-gray-50">
+                                <thead class="bg-gray-50 dark:bg-gray-900">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Day</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">Time Range</th>
@@ -132,7 +127,7 @@
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                                     {% for schedule in page_obj %}
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -143,7 +138,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ schedule.day_of_the_week }}</div>
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ schedule.day_of_the_week }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -164,7 +159,7 @@
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="{% url 'update_appointment_times' %}?appointment_id={{ schedule.id }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                                            <a href="{% url 'update_appointment_times' %}?appointment_id={{ schedule.id }}" class="text-indigo-600 hover:text-indigo-900 mr-3">{% trans "Edit" %}</a>
                                             <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ schedule.id }}" class="inline">
                                                 {% csrf_token %}
                                                 <button type="submit" class="text-{% if schedule.activated_status %}red{% else %}green{% endif %}-600 hover:text-{% if schedule.activated_status %}red{% else %}green{% endif %}-900">
@@ -179,32 +174,24 @@
                             
                             <!-- Pagination -->
                             {% if page_obj.has_other_pages %}
-                            <div class="py-4 flex items-center justify-between border-t border-gray-200 mt-4">
+                            <div class="py-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 mt-4">
                                 <div class="flex-1 flex justify-between sm:hidden">
                                     {% if page_obj.has_previous %}
-                                    <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                        Previous
-                                    </a>
+                                    <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900">{% trans "Previous" %}</a>
                                     {% else %}
-                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">
-                                        Previous
-                                    </span>
+                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-50 dark:bg-gray-900 cursor-not-allowed">{% trans "Previous" %}</span>
                                     {% endif %}
                                     
                                     {% if page_obj.has_next %}
-                                    <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                        Next
-                                    </a>
+                                    <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900">{% trans "Next" %}</a>
                                     {% else %}
-                                    <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">
-                                        Next
-                                    </span>
+                                    <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-50 dark:bg-gray-900 cursor-not-allowed">{% trans "Next" %}</span>
                                     {% endif %}
                                 </div>
                                 
                                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                     <div>
-                                        <p class="text-sm text-gray-700">
+                                        <p class="text-sm text-gray-700 dark:text-gray-300">
                                             Showing <span class="font-medium">{{ page_obj.start_index }}</span> to <span class="font-medium">{{ page_obj.end_index }}</span> of <span class="font-medium">{{ page_obj.paginator.count }}</span> schedules
                                         </p>
                                     </div>
@@ -212,15 +199,15 @@
                                     <div>
                                         <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                             {% if page_obj.has_previous %}
-                                            <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                                <span class="sr-only">Previous</span>
+                                            <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:bg-gray-900">
+                                                <span class="sr-only">{% trans "Previous" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                                 </svg>
                                             </a>
                                             {% else %}
-                                            <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed">
-                                                <span class="sr-only">Previous</span>
+                                            <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-sm font-medium text-gray-300 cursor-not-allowed">
+                                                <span class="sr-only">{% trans "Previous" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                                 </svg>
@@ -229,22 +216,22 @@
                                             
                                             {% for i in page_obj.paginator.page_range %}
                                                 {% if page_obj.number == i %}
-                                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600">{{ i }}</span>
+                                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 text-sm font-medium text-blue-600">{{ i }}</span>
                                                 {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                                                <a href="?page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">{{ i }}</a>
+                                                <a href="?page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-900">{{ i }}</a>
                                                 {% endif %}
                                             {% endfor %}
                                             
                                             {% if page_obj.has_next %}
-                                            <a href="?page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                                <span class="sr-only">Next</span>
+                                            <a href="?page={{ page_obj.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:bg-gray-900">
+                                                <span class="sr-only">{% trans "Next" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                                 </svg>
                                             </a>
                                             {% else %}
-                                            <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed">
-                                                <span class="sr-only">Next</span>
+                                            <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-sm font-medium text-gray-300 cursor-not-allowed">
+                                                <span class="sr-only">{% trans "Next" %}</span>
                                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                                 </svg>
@@ -261,14 +248,14 @@
                     <!-- Mobile card view -->
                     <div class="md:hidden space-y-4">
                         {% for schedule in page_obj %}
-                            <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
+                            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm p-4">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center">
                                         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
                                             <span class="text-indigo-800 font-medium">{{ schedule.day_of_the_week|slice:":2" }}</span>
                                         </div>
                                         <div class="ml-3">
-                                            <div class="text-sm font-medium text-gray-900">{{ schedule.day_of_the_week }}</div>
+                                            <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ schedule.day_of_the_week }}</div>
                                         </div>
                                     </div>
                                     <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -283,19 +270,17 @@
                                 
                                 <div class="grid grid-cols-2 gap-2 mb-3">
                                     <div>
-                                        <span class="block text-xs font-medium text-gray-500">Time Range</span>
-                                        <span class="text-sm text-gray-900">{{ schedule.start_time|time:"g:i A" }} - {{ schedule.end_time|time:"g:i A" }}</span>
+                                        <span class="block text-xs font-medium text-gray-500">{% trans "Time Range" %}</span>
+                                        <span class="text-sm text-gray-900 dark:text-gray-100">{{ schedule.start_time|time:"g:i A" }} - {{ schedule.end_time|time:"g:i A" }}</span>
                                     </div>
                                     <div>
-                                        <span class="block text-xs font-medium text-gray-500">Duration</span>
-                                        <span class="text-sm text-gray-900">{{ schedule.separation_time }}</span>
+                                        <span class="block text-xs font-medium text-gray-500">{% trans "Duration" %}</span>
+                                        <span class="text-sm text-gray-900 dark:text-gray-100">{{ schedule.separation_time }}</span>
                                     </div>
                                 </div>
                                 
-                                <div class="flex items-center justify-end space-x-2 pt-2 border-t border-gray-200">
-                                    <a href="{% url 'update_appointment_times' %}?appointment_id={{ schedule.id }}" class="flex-1 text-center px-3 py-2 text-sm bg-indigo-50 text-indigo-600 rounded-md hover:bg-indigo-100 transition-colors">
-                                        Edit
-                                    </a>
+                                <div class="flex items-center justify-end space-x-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                                    <a href="{% url 'update_appointment_times' %}?appointment_id={{ schedule.id }}" class="flex-1 text-center px-3 py-2 text-sm bg-indigo-50 text-indigo-600 rounded-md hover:bg-indigo-100 transition-colors">{% trans "Edit" %}</a>
                                     <form method="POST" action="{% url 'deactivate_appointment_times' %}?appointment_id={{ schedule.id }}" class="flex-1">
                                         {% csrf_token %}
                                         <button type="submit" class="w-full px-3 py-2 text-sm {% if schedule.activated_status %}bg-red-50 text-red-600 hover:bg-red-100{% else %}bg-green-50 text-green-600 hover:bg-green-100{% endif %} rounded-md transition-colors">
@@ -308,38 +293,30 @@
                         
                         <!-- Mobile Pagination -->
                         {% if page_obj.has_other_pages %}
-                        <div class="py-4 flex items-center justify-between border-t border-gray-200 mt-4">
+                        <div class="py-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 mt-4">
                             <div class="flex flex-1 justify-between">
                                 {% if page_obj.has_previous %}
-                                <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                    Previous
-                                </a>
+                                <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900">{% trans "Previous" %}</a>
                                 {% else %}
-                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">
-                                    Previous
-                                </span>
+                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-50 dark:bg-gray-900 cursor-not-allowed">{% trans "Previous" %}</span>
                                 {% endif %}
                                 
                                 {% if page_obj.has_next %}
-                                <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                    Next
-                                </a>
+                                <a href="?page={{ page_obj.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900">{% trans "Next" %}</a>
                                 {% else %}
-                                <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-300 bg-gray-50 cursor-not-allowed">
-                                    Next
-                                </span>
+                                <span class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-50 dark:bg-gray-900 cursor-not-allowed">{% trans "Next" %}</span>
                                 {% endif %}
                             </div>
                         </div>
                         {% endif %}
                     </div>
                 {% else %}
-                    <div class="bg-gray-50 rounded-lg p-8 text-center">
+                    <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 text-center">
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900">No appointment schedules</h3>
-                        <p class="mt-1 text-sm text-gray-500">Get started by creating a new appointment schedule.</p>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{% trans "No appointment schedules" %}</h3>
+                        <p class="mt-1 text-sm text-gray-500">{% trans "Get started by creating a new appointment schedule." %}</p>
                         <div class="mt-6">
                             <a href="{% url 'set_appointment_times' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -352,7 +329,7 @@
                 {% endif %}
                 
                 <!-- Quick Help Card -->
-                <div class="mt-4 bg-blue-50 rounded-md p-4 border border-blue-200">
+                <div class="mt-4 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 rounded-md p-4 border border-blue-200">
                     <div class="flex">
                         <div class="flex-shrink-0">
                             <svg class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
@@ -360,7 +337,7 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-blue-800">Managing Your Appointment Schedules</h3>
+                            <h3 class="text-sm font-medium text-blue-800">{% trans "Managing Your Appointment Schedules" %}</h3>
                             <div class="mt-2 text-sm text-blue-700">
                                 <ul class="list-disc pl-5 space-y-1">
                                     <li>Create multiple schedules for different days of the week</li>
@@ -375,83 +352,81 @@
             </div>
         
 
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Personal Information</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4 pb-2 border-b">{% trans "Personal Information" %}</h2>
                 
                 <form method="POST" action="{% url 'update_profile' %}">
                     {% csrf_token %}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <!-- First Name Field -->
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                            <label for="first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "First Name" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <input type="text" name="first_name" id="first_name" value="{{ user_data.first_name }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Your first name">
+                                <input type="text" name="first_name" id="first_name" value="{{ user_data.first_name }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="Your first name">
                             </div>
                         </div>
                         
                         <!-- Last Name Field -->
                         <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                            <label for="last_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Last Name" %}</label>
                             <div class="relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <input type="text" name="last_name" id="last_name" value="{{ user_data.last_name }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Your last name">
+                                <input type="text" name="last_name" id="last_name" value="{{ user_data.last_name }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="Your last name">
                             </div>
                         </div>
                     </div>
                     
                     <!-- Username Field -->
                     <div class="mb-6">
-                        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Username" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
-                            <input type="text" name="username" id="username" value="{{ user_data.username }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="Your username">
+                            <input type="text" name="username" id="username" value="{{ user_data.username }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="Your username">
                         </div>
                     </div>
                     
                     <!-- Email Field -->
                     <div class="mb-6">
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{% trans "Email Address" %}</label>
                         <div class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <input type="email" name="email" id="email" value="{{ user_data.email }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md" placeholder="your.email@example.com">
+                            <input type="email" name="email" id="email" value="{{ user_data.email }}" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-3 py-3 border-gray-300 dark:border-gray-600 rounded-md" placeholder="your.email@example.com">
                         </div>
-                        <p class="mt-1 text-xs text-gray-500">Changing your email will require verification</p>
+                        <p class="mt-1 text-xs text-gray-500">{% trans "Changing your email will require verification" %}</p>
                     </div>
                     
                     <!-- Submit Button -->
                     <div class="flex justify-end">
-                        <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm transition-colors">
-                            Update Account Information
-                        </button>
+                        <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-sm transition-colors">{% trans "Update Account Information" %}</button>
                     </div>
                 </form>
             </div>
             
             <!-- Password Management Section (handled by password change views) -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Password Management</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4 pb-2 border-b">{% trans "Password Management" %}</h2>
                 
                 <div class="flex items-center justify-between">
                     <div>
-                        <h3 class="text-lg font-medium text-gray-700">Change Your Password</h3>
-                        <p class="text-sm text-gray-500">Update your password to maintain account security</p>
+                        <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300">{% trans "Change Your Password" %}</h3>
+                        <p class="text-sm text-gray-500">{% trans "Update your password to maintain account security" %}</p>
                     </div>
                     <a href="{% url 'password_change' %}" class="inline-flex items-center px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-md transition-colors">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

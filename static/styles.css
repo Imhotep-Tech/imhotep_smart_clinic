@@ -1,0 +1,40 @@
+/* Dark Mode Base Styles */
+/* These styles ensure basic elements look correct in dark mode, complementing Tailwind utilities */
+
+.dark input[type="text"],
+.dark input[type="password"],
+.dark input[type="email"],
+.dark input[type="number"],
+.dark input[type="date"],
+.dark input[type="time"],
+.dark select,
+.dark textarea {
+    background-color: #374151; /* bg-gray-700 */
+    border-color: #4b5563; /* border-gray-600 */
+    color: #f9fafb; /* text-gray-50 */
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+    color: #9ca3af; /* text-gray-400 */
+}
+
+.dark input:disabled,
+.dark select:disabled,
+.dark textarea:disabled {
+    background-color: #4b5563; /* bg-gray-600 */
+    color: #d1d5db; /* text-gray-300 */
+}
+
+.dark table {
+    color: #d1d5db;
+}
+
+.dark thead {
+    background-color: #1f2937; /* bg-gray-800 */
+    color: #f3f4f6; /* text-gray-100 */
+}
+
+.dark tbody tr {
+    border-color: #374151; /* border-gray-700 */
+}

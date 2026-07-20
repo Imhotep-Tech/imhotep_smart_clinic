@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,7 @@
     </style>
 </head>
 <body>
-    <h1>You Are Offline</h1>
-    <p>It seems you have lost your internet connection. Please check your connection and try again.</p>
+    <h1>{% trans "You Are Offline" %}</h1>
+    <p>{% trans "It seems you have lost your internet connection. Please check your connection and try again." %}</p>
 </body>
 </html>

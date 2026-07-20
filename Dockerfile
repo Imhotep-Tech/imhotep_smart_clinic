@@ -21,6 +21,7 @@ RUN apt-get update \
         libopenjp2-7-dev \
         libffi-dev \
         shared-mime-info \
+        gettext \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies

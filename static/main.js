@@ -282,3 +282,35 @@ window.addEventListener('offline', () => setReadOnlyMode(true));
 document.addEventListener('DOMContentLoaded', function() {
     setReadOnlyMode(!navigator.onLine);
 });
+
+// Dark mode toggle functionality
+function toggleTheme() {
+    const themeToggleDarkIcon = document.querySelectorAll('.theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.querySelectorAll('.theme-toggle-light-icon');
+    
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+        themeToggleLightIcon.forEach(icon => icon.classList.add('hidden'));
+        themeToggleDarkIcon.forEach(icon => icon.classList.remove('hidden'));
+    } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+        themeToggleDarkIcon.forEach(icon => icon.classList.add('hidden'));
+        themeToggleLightIcon.forEach(icon => icon.classList.remove('hidden'));
+    }
+}
+
+// Initialize theme icons
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggleDarkIcon = document.querySelectorAll('.theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.querySelectorAll('.theme-toggle-light-icon');
+    
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.forEach(icon => icon.classList.remove('hidden'));
+        themeToggleDarkIcon.forEach(icon => icon.classList.add('hidden'));
+    } else {
+        themeToggleDarkIcon.forEach(icon => icon.classList.remove('hidden'));
+        themeToggleLightIcon.forEach(icon => icon.classList.add('hidden'));
+    }
+});

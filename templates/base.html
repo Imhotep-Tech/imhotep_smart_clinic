@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,6 +47,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
+                darkMode: 'class',
                 theme: {
                     extend: {
                         colors: {
@@ -80,8 +81,16 @@
         </script>
         
         {% block extra_head %}{% endblock %}
+        
+        <script>
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
     </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200">
   <div id="page-loader" aria-hidden="true">
     <div class="spinner" role="status" aria-label="Loading"></div>
   </div>
@@ -96,7 +105,7 @@
                     {% for message in messages %}
                         <div class="p-4 {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %} rounded-lg mb-4 flex justify-between items-center">
                             <div>{{ message }}</div>
-                            <button type="button" class="text-gray-500 hover:text-gray-700" onclick="this.parentElement.remove()">
+                            <button type="button" class="text-gray-500 hover:text-gray-700 dark:text-gray-300" onclick="this.parentElement.remove()">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>

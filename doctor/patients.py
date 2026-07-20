@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.db.models import Q
 from .utils.search_patient import search_patient_by_name, search_patient_by_phone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.translation import gettext_lazy as _
 from datetime import date
 
 @login_required
@@ -38,12 +39,12 @@ def add_patient(request):
             
         try:
             new_patient.save()
-            messages.success(request, "Patient Added successfully!")
+            messages.success(request, _("Patient Added successfully!"))
             patient_id = new_patient.id
             url = reverse('show_patient_details') + f'?patient_id={patient_id}'
             return redirect(url)
         except Exception as e:
-            messages.error(request, f"Something went wrong while saving the new patient data: {str(e)}")
+            messages.error(request, _(f"Something went wrong while saving the new patient data: {str(e)}"))
             return redirect("doctor_dashboard")
     context={
         "user_data": request.user
@@ -174,11 +175,11 @@ def update_patient(request):
 
     try:
         patient.save()
-        messages.success(request, "Patient Updated successfully!")
+        messages.success(request, _("Patient Updated successfully!"))
         url = reverse('show_patient_details') + f'?patient_id={patient_id}'
         return redirect(url)
     except Exception as e:
-        messages.error(request, f"Something went wrong while saving the new patient data: {str(e)}")
+        messages.error(request, _(f"Something went wrong while saving the new patient data: {str(e)}"))
         url = reverse('update_patient') + f'?patient_id={patient_id}'
         return redirect(url)
 
@@ -193,14 +194,14 @@ def delete_patient(request):
         try:
             name = patient.name
             patient.delete()
-            messages.success(request, f"Patient {name} Delete successfully!")
+            messages.success(request, _(f"Patient {name} Delete successfully!"))
             return redirect("show_patients")
         except Exception as e:
-            messages.error(request, f"Something went wrong while saving the new patient data: {str(e)}")
+            messages.error(request, _(f"Something went wrong while saving the new patient data: {str(e)}"))
             url = reverse('update_patient') + f'?patient_id={patient_id}'
             return redirect(url)
     else:
-        messages.error(request, "Method Not allowed")
+        messages.error(request, _("Method Not allowed"))
         return redirect("doctor_dashboard")
     
 @login_required
