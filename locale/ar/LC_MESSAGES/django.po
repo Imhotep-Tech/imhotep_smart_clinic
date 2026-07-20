@@ -94,12 +94,12 @@ msgstr ""
 
 #: accounts/auth.py:266
 msgid "Logged in as Demo Doctor. Some features are restricted."
-msgstr ""
+msgstr "تم تسجيل الدخول كطبيب تجريبي. بعض الميزات مقيدة."
 
 #: accounts/auth.py:267
 msgid ""
 "Note: You cannot change password, email, username, or name in demo mode."
-msgstr ""
+msgstr "ملاحظة: لا يمكنك تغيير كلمة المرور أو البريد الإلكتروني أو اسم المستخدم أو الاسم في الوضع التجريبي."
 
 #: accounts/auth.py:365
 msgid "Google login was canceled. Please try again."
@@ -233,7 +233,7 @@ msgstr ""
 #: accounts/templates/register.html:44 doctor/templates/add_assistant.html:48
 #: doctor/templates/update_doctor_profile.html:390
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: accounts/templates/add_username_google.html:36
 msgid ""
@@ -247,42 +247,42 @@ msgstr ""
 
 #: accounts/templates/login.html:16
 msgid "Welcome to Imhotep Clinic"
-msgstr ""
+msgstr "مرحبًا بكم في عيادة إمحوتب"
 
 #: accounts/templates/login.html:17
 msgid "Sign in to access the patient management system"
-msgstr ""
+msgstr "قم بتسجيل الدخول للوصول إلى نظام إدارة المرضى"
 
 #: accounts/templates/login.html:36
 msgid "Or sign in with email"
-msgstr ""
+msgstr "أو تسجيل الدخول بالبريد الإلكتروني"
 
 #: accounts/templates/login.html:44
 msgid "Username or Email"
-msgstr ""
+msgstr "اسم المستخدم أو البريد الإلكتروني"
 
 #: accounts/templates/login.html:57 accounts/templates/register.html:143
 #: doctor/templates/add_assistant.html:88
 msgid "Password"
-msgstr ""
+msgstr "كلمة المرور"
 
 #: accounts/templates/login.html:58
 msgid "Forgot password?"
-msgstr ""
+msgstr "هل نسيت كلمة المرور؟"
 
 #: accounts/templates/login.html:77 accounts/templates/password_reset.html:47
 #: accounts/templates/password_reset_complete.html:19
 #: accounts/templates/register.html:193
 msgid "Sign in"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: accounts/templates/login.html:86
 msgid "Or try demo"
-msgstr ""
+msgstr "أو جرب الحساب التجريبي"
 
 #: accounts/templates/login.html:101
 msgid "Register here"
-msgstr ""
+msgstr "سجل هنا"
 
 #: accounts/templates/password_change.html:15
 #: assistant/templates/update_assistant_profile.html:90
@@ -323,7 +323,7 @@ msgstr ""
 
 #: accounts/templates/password_change_done.html:16
 msgid "Demo Account Restriction"
-msgstr ""
+msgstr "قيود الحساب التجريبي"
 
 #: accounts/templates/password_change_done.html:17 accounts/user_profile.py:25
 msgid ""
@@ -378,7 +378,7 @@ msgstr ""
 #: accounts/templates/password_reset.html:22
 #: accounts/templates/register.html:83
 msgid "Email"
-msgstr ""
+msgstr "البريد الإلكتروني"
 
 #: accounts/templates/password_reset.html:41
 msgid "Reset my password"
@@ -444,46 +444,46 @@ msgstr ""
 
 #: accounts/templates/register.html:16
 msgid "Join Imhotep Smart Clinic"
-msgstr ""
+msgstr "انضم إلى عيادة إمحوتب الذكية"
 
 #: accounts/templates/register.html:17
 msgid ""
 "Access patient records, manage appointments, and provide quality healthcare"
-msgstr ""
+msgstr "الوصول إلى سجلات المرضى وإدارة المواعيد وتوفير رعاية صحية عالية الجودة"
 
 #: accounts/templates/register.html:36
 msgid "Or register with email"
-msgstr ""
+msgstr "أو قم بالتسجيل بالبريد الإلكتروني"
 
 #: accounts/templates/register.html:57
 #: assistant/templates/update_assistant_profile.html:30
 #: doctor/templates/add_assistant.html:62
 #: doctor/templates/update_doctor_profile.html:363
 msgid "First Name"
-msgstr ""
+msgstr "الاسم الأول"
 
 #: accounts/templates/register.html:70
 #: assistant/templates/update_assistant_profile.html:43
 #: doctor/templates/add_assistant.html:75
 #: doctor/templates/update_doctor_profile.html:376
 msgid "Last Name"
-msgstr ""
+msgstr "اسم العائلة"
 
 #: accounts/templates/register.html:162
 msgid "Confirm Password"
-msgstr ""
+msgstr "تأكيد كلمة المرور"
 
 #: accounts/templates/register.html:181
 msgid "terms of service"
-msgstr ""
+msgstr "شروط الخدمة"
 
 #: accounts/templates/register.html:183
 msgid "privacy policy"
-msgstr ""
+msgstr "سياسة الخصوصية"
 
 #: accounts/templates/register.html:187
 msgid "Create your account"
-msgstr ""
+msgstr "انشئ حسابك"
 
 #: accounts/user_profile.py:55 doctor/doctor_settings.py:63
 #: doctor/doctor_settings.py:123
@@ -1518,7 +1518,7 @@ msgid ""
 "Streamline your medical practice with our comprehensive clinic management "
 "system. Connect with patients, manage appointments, and access medical "
 "records seamlessly."
-msgstr ""
+msgstr "قم بتبسيط ممارستك الطبية من خلال نظام إدارة العيادات الشامل لدينا. تواصل مع المرضى، وقم بإدارة المواعيد، والوصول إلى السجلات الطبية بسلاسة."
 
 #: templates/landing_page.html:98 templates/landing_page.html:259
 msgid "Get Started Free"
@@ -1541,7 +1541,7 @@ msgstr "الإدارة الذكية للمواعيد"
 msgid ""
 "Schedule and manage appointments with an intuitive interface. Reduce no-"
 "shows with automated reminders."
-msgstr ""
+msgstr "قم بجدولة المواعيد وإدارتها بواجهة بديهية. قلل من حالات عدم الحضور باستخدام التذكيرات التلقائية."
 
 #: templates/landing_page.html:140
 msgid "Digital Medical Records"
@@ -1551,7 +1551,7 @@ msgstr "السجلات الطبية الرقمية"
 msgid ""
 "Keep detailed patient records in one secure location. Access history, "
 "prescriptions, and test results instantly."
-msgstr ""
+msgstr "احتفظ بسجلات المرضى المفصلة في مكان واحد آمن. الوصول إلى التاريخ والوصفات الطبية ونتائج الاختبارات على الفور."
 
 #: templates/landing_page.html:151
 msgid "Patient Management"
@@ -1561,7 +1561,7 @@ msgstr "إدارة المرضى"
 msgid ""
 "Comprehensive profiles for each patient with medical history, contact "
 "information, and care plans."
-msgstr ""
+msgstr "ملفات تعريف شاملة لكل مريض مع التاريخ الطبي ومعلومات الاتصال وخطط الرعاية."
 
 #: templates/landing_page.html:162
 msgid "Secure & Compliant"
@@ -1571,7 +1571,7 @@ msgstr "آمن ومتوافق"
 msgid ""
 "Built with security at its core. Compliant with healthcare data protection "
 "regulations and standards."
-msgstr ""
+msgstr "مبني مع التركيز على الأمان. متوافق مع لوائح ومعايير حماية بيانات الرعاية الصحية."
 
 #: templates/landing_page.html:173
 msgid "Analytics & Insights"
@@ -1581,7 +1581,7 @@ msgstr "التحليلات والرؤى"
 msgid ""
 "Data-driven insights to help optimize your practice, track patient trends, "
 "and improve care outcomes."
-msgstr ""
+msgstr "رؤى مبنية على البيانات للمساعدة في تحسين ممارستك وتتبع اتجاهات المرضى وتحسين نتائج الرعاية."
 
 #: templates/landing_page.html:184
 msgid "Communication Tools"
@@ -1591,7 +1591,7 @@ msgstr "أدوات التواصل"
 msgid ""
 "Streamlined communication between healthcare providers and staff to enhance "
 "coordination of care."
-msgstr ""
+msgstr "تواصل مبسط بين مقدمي الرعاية الصحية والموظفين لتعزيز تنسيق الرعاية."
 
 #: templates/landing_page.html:196
 msgid "Why Choose Imhotep Smart Clinic?"
@@ -1620,7 +1620,7 @@ msgstr "رعاية مرضى محسنة"
 msgid ""
 "Access complete patient history and data instantly, leading to better-"
 "informed clinical decisions and improved outcomes."
-msgstr ""
+msgstr "الوصول إلى تاريخ المريض الكامل وبياناته على الفور، مما يؤدي إلى قرارات سريرية مستنيرة بشكل أفضل وتحسين النتائج."
 
 #: templates/landing_page.html:240
 msgid "Reduced Errors"
@@ -1630,7 +1630,7 @@ msgstr "تقليل الأخطاء"
 msgid ""
 "Digital records eliminate common issues associated with paper-based systems, "
 "such as misplaced files or illegible handwriting."
-msgstr ""
+msgstr "تقضي السجلات الرقمية على المشكلات الشائعة المرتبطة بالأنظمة الورقية، مثل الملفات في غير محلها أو الكتابة اليدوية غير المقروءة."
 
 #: templates/landing_page.html:254
 msgid "Ready to transform your medical practice?"
@@ -1640,7 +1640,7 @@ msgstr "هل أنت مستعد لتحويل ممارستك الطبية؟"
 msgid ""
 "Join thousands of healthcare professionals who have already improved their "
 "practice with Imhotep Smart Clinic."
-msgstr ""
+msgstr "انضم إلى الآلاف من متخصصي الرعاية الصحية الذين قاموا بالفعل بتحسين ممارساتهم مع عيادة إمحوتب الذكية."
 
 #: templates/landing_page.html:262
 msgid "Contact Us"
@@ -1897,3 +1897,19 @@ msgid ""
 "If you have any questions about these Terms, please contact us at "
 "info@imhoteptech.com."
 msgstr ""
+
+
+msgid "Welcome back, Dr."
+msgstr "مرحبًا بعودتك، د."
+
+msgid "completed"
+msgstr "مكتمل"
+
+msgid "View all patients"
+msgstr "عرض جميع المرضى"
+
+msgid "View schedule"
+msgstr "عرض الجدول"
+
+msgid "Sign in with Google"
+msgstr "تسجيل الدخول بواسطة جوجل"
