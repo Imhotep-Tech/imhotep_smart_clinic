@@ -94,12 +94,12 @@ msgstr ""
 
 #: accounts/auth.py:266
 msgid "Logged in as Demo Doctor. Some features are restricted."
-msgstr ""
+msgstr "تم تسجيل الدخول كطبيب تجريبي. بعض الميزات مقيدة."
 
 #: accounts/auth.py:267
 msgid ""
 "Note: You cannot change password, email, username, or name in demo mode."
-msgstr ""
+msgstr "ملاحظة: لا يمكنك تغيير كلمة المرور أو البريد الإلكتروني أو اسم المستخدم أو الاسم في الوضع التجريبي."
 
 #: accounts/auth.py:365
 msgid "Google login was canceled. Please try again."
@@ -203,7 +203,7 @@ msgstr ""
 #: accounts/templates/register.html:114
 #: doctor/templates/update_doctor_profile.html:84
 msgid "Medical Specialization"
-msgstr ""
+msgstr "التخصص الطبي"
 
 #: accounts/templates/add_details_google.html:64
 #: accounts/templates/register.html:129 doctor/templates/add_patient.html:74
@@ -233,7 +233,7 @@ msgstr ""
 #: accounts/templates/register.html:44 doctor/templates/add_assistant.html:48
 #: doctor/templates/update_doctor_profile.html:390
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: accounts/templates/add_username_google.html:36
 msgid ""
@@ -247,42 +247,42 @@ msgstr ""
 
 #: accounts/templates/login.html:16
 msgid "Welcome to Imhotep Clinic"
-msgstr ""
+msgstr "مرحبًا بكم في عيادة إمحوتب"
 
 #: accounts/templates/login.html:17
 msgid "Sign in to access the patient management system"
-msgstr ""
+msgstr "قم بتسجيل الدخول للوصول إلى نظام إدارة المرضى"
 
 #: accounts/templates/login.html:36
 msgid "Or sign in with email"
-msgstr ""
+msgstr "أو تسجيل الدخول بالبريد الإلكتروني"
 
 #: accounts/templates/login.html:44
 msgid "Username or Email"
-msgstr ""
+msgstr "اسم المستخدم أو البريد الإلكتروني"
 
 #: accounts/templates/login.html:57 accounts/templates/register.html:143
 #: doctor/templates/add_assistant.html:88
 msgid "Password"
-msgstr ""
+msgstr "كلمة المرور"
 
 #: accounts/templates/login.html:58
 msgid "Forgot password?"
-msgstr ""
+msgstr "هل نسيت كلمة المرور؟"
 
 #: accounts/templates/login.html:77 accounts/templates/password_reset.html:47
 #: accounts/templates/password_reset_complete.html:19
 #: accounts/templates/register.html:193
 msgid "Sign in"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: accounts/templates/login.html:86
 msgid "Or try demo"
-msgstr ""
+msgstr "أو جرب الحساب التجريبي"
 
 #: accounts/templates/login.html:101
 msgid "Register here"
-msgstr ""
+msgstr "سجل هنا"
 
 #: accounts/templates/password_change.html:15
 #: assistant/templates/update_assistant_profile.html:90
@@ -323,7 +323,7 @@ msgstr ""
 
 #: accounts/templates/password_change_done.html:16
 msgid "Demo Account Restriction"
-msgstr ""
+msgstr "قيود الحساب التجريبي"
 
 #: accounts/templates/password_change_done.html:17 accounts/user_profile.py:25
 msgid ""
@@ -378,7 +378,7 @@ msgstr ""
 #: accounts/templates/password_reset.html:22
 #: accounts/templates/register.html:83
 msgid "Email"
-msgstr ""
+msgstr "البريد الإلكتروني"
 
 #: accounts/templates/password_reset.html:41
 msgid "Reset my password"
@@ -444,46 +444,46 @@ msgstr ""
 
 #: accounts/templates/register.html:16
 msgid "Join Imhotep Smart Clinic"
-msgstr ""
+msgstr "انضم إلى عيادة إمحوتب الذكية"
 
 #: accounts/templates/register.html:17
 msgid ""
 "Access patient records, manage appointments, and provide quality healthcare"
-msgstr ""
+msgstr "الوصول إلى سجلات المرضى وإدارة المواعيد وتوفير رعاية صحية عالية الجودة"
 
 #: accounts/templates/register.html:36
 msgid "Or register with email"
-msgstr ""
+msgstr "أو قم بالتسجيل بالبريد الإلكتروني"
 
 #: accounts/templates/register.html:57
 #: assistant/templates/update_assistant_profile.html:30
 #: doctor/templates/add_assistant.html:62
 #: doctor/templates/update_doctor_profile.html:363
 msgid "First Name"
-msgstr ""
+msgstr "الاسم الأول"
 
 #: accounts/templates/register.html:70
 #: assistant/templates/update_assistant_profile.html:43
 #: doctor/templates/add_assistant.html:75
 #: doctor/templates/update_doctor_profile.html:376
 msgid "Last Name"
-msgstr ""
+msgstr "اسم العائلة"
 
 #: accounts/templates/register.html:162
 msgid "Confirm Password"
-msgstr ""
+msgstr "تأكيد كلمة المرور"
 
 #: accounts/templates/register.html:181
 msgid "terms of service"
-msgstr ""
+msgstr "شروط الخدمة"
 
 #: accounts/templates/register.html:183
 msgid "privacy policy"
-msgstr ""
+msgstr "سياسة الخصوصية"
 
 #: accounts/templates/register.html:187
 msgid "Create your account"
-msgstr ""
+msgstr "انشئ حسابك"
 
 #: accounts/user_profile.py:55 doctor/doctor_settings.py:63
 #: doctor/doctor_settings.py:123
@@ -540,7 +540,7 @@ msgstr ""
 #: assistant/templates/assistant_dashboard.html:30
 #: doctor/templates/doctor_dashboard.html:73
 msgid "Patient Records"
-msgstr ""
+msgstr "سجلات المرضى"
 
 #: assistant/templates/assistant_dashboard.html:31
 msgid "Access patient information"
@@ -549,7 +549,7 @@ msgstr ""
 #: assistant/templates/assistant_dashboard.html:35
 #: doctor/templates/nav.html:108 doctor/templates/nav.html:233
 msgid "My Profile"
-msgstr ""
+msgstr "ملفي الشخصي"
 
 #: assistant/templates/assistant_dashboard.html:36
 msgid "Update your personal information"
@@ -579,7 +579,7 @@ msgstr ""
 #: doctor/templates/show_patient_details.html:133
 #: doctor/templates/update_doctor_profile.html:356
 msgid "Personal Information"
-msgstr ""
+msgstr "المعلومات الشخصية"
 
 #: assistant/templates/update_assistant_profile.html:57
 #: doctor/templates/update_doctor_profile.html:403
@@ -597,17 +597,17 @@ msgstr ""
 #: assistant/templates/update_assistant_profile.html:79
 #: doctor/templates/update_doctor_profile.html:417
 msgid "Update Account Information"
-msgstr ""
+msgstr "تحديث معلومات الحساب"
 
 #: assistant/templates/update_assistant_profile.html:86
 #: doctor/templates/update_doctor_profile.html:424
 msgid "Password Management"
-msgstr ""
+msgstr "إدارة كلمة المرور"
 
 #: assistant/templates/update_assistant_profile.html:91
 #: doctor/templates/update_doctor_profile.html:429
 msgid "Update your password to maintain account security"
-msgstr ""
+msgstr "قم بتحديث كلمة المرور الخاصة بك للحفاظ على أمان الحساب"
 
 #: assistant/templates/update_assistant_profile.html:93
 msgid "Change Password"
@@ -790,7 +790,7 @@ msgstr ""
 #: doctor/templates/add_assistant.html:17 doctor/templates/nav.html:100
 #: doctor/templates/nav.html:225
 msgid "Add Assistant"
-msgstr ""
+msgstr "إضافة مساعد"
 
 #: doctor/templates/add_assistant.html:18
 msgid "Create an account for a clinic assistant"
@@ -894,12 +894,12 @@ msgstr ""
 
 #: doctor/templates/add_patient.html:88
 msgid "Add Patient"
-msgstr ""
+msgstr "إضافة مريض"
 
 #: doctor/templates/appointment_list.html:18 doctor/templates/nav.html:83
 #: doctor/templates/nav.html:208
 msgid "Appointments"
-msgstr ""
+msgstr "المواعيد"
 
 #: doctor/templates/appointment_list.html:19
 msgid "Manage your patient appointments"
@@ -1030,30 +1030,30 @@ msgstr ""
 
 #: doctor/templates/doctor_dashboard.html:50
 msgid "Total Patients"
-msgstr ""
+msgstr "إجمالي المرضى"
 
 #: doctor/templates/doctor_dashboard.html:97
 #: doctor/templates/doctor_dashboard.html:133
 msgid "Today's Appointments"
-msgstr ""
+msgstr "مواعيد اليوم"
 
 #: doctor/templates/doctor_dashboard.html:121
 msgid "Avg. Patients/Day"
-msgstr ""
+msgstr "متوسط المرضى/اليوم"
 
 #: doctor/templates/doctor_dashboard.html:213
 #: doctor/templates/show_patient_details.html:232
 #: doctor/templates/show_patients.html:133
 msgid "View Details"
-msgstr ""
+msgstr "عرض التفاصيل"
 
 #: doctor/templates/doctor_dashboard.html:297
 msgid "No appointments today"
-msgstr ""
+msgstr "لا توجد مواعيد اليوم"
 
 #: doctor/templates/doctor_dashboard.html:298
 msgid "Get started by scheduling an appointment."
-msgstr ""
+msgstr "ابدأ بجدولة موعد."
 
 #: doctor/templates/edit_medical_record.html:31
 msgid "Edit Medical Record"
@@ -1079,23 +1079,23 @@ msgstr ""
 #: doctor/templates/prescription_pdf.html:199 templates/footer.html:10
 #: templates/landing_page.html:66
 msgid "Imhotep Smart Clinic"
-msgstr ""
+msgstr "عيادة إمحوتب الذكية"
 
 #: doctor/templates/nav.html:48 doctor/templates/nav.html:173
 msgid "Demo Account"
-msgstr ""
+msgstr "حساب تجريبي"
 
 #: doctor/templates/nav.html:67 doctor/templates/nav.html:192
 msgid "Dashboard"
-msgstr ""
+msgstr "لوحة القيادة"
 
 #: doctor/templates/nav.html:75 doctor/templates/nav.html:200
 msgid "Patients"
-msgstr ""
+msgstr "المرضى"
 
 #: doctor/templates/nav.html:93 doctor/templates/nav.html:218
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: doctor/templates/nav.html:117 doctor/templates/nav.html:242
 msgid "Language"
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: doctor/templates/nav.html:137 doctor/templates/nav.html:262
 msgid "Logout"
-msgstr ""
+msgstr "تسجيل الخروج"
 
 #: doctor/templates/prescription_pdf.html:171
 msgid "PRESCRIPTION"
@@ -1130,7 +1130,7 @@ msgstr ""
 #: doctor/templates/schedule_appointment.html:17
 #: doctor/templates/schedule_appointment.html:112
 msgid "Schedule Appointment"
-msgstr ""
+msgstr "جدولة موعد"
 
 #: doctor/templates/schedule_appointment.html:18
 msgid "Book a new appointment for a patient"
@@ -1236,7 +1236,7 @@ msgstr ""
 #: doctor/templates/update_doctor_profile.html:162
 #: doctor/templates/update_doctor_profile.html:283
 msgid "Edit"
-msgstr ""
+msgstr "تعديل"
 
 #: doctor/templates/show_patient_details.html:246
 msgid "Restricted"
@@ -1280,47 +1280,47 @@ msgstr ""
 
 #: doctor/templates/show_patients.html:18
 msgid "My Patients"
-msgstr ""
+msgstr "مرضاي"
 
 #: doctor/templates/show_patients.html:19
 msgid "Manage your patient records"
-msgstr ""
+msgstr "إدارة سجلات مرضاك"
 
 #: doctor/templates/show_patients.html:30
 msgid "Sort by"
-msgstr ""
+msgstr "ترتيب حسب"
 
 #: doctor/templates/show_patients.html:53
 msgid "Search Patients"
-msgstr ""
+msgstr "البحث عن المرضى"
 
 #: doctor/templates/show_patients.html:72
 msgid "Search"
-msgstr ""
+msgstr "بحث"
 
 #: doctor/templates/show_patients.html:73
 msgid "Reset"
-msgstr ""
+msgstr "إعادة ضبط"
 
 #: doctor/templates/show_patients.html:83
 msgid "Patient List"
-msgstr ""
+msgstr "قائمة المرضى"
 
 #: doctor/templates/show_patients.html:217
 msgid "No matching patients found"
-msgstr ""
+msgstr "لم يتم العثور على مرضى مطابقين"
 
 #: doctor/templates/show_patients.html:218
 msgid "Try a different search term or check your spelling."
-msgstr ""
+msgstr "حاول استخدام مصطلح بحث مختلف أو تحقق من الإملاء."
 
 #: doctor/templates/show_patients.html:220
 msgid "No patients yet"
-msgstr ""
+msgstr "لا يوجد مرضى بعد"
 
 #: doctor/templates/show_patients.html:221
 msgid "Start by adding your first patient record."
-msgstr ""
+msgstr "ابدأ بإضافة أول سجل مريض."
 
 #: doctor/templates/update_appointment_doctor.html:17
 #: doctor/templates/update_appointment_doctor.html:114
@@ -1357,51 +1357,51 @@ msgstr ""
 
 #: doctor/templates/update_doctor_profile.html:17
 msgid "Doctor Profile Settings"
-msgstr ""
+msgstr "إعدادات الملف الشخصي للطبيب"
 
 #: doctor/templates/update_doctor_profile.html:18
 msgid "Manage your account information and professional details"
-msgstr ""
+msgstr "إدارة معلومات حسابك وتفاصيلك المهنية"
 
 #: doctor/templates/update_doctor_profile.html:23
 msgid "Clinic Logo"
-msgstr ""
+msgstr "شعار العيادة"
 
 #: doctor/templates/update_doctor_profile.html:43
 msgid "Upload New Logo"
-msgstr ""
+msgstr "تحميل شعار جديد"
 
 #: doctor/templates/update_doctor_profile.html:51
 msgid "Maximum size: 500KB. Recommended dimensions: 300x300px"
-msgstr ""
+msgstr "الحجم الأقصى: 500 كيلوبايت. الأبعاد الموصى بها: 300x300 بكسل"
 
 #: doctor/templates/update_doctor_profile.html:52
 msgid "Allowed formats: JPEG, PNG"
-msgstr ""
+msgstr "الصيغ المسموح بها: JPEG، PNG"
 
 #: doctor/templates/update_doctor_profile.html:56
 msgid "Upload Logo"
-msgstr ""
+msgstr "تحميل الشعار"
 
 #: doctor/templates/update_doctor_profile.html:60
 msgid "Remove Logo"
-msgstr ""
+msgstr "إزالة الشعار"
 
 #: doctor/templates/update_doctor_profile.html:77
 msgid "Professional Information"
-msgstr ""
+msgstr "المعلومات المهنية"
 
 #: doctor/templates/update_doctor_profile.html:97
 msgid "Update Professional Details"
-msgstr ""
+msgstr "تحديث التفاصيل المهنية"
 
 #: doctor/templates/update_doctor_profile.html:106
 msgid "Appointment Schedules"
-msgstr ""
+msgstr "جداول المواعيد"
 
 #: doctor/templates/update_doctor_profile.html:107
 msgid "Set your availability for patient appointments"
-msgstr ""
+msgstr "حدد مدى توفرك لمواعيد المرضى"
 
 #: doctor/templates/update_doctor_profile.html:273
 msgid "Time Range"
@@ -1413,19 +1413,19 @@ msgstr ""
 
 #: doctor/templates/update_doctor_profile.html:318
 msgid "No appointment schedules"
-msgstr ""
+msgstr "لا توجد جداول مواعيد"
 
 #: doctor/templates/update_doctor_profile.html:319
 msgid "Get started by creating a new appointment schedule."
-msgstr ""
+msgstr "ابدأ بإنشاء جدول مواعيد جديد."
 
 #: doctor/templates/update_doctor_profile.html:340
 msgid "Managing Your Appointment Schedules"
-msgstr ""
+msgstr "إدارة جداول المواعيد الخاصة بك"
 
 #: doctor/templates/update_doctor_profile.html:412
 msgid "Changing your email will require verification"
-msgstr ""
+msgstr "سيتطلب تغيير بريدك الإلكتروني التحقق"
 
 #: doctor/views.py:87
 msgid ""
@@ -1503,30 +1503,30 @@ msgstr ""
 
 #: templates/landing_page.html:83
 msgid "Sign In"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: templates/landing_page.html:84
 msgid "Register"
-msgstr ""
+msgstr "التسجيل"
 
 #: templates/landing_page.html:94
 msgid "Management Platform"
-msgstr ""
+msgstr "منصة الإدارة"
 
 #: templates/landing_page.html:96
 msgid ""
 "Streamline your medical practice with our comprehensive clinic management "
 "system. Connect with patients, manage appointments, and access medical "
 "records seamlessly."
-msgstr ""
+msgstr "قم بتبسيط ممارستك الطبية من خلال نظام إدارة العيادات الشامل لدينا. تواصل مع المرضى، وقم بإدارة المواعيد، والوصول إلى السجلات الطبية بسلاسة."
 
 #: templates/landing_page.html:98 templates/landing_page.html:259
 msgid "Get Started Free"
-msgstr ""
+msgstr "ابدأ مجانًا"
 
 #: templates/landing_page.html:116
 msgid "Powerful Features for Modern Healthcare"
-msgstr ""
+msgstr "ميزات قوية للرعاية الصحية الحديثة"
 
 #: templates/landing_page.html:118
 msgid ""
@@ -1535,75 +1535,75 @@ msgstr ""
 
 #: templates/landing_page.html:129
 msgid "Smart Appointment Management"
-msgstr ""
+msgstr "الإدارة الذكية للمواعيد"
 
 #: templates/landing_page.html:130
 msgid ""
 "Schedule and manage appointments with an intuitive interface. Reduce no-"
 "shows with automated reminders."
-msgstr ""
+msgstr "قم بجدولة المواعيد وإدارتها بواجهة بديهية. قلل من حالات عدم الحضور باستخدام التذكيرات التلقائية."
 
 #: templates/landing_page.html:140
 msgid "Digital Medical Records"
-msgstr ""
+msgstr "السجلات الطبية الرقمية"
 
 #: templates/landing_page.html:141
 msgid ""
 "Keep detailed patient records in one secure location. Access history, "
 "prescriptions, and test results instantly."
-msgstr ""
+msgstr "احتفظ بسجلات المرضى المفصلة في مكان واحد آمن. الوصول إلى التاريخ والوصفات الطبية ونتائج الاختبارات على الفور."
 
 #: templates/landing_page.html:151
 msgid "Patient Management"
-msgstr ""
+msgstr "إدارة المرضى"
 
 #: templates/landing_page.html:152
 msgid ""
 "Comprehensive profiles for each patient with medical history, contact "
 "information, and care plans."
-msgstr ""
+msgstr "ملفات تعريف شاملة لكل مريض مع التاريخ الطبي ومعلومات الاتصال وخطط الرعاية."
 
 #: templates/landing_page.html:162
 msgid "Secure & Compliant"
-msgstr ""
+msgstr "آمن ومتوافق"
 
 #: templates/landing_page.html:163
 msgid ""
 "Built with security at its core. Compliant with healthcare data protection "
 "regulations and standards."
-msgstr ""
+msgstr "مبني مع التركيز على الأمان. متوافق مع لوائح ومعايير حماية بيانات الرعاية الصحية."
 
 #: templates/landing_page.html:173
 msgid "Analytics & Insights"
-msgstr ""
+msgstr "التحليلات والرؤى"
 
 #: templates/landing_page.html:174
 msgid ""
 "Data-driven insights to help optimize your practice, track patient trends, "
 "and improve care outcomes."
-msgstr ""
+msgstr "رؤى مبنية على البيانات للمساعدة في تحسين ممارستك وتتبع اتجاهات المرضى وتحسين نتائج الرعاية."
 
 #: templates/landing_page.html:184
 msgid "Communication Tools"
-msgstr ""
+msgstr "أدوات التواصل"
 
 #: templates/landing_page.html:185
 msgid ""
 "Streamlined communication between healthcare providers and staff to enhance "
 "coordination of care."
-msgstr ""
+msgstr "تواصل مبسط بين مقدمي الرعاية الصحية والموظفين لتعزيز تنسيق الرعاية."
 
 #: templates/landing_page.html:196
 msgid "Why Choose Imhotep Smart Clinic?"
-msgstr ""
+msgstr "لماذا تختار عيادة إمحوتب الذكية؟"
 
 #: templates/landing_page.html:198
 msgid "Our platform offers numerous benefits for healthcare professionals"
-msgstr ""
+msgstr "تقدم منصتنا فوائد عديدة لمتخصصي الرعاية الصحية"
 
 #: templates/landing_page.html:212
 msgid "Improved Efficiency"
-msgstr ""
+msgstr "تحسين الكفاءة"
 
 #: templates/landing_page.html:213
 #, python-format
@@ -1614,37 +1614,37 @@ msgstr ""
 
 #: templates/landing_page.html:226
 msgid "Enhanced Patient Care"
-msgstr ""
+msgstr "رعاية مرضى محسنة"
 
 #: templates/landing_page.html:227
 msgid ""
 "Access complete patient history and data instantly, leading to better-"
 "informed clinical decisions and improved outcomes."
-msgstr ""
+msgstr "الوصول إلى تاريخ المريض الكامل وبياناته على الفور، مما يؤدي إلى قرارات سريرية مستنيرة بشكل أفضل وتحسين النتائج."
 
 #: templates/landing_page.html:240
 msgid "Reduced Errors"
-msgstr ""
+msgstr "تقليل الأخطاء"
 
 #: templates/landing_page.html:241
 msgid ""
 "Digital records eliminate common issues associated with paper-based systems, "
 "such as misplaced files or illegible handwriting."
-msgstr ""
+msgstr "تقضي السجلات الرقمية على المشكلات الشائعة المرتبطة بالأنظمة الورقية، مثل الملفات في غير محلها أو الكتابة اليدوية غير المقروءة."
 
 #: templates/landing_page.html:254
 msgid "Ready to transform your medical practice?"
-msgstr ""
+msgstr "هل أنت مستعد لتحويل ممارستك الطبية؟"
 
 #: templates/landing_page.html:256
 msgid ""
 "Join thousands of healthcare professionals who have already improved their "
 "practice with Imhotep Smart Clinic."
-msgstr ""
+msgstr "انضم إلى الآلاف من متخصصي الرعاية الصحية الذين قاموا بالفعل بتحسين ممارساتهم مع عيادة إمحوتب الذكية."
 
 #: templates/landing_page.html:262
 msgid "Contact Us"
-msgstr ""
+msgstr "اتصل بنا"
 
 #: templates/offline.html:24
 msgid "You Are Offline"
@@ -1897,3 +1897,95 @@ msgid ""
 "If you have any questions about these Terms, please contact us at "
 "info@imhoteptech.com."
 msgstr ""
+
+
+msgid "Welcome back, Dr."
+msgstr "مرحبًا بعودتك، د."
+
+msgid "completed"
+msgstr "مكتمل"
+
+msgid "View all patients"
+msgstr "عرض جميع المرضى"
+
+msgid "View schedule"
+msgstr "عرض الجدول"
+
+msgid "Sign in with Google"
+msgstr "تسجيل الدخول بواسطة جوجل"
+
+
+msgid "Add New Schedule"
+msgstr "إضافة جدول جديد"
+
+msgid "Day"
+msgstr "اليوم"
+
+msgid "Actions"
+msgstr "الإجراءات"
+
+msgid "Active"
+msgstr "نشط"
+
+msgid "Inactive"
+msgstr "غير نشط"
+
+msgid "Deactivate"
+msgstr "تعطيل"
+
+msgid "Activate"
+msgstr "تفعيل"
+
+msgid "New Schedule"
+msgstr "جدول جديد"
+
+msgid "Name (A→Z)"
+msgstr "الاسم (أ→ي)"
+
+msgid "Name (Z→A)"
+msgstr "الاسم (ي→أ)"
+
+msgid "Birthdate (Oldest)"
+msgstr "تاريخ الميلاد (الأقدم)"
+
+msgid "Birthdate (Newest)"
+msgstr "تاريخ الميلاد (الأحدث)"
+
+msgid "Date Added (Oldest)"
+msgstr "تاريخ الإضافة (الأقدم)"
+
+msgid "Date Added (Newest)"
+msgstr "تاريخ الإضافة (الأحدث)"
+
+msgid "Search by Name"
+msgstr "البحث بالاسم"
+
+msgid "Search by Phone"
+msgstr "البحث برقم الهاتف"
+
+msgid "Enter patient name..."
+msgstr "أدخل اسم المريض..."
+
+msgid "Enter phone number..."
+msgstr "أدخل رقم الهاتف..."
+
+msgid "Total:"
+msgstr "الإجمالي:"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Phone"
+msgstr "رقم الهاتف"
+
+msgid "Date Added"
+msgstr "تاريخ الإضافة"
+
+msgid "Share Feedback"
+msgstr "مشاركة الملاحظات"
+
+msgid "View Source"
+msgstr "عرض المصدر"
+
+msgid "© 2026 Imhotep Tech. All rights reserved."
+msgstr "© 2026 إمحوتب تك. جميع الحقوق محفوظة."

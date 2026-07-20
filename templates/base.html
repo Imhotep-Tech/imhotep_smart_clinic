@@ -1,6 +1,8 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr' }}">
     <head>
         <!-- Primary Meta Tags -->
         <meta charset="UTF-8">
