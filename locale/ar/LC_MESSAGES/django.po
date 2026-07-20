@@ -540,7 +540,7 @@ msgstr ""
 #: assistant/templates/assistant_dashboard.html:30
 #: doctor/templates/doctor_dashboard.html:73
 msgid "Patient Records"
-msgstr ""
+msgstr "سجلات المرضى"
 
 #: assistant/templates/assistant_dashboard.html:31
 msgid "Access patient information"
@@ -549,7 +549,7 @@ msgstr ""
 #: assistant/templates/assistant_dashboard.html:35
 #: doctor/templates/nav.html:108 doctor/templates/nav.html:233
 msgid "My Profile"
-msgstr ""
+msgstr "ملفي الشخصي"
 
 #: assistant/templates/assistant_dashboard.html:36
 msgid "Update your personal information"
@@ -790,7 +790,7 @@ msgstr ""
 #: doctor/templates/add_assistant.html:17 doctor/templates/nav.html:100
 #: doctor/templates/nav.html:225
 msgid "Add Assistant"
-msgstr ""
+msgstr "إضافة مساعد"
 
 #: doctor/templates/add_assistant.html:18
 msgid "Create an account for a clinic assistant"
@@ -894,12 +894,12 @@ msgstr ""
 
 #: doctor/templates/add_patient.html:88
 msgid "Add Patient"
-msgstr ""
+msgstr "إضافة مريض"
 
 #: doctor/templates/appointment_list.html:18 doctor/templates/nav.html:83
 #: doctor/templates/nav.html:208
 msgid "Appointments"
-msgstr ""
+msgstr "المواعيد"
 
 #: doctor/templates/appointment_list.html:19
 msgid "Manage your patient appointments"
@@ -1030,16 +1030,16 @@ msgstr ""
 
 #: doctor/templates/doctor_dashboard.html:50
 msgid "Total Patients"
-msgstr ""
+msgstr "إجمالي المرضى"
 
 #: doctor/templates/doctor_dashboard.html:97
 #: doctor/templates/doctor_dashboard.html:133
 msgid "Today's Appointments"
-msgstr ""
+msgstr "مواعيد اليوم"
 
 #: doctor/templates/doctor_dashboard.html:121
 msgid "Avg. Patients/Day"
-msgstr ""
+msgstr "متوسط المرضى/اليوم"
 
 #: doctor/templates/doctor_dashboard.html:213
 #: doctor/templates/show_patient_details.html:232
@@ -1049,11 +1049,11 @@ msgstr ""
 
 #: doctor/templates/doctor_dashboard.html:297
 msgid "No appointments today"
-msgstr ""
+msgstr "لا توجد مواعيد اليوم"
 
 #: doctor/templates/doctor_dashboard.html:298
 msgid "Get started by scheduling an appointment."
-msgstr ""
+msgstr "ابدأ بجدولة موعد."
 
 #: doctor/templates/edit_medical_record.html:31
 msgid "Edit Medical Record"
@@ -1079,23 +1079,23 @@ msgstr ""
 #: doctor/templates/prescription_pdf.html:199 templates/footer.html:10
 #: templates/landing_page.html:66
 msgid "Imhotep Smart Clinic"
-msgstr ""
+msgstr "عيادة إمحوتب الذكية"
 
 #: doctor/templates/nav.html:48 doctor/templates/nav.html:173
 msgid "Demo Account"
-msgstr ""
+msgstr "حساب تجريبي"
 
 #: doctor/templates/nav.html:67 doctor/templates/nav.html:192
 msgid "Dashboard"
-msgstr ""
+msgstr "لوحة القيادة"
 
 #: doctor/templates/nav.html:75 doctor/templates/nav.html:200
 msgid "Patients"
-msgstr ""
+msgstr "المرضى"
 
 #: doctor/templates/nav.html:93 doctor/templates/nav.html:218
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: doctor/templates/nav.html:117 doctor/templates/nav.html:242
 msgid "Language"
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: doctor/templates/nav.html:137 doctor/templates/nav.html:262
 msgid "Logout"
-msgstr ""
+msgstr "تسجيل الخروج"
 
 #: doctor/templates/prescription_pdf.html:171
 msgid "PRESCRIPTION"
@@ -1130,7 +1130,7 @@ msgstr ""
 #: doctor/templates/schedule_appointment.html:17
 #: doctor/templates/schedule_appointment.html:112
 msgid "Schedule Appointment"
-msgstr ""
+msgstr "جدولة موعد"
 
 #: doctor/templates/schedule_appointment.html:18
 msgid "Book a new appointment for a patient"
@@ -1503,15 +1503,15 @@ msgstr ""
 
 #: templates/landing_page.html:83
 msgid "Sign In"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: templates/landing_page.html:84
 msgid "Register"
-msgstr ""
+msgstr "التسجيل"
 
 #: templates/landing_page.html:94
 msgid "Management Platform"
-msgstr ""
+msgstr "منصة الإدارة"
 
 #: templates/landing_page.html:96
 msgid ""
@@ -1522,11 +1522,11 @@ msgstr ""
 
 #: templates/landing_page.html:98 templates/landing_page.html:259
 msgid "Get Started Free"
-msgstr ""
+msgstr "ابدأ مجانًا"
 
 #: templates/landing_page.html:116
 msgid "Powerful Features for Modern Healthcare"
-msgstr ""
+msgstr "ميزات قوية للرعاية الصحية الحديثة"
 
 #: templates/landing_page.html:118
 msgid ""
@@ -1535,7 +1535,7 @@ msgstr ""
 
 #: templates/landing_page.html:129
 msgid "Smart Appointment Management"
-msgstr ""
+msgstr "الإدارة الذكية للمواعيد"
 
 #: templates/landing_page.html:130
 msgid ""
@@ -1545,7 +1545,7 @@ msgstr ""
 
 #: templates/landing_page.html:140
 msgid "Digital Medical Records"
-msgstr ""
+msgstr "السجلات الطبية الرقمية"
 
 #: templates/landing_page.html:141
 msgid ""
@@ -1555,7 +1555,7 @@ msgstr ""
 
 #: templates/landing_page.html:151
 msgid "Patient Management"
-msgstr ""
+msgstr "إدارة المرضى"
 
 #: templates/landing_page.html:152
 msgid ""
@@ -1565,7 +1565,7 @@ msgstr ""
 
 #: templates/landing_page.html:162
 msgid "Secure & Compliant"
-msgstr ""
+msgstr "آمن ومتوافق"
 
 #: templates/landing_page.html:163
 msgid ""
@@ -1575,7 +1575,7 @@ msgstr ""
 
 #: templates/landing_page.html:173
 msgid "Analytics & Insights"
-msgstr ""
+msgstr "التحليلات والرؤى"
 
 #: templates/landing_page.html:174
 msgid ""
@@ -1585,7 +1585,7 @@ msgstr ""
 
 #: templates/landing_page.html:184
 msgid "Communication Tools"
-msgstr ""
+msgstr "أدوات التواصل"
 
 #: templates/landing_page.html:185
 msgid ""
@@ -1595,15 +1595,15 @@ msgstr ""
 
 #: templates/landing_page.html:196
 msgid "Why Choose Imhotep Smart Clinic?"
-msgstr ""
+msgstr "لماذا تختار عيادة إمحوتب الذكية؟"
 
 #: templates/landing_page.html:198
 msgid "Our platform offers numerous benefits for healthcare professionals"
-msgstr ""
+msgstr "تقدم منصتنا فوائد عديدة لمتخصصي الرعاية الصحية"
 
 #: templates/landing_page.html:212
 msgid "Improved Efficiency"
-msgstr ""
+msgstr "تحسين الكفاءة"
 
 #: templates/landing_page.html:213
 #, python-format
@@ -1614,7 +1614,7 @@ msgstr ""
 
 #: templates/landing_page.html:226
 msgid "Enhanced Patient Care"
-msgstr ""
+msgstr "رعاية مرضى محسنة"
 
 #: templates/landing_page.html:227
 msgid ""
@@ -1624,7 +1624,7 @@ msgstr ""
 
 #: templates/landing_page.html:240
 msgid "Reduced Errors"
-msgstr ""
+msgstr "تقليل الأخطاء"
 
 #: templates/landing_page.html:241
 msgid ""
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: templates/landing_page.html:254
 msgid "Ready to transform your medical practice?"
-msgstr ""
+msgstr "هل أنت مستعد لتحويل ممارستك الطبية؟"
 
 #: templates/landing_page.html:256
 msgid ""
@@ -1644,7 +1644,7 @@ msgstr ""
 
 #: templates/landing_page.html:262
 msgid "Contact Us"
-msgstr ""
+msgstr "اتصل بنا"
 
 #: templates/offline.html:24
 msgid "You Are Offline"
