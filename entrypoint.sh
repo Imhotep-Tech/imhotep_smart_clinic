@@ -39,6 +39,10 @@ python manage.py makemigrations assistant
 python manage.py makemigrations
 python manage.py migrate
 
+# Migrate legacy data to clinic structure
+echo "Migrating legacy data to clinic structure..."
+python manage.py migrate_clinic_data
+
 # Create superuser if it doesn't exist
 echo "Creating superuser..."
 python manage.py shell -c "

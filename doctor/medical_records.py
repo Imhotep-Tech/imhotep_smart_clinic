@@ -148,9 +148,9 @@ def generate_prescription_pdf(request, record_id):
     
     # Prepare the clinic logo path with absolute URL if it exists
     clinic_logo_path = None
-    if doctor_profile.clinic_photo_path:
+    if doctor_profile.logo_path:
         # Get the absolute URL for the clinic logo
-        clinic_logo_path = request.build_absolute_uri(settings.MEDIA_URL + doctor_profile.clinic_photo_path)
+        clinic_logo_path = request.build_absolute_uri(settings.MEDIA_URL + doctor_profile.logo_path)
     
     # Prepare context for the template
     context = {

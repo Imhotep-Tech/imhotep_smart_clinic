@@ -104,7 +104,10 @@ def upload_clinic_logo(request):
             # Save to storage
             saved_path = default_storage.save(full_path, ContentFile(buffer.read()))
             
-            # Update database
+            # Update database on Clinic model
+            if doctor_profile.clinic:
+                doctor_profile.clinic.logo = saved_path
+                doctor_profile.clinic.save()
             doctor_profile.clinic_photo_path = saved_path
             doctor_profile.save()
             
@@ -124,13 +127,17 @@ def remove_clinic_logo(request):
         return redirect('update_doctor_profile')
 
     # Check if there's a logo to remove
-    if doctor_profile.clinic_photo_path:
+    current_logo = doctor_profile.logo_path
+    if current_logo:
         try:
             # Delete the file from storage
-            if default_storage.exists(doctor_profile.clinic_photo_path):
-                default_storage.delete(doctor_profile.clinic_photo_path)
+            if default_storage.exists(current_logo):
+                default_storage.delete(current_logo)
             
-            # Clear the path in the database
+            # Clear the path in Clinic and DoctorProfile
+            if doctor_profile.clinic:
+                doctor_profile.clinic.logo = ''
+                doctor_profile.clinic.save()
             doctor_profile.clinic_photo_path = ''
             doctor_profile.save()
             

@@ -11,6 +11,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import gettext_lazy as _
 from datetime import date
 
+from accounts.models import User
+
 @login_required
 @doctor_required  # Only doctors can add patients
 def add_patient(request):
@@ -19,23 +21,36 @@ def add_patient(request):
         phone_number = request.POST.get('phone_number')
         gender = request.POST.get('gender')
         date_of_birth = request.POST.get('date_of_birth')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        
         doctor = get_object_or_404(DoctorProfile, user=request.user)
+        clinic = doctor.clinic
 
-        if date_of_birth:
-            new_patient = Patients.objects.create(
-                name=name,
-                phone_number=phone_number,
-                gender=gender,
-                date_of_birth=date_of_birth,
-                doctor=doctor
-            )
-        else:
-            new_patient = Patients.objects.create(
-                name=name,
-                phone_number=phone_number,
-                gender=gender,
-                doctor=doctor
-            )
+        # Create user account for patient if password provided (Option 1)
+        patient_user = None
+        if username and password:
+            if not User.objects.filter(username=username).exists():
+                patient_user = User.objects.create_user(
+                    username=username,
+                    email=email or f"{username}@clinic.local",
+                    password=password,
+                    first_name=name.split(' ')[0],
+                    last_name=' '.join(name.split(' ')[1:]) if ' ' in name else '',
+                    user_type='patient',
+                    email_verify=True
+                )
+
+        new_patient = Patients.objects.create(
+            user=patient_user,
+            clinic=clinic,
+            doctor=doctor,
+            name=name,
+            phone_number=phone_number,
+            gender=gender,
+            date_of_birth=date_of_birth if date_of_birth else None
+        )
             
         try:
             new_patient.save()
@@ -57,8 +72,10 @@ def show_patients(request):
     # Get the appropriate doctor profile
     if request.user.is_doctor():
         doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        clinic = doctor_profile.clinic
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        clinic = assistant_profile.clinic
         doctor_profile = assistant_profile.doctor
     
     sort_with = request.GET.get('sort_with', 'name')
@@ -66,7 +83,12 @@ def show_patients(request):
     if sort_with not in ["date_added", "name", "date_of_birth", "-date_added", "-name", "-date_of_birth"]:
         sort_with = "name"
 
-    patients_list = Patients.objects.filter(doctor=doctor_profile).order_by(f'{sort_with}')
+    if clinic:
+        patients_list = Patients.objects.filter(clinic=clinic).order_by(f'{sort_with}')
+    elif doctor_profile:
+        patients_list = Patients.objects.filter(doctor=doctor_profile).order_by(f'{sort_with}')
+    else:
+        patients_list = Patients.objects.none()
     
     # Pagination
     page = request.GET.get('page', 1)
@@ -105,12 +127,18 @@ def show_patient_details(request):
     # Get the appropriate doctor profile
     if request.user.is_doctor():
         doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        clinic = doctor_profile.clinic
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        clinic = assistant_profile.clinic
         doctor_profile = assistant_profile.doctor
     
-    patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
-    records_list = MedicalRecord.objects.filter(doctor=doctor_profile, patient=patient_id).order_by('-date')
+    if clinic:
+        patient = get_object_or_404(Patients, clinic=clinic, id=patient_id)
+    else:
+        patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
+        
+    records_list = MedicalRecord.objects.filter(patient=patient_id).order_by('-date')
 
     if patient.date_of_birth:
         today = date.today()
@@ -150,11 +178,16 @@ def update_patient(request):
     # Get the appropriate doctor profile
     if request.user.is_doctor():
         doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        clinic = doctor_profile.clinic
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
+        clinic = assistant_profile.clinic
         doctor_profile = assistant_profile.doctor
         
-    patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
+    if clinic:
+        patient = get_object_or_404(Patients, clinic=clinic, id=patient_id)
+    else:
+        patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
 
     if request.method == 'GET': 
         context = {
@@ -188,7 +221,11 @@ def update_patient(request):
 def delete_patient(request):
     patient_id = request.GET.get('patient_id')
     doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
-    patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
+    clinic = doctor_profile.clinic
+    if clinic:
+        patient = get_object_or_404(Patients, clinic=clinic, id=patient_id)
+    else:
+        patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
 
     if request.method == 'POST': 
         try:

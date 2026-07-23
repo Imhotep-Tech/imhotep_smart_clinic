@@ -9,11 +9,13 @@ class User(AbstractUser):
     USER_TYPE_CHOICES = (
         ('doctor', 'Doctor'),
         ('assistant', 'Assistant'),
-        ('admin', 'Admin')
+        ('patient', 'Patient'),
+        ('clinic_admin', 'Clinic Admin'),
+        ('super_admin', 'Super Admin')
     )
     
     email_verify = models.BooleanField(default=False)
-    user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES)
+    user_type = models.CharField(max_length=15, choices=USER_TYPE_CHOICES)
     is_demo = models.BooleanField(default=False)
     
     def is_doctor(self):
@@ -21,6 +23,15 @@ class User(AbstractUser):
         
     def is_assistant(self):
         return self.user_type == 'assistant'
+
+    def is_patient(self):
+        return self.user_type == 'patient'
+
+    def is_clinic_admin(self):
+        return self.user_type == 'clinic_admin'
+
+    def is_super_admin(self):
+        return self.user_type == 'super_admin' or self.is_superuser
     
     def __str__(self):
         return f"{self.username} ({self.get_user_type_display()})"
