@@ -42,16 +42,31 @@
 }
 
 .dark table {
-    color: #d1d5db;
+    color: #cbd5e1 !important;
 }
 
 .dark thead {
-    background-color: #1f2937; /* bg-gray-800 */
-    color: #f3f4f6; /* text-gray-100 */
+    background-color: #111827 !important; /* bg-gray-900 */
+    color: #f3f4f6 !important; /* text-gray-100 */
+}
+
+.dark th {
+    color: #cbd5e1 !important; /* text-slate-300 */
+}
+
+.dark td, 
+.dark td div, 
+.dark td p,
+.dark td span:not([class*="bg-"]) {
+    color: #cbd5e1 !important; /* text-slate-300 */
 }
 
 .dark tbody tr {
-    border-color: #374151; /* border-gray-700 */
+    border-color: #374151 !important; /* border-gray-700 */
+}
+
+.dark tbody tr:hover {
+    background-color: #1f2937 !important; /* bg-gray-800 */
 }
 
 /* Dark Mode - Quill Rich Text Editor */

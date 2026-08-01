@@ -314,3 +314,163 @@ document.addEventListener('DOMContentLoaded', function() {
         themeToggleLightIcon.forEach(icon => icon.classList.add('hidden'));
     }
 });
+
+// ==========================================
+// Toast Notification Manager (10s progress slider)
+// ==========================================
+
+function showNotification(message, type = 'info', duration = 10000) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed top-5 right-5 z-50 flex flex-col space-y-3 max-w-md w-full px-4 pointer-events-none';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast-item pointer-events-auto relative overflow-hidden rounded-xl shadow-xl border-l-4 transition-all duration-300 transform translate-x-full opacity-0 glass-card p-4 flex flex-col justify-between ${getTypeClasses(type)}`;
+    
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'flex items-start justify-between gap-3';
+    
+    const iconAndText = document.createElement('div');
+    iconAndText.className = 'flex items-start gap-3';
+    
+    const icon = document.createElement('i');
+    icon.className = getIconClass(type);
+    
+    const textWrapper = document.createElement('div');
+    textWrapper.className = 'text-sm font-semibold text-gray-900 dark:text-gray-100 pr-2 leading-snug';
+    textWrapper.innerHTML = message;
+    
+    iconAndText.appendChild(icon);
+    iconAndText.appendChild(textWrapper);
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors p-1 flex-shrink-0';
+    closeBtn.ariaLabel = 'Close notification';
+    closeBtn.innerHTML = '<i class="fas fa-times text-sm"></i>';
+    closeBtn.onclick = () => dismissToast(toast);
+    
+    contentWrapper.appendChild(iconAndText);
+    contentWrapper.appendChild(closeBtn);
+    toast.appendChild(contentWrapper);
+
+    // Progress slider bar container & indicator
+    const progressTrack = document.createElement('div');
+    progressTrack.className = 'w-full bg-slate-200/60 dark:bg-slate-700/60 h-1.5 absolute bottom-0 left-0 overflow-hidden';
+    
+    const progressBar = document.createElement('div');
+    progressBar.className = `h-full transition-all ease-linear ${getProgressColorClass(type)}`;
+    progressBar.style.width = '100%';
+    progressTrack.appendChild(progressBar);
+    toast.appendChild(progressTrack);
+
+    container.appendChild(toast);
+
+    // Enter animation
+    requestAnimationFrame(() => {
+        toast.classList.remove('translate-x-full', 'opacity-0');
+        toast.classList.add('translate-x-0', 'opacity-100');
+    });
+
+    // 10-Second Timer & Progress Slider Animation
+    let remainingTime = duration;
+    let startTime = performance.now();
+    let isPaused = false;
+
+    function updateProgress(now) {
+        if (!isPaused) {
+            const elapsed = now - startTime;
+            remainingTime -= elapsed;
+            startTime = now;
+
+            const percentage = Math.max(0, (remainingTime / duration) * 100);
+            progressBar.style.width = `${percentage}%`;
+
+            if (remainingTime <= 0) {
+                dismissToast(toast);
+                return;
+            }
+        } else {
+            startTime = now;
+        }
+        requestAnimationFrame(updateProgress);
+    }
+
+    requestAnimationFrame((now) => {
+        startTime = now;
+        updateProgress(now);
+    });
+
+    // Pause on hover, resume on leave
+    toast.addEventListener('mouseenter', () => {
+        isPaused = true;
+    });
+
+    toast.addEventListener('mouseleave', () => {
+        isPaused = false;
+        startTime = performance.now();
+    });
+}
+
+function dismissToast(toast) {
+    if (!toast || toast.dataset.dismissed) return;
+    toast.dataset.dismissed = "true";
+    toast.classList.remove('translate-x-0', 'opacity-100');
+    toast.classList.add('translate-x-full', 'opacity-0');
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+    }, 350);
+}
+
+function getTypeClasses(type) {
+    switch (type) {
+        case 'success':
+            return 'bg-white dark:bg-slate-900 border-emerald-500 text-slate-800 dark:text-slate-100 shadow-emerald-500/10';
+        case 'error':
+        case 'danger':
+            return 'bg-white dark:bg-slate-900 border-rose-500 text-slate-800 dark:text-slate-100 shadow-rose-500/10';
+        case 'warning':
+            return 'bg-white dark:bg-slate-900 border-amber-500 text-slate-800 dark:text-slate-100 shadow-amber-500/10';
+        default:
+            return 'bg-white dark:bg-slate-900 border-sky-500 text-slate-800 dark:text-slate-100 shadow-sky-500/10';
+    }
+}
+
+function getIconClass(type) {
+    switch (type) {
+        case 'success':
+            return 'fas fa-check-circle text-emerald-500 text-lg mt-0.5 flex-shrink-0';
+        case 'error':
+        case 'danger':
+            return 'fas fa-exclamation-circle text-rose-500 text-lg mt-0.5 flex-shrink-0';
+        case 'warning':
+            return 'fas fa-exclamation-triangle text-amber-500 text-lg mt-0.5 flex-shrink-0';
+        default:
+            return 'fas fa-info-circle text-sky-500 text-lg mt-0.5 flex-shrink-0';
+    }
+}
+
+function getProgressColorClass(type) {
+    switch (type) {
+        case 'success':
+            return 'bg-emerald-500';
+        case 'error':
+        case 'danger':
+            return 'bg-rose-500';
+        case 'warning':
+            return 'bg-amber-500';
+        default:
+            return 'bg-sky-500';
+    }
+}
+
+// Make available globally
+window.showNotification = showNotification;
+window.createToast = showNotification;
+

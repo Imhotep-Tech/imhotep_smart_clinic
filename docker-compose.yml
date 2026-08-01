@@ -23,6 +23,7 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=True
+      - database_type=postgresql
       - POSTGRES_DB=imhotepclinic_db
       - POSTGRES_USER=imhotepclinic_user
       - POSTGRES_PASSWORD=imhotepclinic_password

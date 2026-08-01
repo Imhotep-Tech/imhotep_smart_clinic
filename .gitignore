@@ -8,5 +8,8 @@ dist/
 node_modules/
 
 imhotep_clinic.db
+db.sqlite3
+database_*.db
+*.log
 
 .conda/
