@@ -17,10 +17,14 @@ from datetime import timedelta
 @login_required
 @doctor_required
 def update_doctor_profile(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
-    
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
+
     if request.method == 'POST':
         specialization = request.POST.get('specialization')
+        
+        if request.user.is_demo:
+            messages.error(request, _("Demo accounts cannot update profile details. Please create your own account to access all features."))
+            return redirect('update_doctor_profile')
         # Add any other doctor-specific fields here
         
         if specialization:
@@ -57,7 +61,7 @@ def update_doctor_profile(request):
 @login_required
 @doctor_required
 def upload_clinic_logo(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     
     if request.user.is_demo:
         messages.error(request, _("Demo accounts cannot update profile details. Please create your own account to access all features."))
@@ -120,7 +124,7 @@ def upload_clinic_logo(request):
 @login_required
 @doctor_required
 def remove_clinic_logo(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     
     if request.user.is_demo:
         messages.error(request, _("Demo accounts cannot update profile details. Please create your own account to access all features."))
@@ -152,7 +156,7 @@ def remove_clinic_logo(request):
 @login_required
 @doctor_required
 def set_appointment_times(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     
     if request.method == 'POST':
         start_time = request.POST.get('start_time')
@@ -189,7 +193,7 @@ def set_appointment_times(request):
 @login_required
 @doctor_required
 def update_appointment_times(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     if request.method == 'POST':
         appointment_id = request.POST.get('appointment_id')
         appointment_time = get_object_or_404(AppointmentTimes, id=appointment_id, doctor=doctor_profile)
@@ -225,7 +229,7 @@ def update_appointment_times(request):
 @doctor_required
 def deactivate_appointment_times(request):
 
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     if request.method == 'POST':
         appointment_id = request.GET.get('appointment_id')
         appointment_time = get_object_or_404(AppointmentTimes, id=appointment_id, doctor=doctor_profile)

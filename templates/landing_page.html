@@ -71,20 +71,6 @@
                     <span class="ml-3 text-xl font-bold text-gray-800 dark:text-gray-200">{% trans "Imhotep Smart Clinic" %}</span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <form action="{% url 'set_language' %}" method="post" class="inline">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.get_full_path|default:'/' }}">
-                        <select name="language" onchange="this.form.submit()" class="text-sm border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:bg-gray-900 transition-colors py-2 pl-3 pr-8">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            {% get_available_languages as LANGUAGES %}
-                            {% get_language_info_list for LANGUAGES as languages %}
-                            {% for language in languages %}
-                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                    {{ language.name_local }} ({{ language.code|upper }})
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </form>
                     <a href="{% url 'login' %}" class="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 transition-colors">{% trans "Sign In" %}</a>
                     <a href="{% url 'register' %}" class="hidden sm:inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">{% trans "Register" %}</a>
                 </div>

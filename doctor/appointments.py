@@ -17,7 +17,7 @@ def appointment_list(request):
     """View for showing a list of appointments."""
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor = assistant_profile.doctor
@@ -65,7 +65,7 @@ def appointment_detail(request):
     """View for showing appointment details."""
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor = assistant_profile.doctor
@@ -91,7 +91,7 @@ def get_available_times(request):
     """AJAX endpoint to get available appointment times for a date."""
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor = assistant_profile.doctor
@@ -155,7 +155,7 @@ def schedule_appointment(request):
     """View for scheduling a new appointment."""
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor = assistant_profile.doctor
@@ -213,7 +213,7 @@ def update_appointment_doctor(request):
     """View for updating an existing appointment."""
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor_profile = assistant_profile.doctor
@@ -295,7 +295,7 @@ def update_appointment_doctor(request):
 def delete_appointment_doctor(request):
 
     appointment_id = request.GET.get('appointment_id')
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     appointment = get_object_or_404(Appointments, id=appointment_id, doctor=doctor_profile)
 
     if request.method == 'POST': 
@@ -320,7 +320,7 @@ def mark_appointment(request):
         messages.error(request, _("Method not allowed"))
         return redirect("appointment_list")
     
-    doctor = get_object_or_404(DoctorProfile, user=request.user)
+    doctor = DoctorProfile.get_or_create_for_user(request.user)
     appointment_id = request.POST.get('appointment_id')
     
     try:

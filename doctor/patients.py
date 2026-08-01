@@ -25,7 +25,7 @@ def add_patient(request):
         password = request.POST.get('password')
         email = request.POST.get('email')
         
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
         clinic = doctor.clinic
 
         # Create user account for patient if password provided (Option 1)
@@ -71,7 +71,7 @@ def add_patient(request):
 def show_patients(request):
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
         clinic = doctor_profile.clinic
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
@@ -126,7 +126,7 @@ def show_patient_details(request):
     
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
         clinic = doctor_profile.clinic
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
@@ -177,7 +177,7 @@ def update_patient(request):
     
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
         clinic = doctor_profile.clinic
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
@@ -220,7 +220,7 @@ def update_patient(request):
 @doctor_required  # Only doctors can delete patients
 def delete_patient(request):
     patient_id = request.GET.get('patient_id')
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     clinic = doctor_profile.clinic
     if clinic:
         patient = get_object_or_404(Patients, clinic=clinic, id=patient_id)
@@ -246,7 +246,7 @@ def delete_patient(request):
 def search_patient(request):
     # Get the appropriate doctor profile
     if request.user.is_doctor():
-        doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+        doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     else:  # Assistant
         assistant_profile = get_object_or_404(AssistantProfile, user=request.user)
         doctor_profile = assistant_profile.doctor

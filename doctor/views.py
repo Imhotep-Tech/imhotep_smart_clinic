@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 @login_required
 @doctor_required
 def dashboard(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
 
     number_of_patients = doctor_profile.doctor_patients.count()
 
@@ -81,7 +81,7 @@ def dashboard(request):
     return render(request, "doctor_dashboard.html", context)
 
 def add_assistant(request):
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
 
     if request.user.is_demo:
         messages.error(request, _("Demo accounts cannot add assistants. Please create your own account to access all features."))

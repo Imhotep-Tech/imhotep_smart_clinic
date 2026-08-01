@@ -120,73 +120,6 @@ def register(request):
 
     return render(request, "register.html")
 
-import secrets
-import string
-
-def create_and_send_clinic_admin_credentials(doctor_user):
-    from doctor.models import DoctorProfile, Clinic
-    doctor_profile = DoctorProfile.objects.filter(user=doctor_user).first()
-    if not doctor_profile or not doctor_profile.clinic:
-        return
-    
-    clinic = doctor_profile.clinic
-    if clinic.admin and getattr(clinic.admin, 'is_clinic_admin', lambda: False)():
-        return
-
-    admin_username = f"admin_{doctor_user.username}"
-    counter = 1
-    original_username = admin_username
-    while User.objects.filter(username=admin_username).exists():
-        admin_username = f"{original_username}_{counter}"
-        counter += 1
-
-    alphabet = string.ascii_letters + string.digits
-    random_password = ''.join(secrets.choice(alphabet) for _ in range(12))
-    
-    admin_user = User.objects.create_user(
-        username=admin_username,
-        email=doctor_user.email,
-        password=random_password,
-        first_name="Clinic",
-        last_name=f"Admin ({clinic.name})",
-        user_type='clinic_admin',
-        is_staff=True,
-        email_verify=True
-    )
-    
-    clinic.admin = admin_user
-    clinic.save()
-
-    current_site = SITE_DOMAIN.rstrip('/')
-    admin_url = f"http://{current_site}/admin/" if not current_site.startswith('http') else f"{current_site}/admin/"
-
-    subject = f"Your Clinic Admin Account Credentials - {clinic.name}"
-    message = f"""Hello Dr. {doctor_user.get_full_name() or doctor_user.username},
-
-Your email has been verified and your clinic ({clinic.name}) is now active!
-
-A Clinic Admin account has been automatically created for managing your clinic settings and data:
-
-  Admin Panel URL: {admin_url}
-  Admin Username: {admin_username}
-  Temporary Password: {random_password}
-
-Please log in to the admin panel and change your password immediately.
-
-Best regards,
-Imhotep Smart Clinic Team
-"""
-    try:
-        send_mail(
-            subject,
-            message,
-            'imhoteptech1@gmail.com',
-            [doctor_user.email],
-            fail_silently=False
-        )
-    except Exception as e:
-        print(f"Error sending clinic admin credentials email: {e}")
-
 #the activate route
 def activate(request, uidb64, token):
     try:
@@ -201,9 +134,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.email_verify = True
         user.save()
-
-        if user.is_doctor():
-            create_and_send_clinic_admin_credentials(user)
 
         # Set the backend attribute on the user
         backend = get_backends()[0]

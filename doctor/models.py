@@ -25,6 +25,21 @@ class DoctorProfile(models.Model):
             return self.clinic.logo
         return self.clinic_photo_path or ''
 
+    @classmethod
+    def get_or_create_for_user(cls, user):
+        profile = cls.objects.filter(user=user).first()
+        if not profile:
+            clinic_name = f"Dr. {user.get_full_name() or user.username}'s Clinic"
+            clinic, _ = Clinic.objects.get_or_create(name=clinic_name)
+            profile, _ = cls.objects.get_or_create(
+                user=user,
+                defaults={
+                    'specialization': 'General',
+                    'clinic': clinic
+                }
+            )
+        return profile
+
     def __str__(self):
         return f"Dr. {self.user.get_full_name() or self.user.username}"
 

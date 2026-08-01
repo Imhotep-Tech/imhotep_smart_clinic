@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -49,9 +48,11 @@ def serve_sitemap(request):
     return HttpResponse(content, content_type='application/xml')
 
 urlpatterns = [
-    # Language switcher endpoint
-    path('i18n/', include('django.conf.urls.i18n')),
-
+    path('admin/', admin.site.urls),
+    path('', include('accounts.urls')),
+    path('doctor/', include('doctor.urls')),
+    path('assistant/', include('assistant.urls')),
+    
     # Add these lines to serve service-worker.js from the root
     path('service-worker.js', 
          RedirectView.as_view(url=settings.STATIC_URL + 'service-worker.js', permanent=False),
@@ -64,14 +65,6 @@ urlpatterns = [
          
     path('sitemap.xml', serve_sitemap, name='sitemap'),
 ]
-
-# Wrap main routes in i18n_patterns
-urlpatterns += i18n_patterns(
-    path('admin/', admin.site.urls),
-    path('', include('accounts.urls')),
-    path('doctor/', include('doctor.urls')),
-    path('assistant/', include('assistant.urls')),
-)
 
 # Serve media files in development
 if settings.DEBUG:

@@ -20,7 +20,7 @@ from weasyprint import HTML, CSS
 def add_medical_record(request):
     if request.method == 'POST':
         patient_id = request.POST.get("patient_id")
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
         patient = get_object_or_404(Patients,  doctor=doctor, id=patient_id)
 
         date = request.POST.get("date")
@@ -48,7 +48,7 @@ def add_medical_record(request):
             return redirect("doctor_dashboard")
     else:
         patient_id = request.GET.get('patient_id')
-        doctor = get_object_or_404(DoctorProfile, user=request.user)
+        doctor = DoctorProfile.get_or_create_for_user(request.user)
         patient = get_object_or_404(Patients, doctor=doctor, id=patient_id)
         
         context = {
@@ -63,7 +63,7 @@ def add_medical_record(request):
 @doctor_required
 def update_medical_record(request):
     medical_record_id = request.GET.get('medical_record_id')
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     medical_record = get_object_or_404(MedicalRecord, id=medical_record_id, doctor=doctor_profile)
     patient_id = medical_record.patient.id
 
@@ -100,7 +100,7 @@ def update_medical_record(request):
 @doctor_required
 def delete_medical_record(request):
     medical_record_id = request.GET.get('medical_record_id')
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     medical_record = get_object_or_404(MedicalRecord, id=medical_record_id, doctor=doctor_profile)
     patient_id = medical_record.patient.id
 
@@ -124,7 +124,7 @@ def delete_medical_record(request):
 @doctor_required
 def generate_prescription_pdf(request, record_id):
     # Get the medical record
-    doctor_profile = get_object_or_404(DoctorProfile, user=request.user)
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
     medical_record = get_object_or_404(MedicalRecord, id=record_id, doctor=doctor_profile)
     patient = medical_record.patient
     
