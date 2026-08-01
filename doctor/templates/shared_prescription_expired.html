@@ -1,0 +1,75 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="10;url=/">
+    <title>{% trans "Prescription Link Expired - Imhotep Smart Clinic" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center border border-gray-100 dark:border-gray-700">
+        <!-- Warning / Expired Icon -->
+        <div class="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            {% trans "Prescription Link Unavailable" %}
+        </h1>
+
+        <!-- Subtitle message -->
+        <p class="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed">
+            {% if error_message %}
+                {{ error_message }}
+            {% else %}
+                {% trans "This prescription share link is no longer shared or has expired. Please contact your doctor if you require a new link." %}
+            {% endif %}
+        </p>
+
+        <!-- Countdown box -->
+        <div class="bg-indigo-50 dark:bg-gray-700/50 rounded-xl p-4 mb-6 border border-indigo-100 dark:border-gray-600">
+            <p class="text-xs text-indigo-600 dark:text-indigo-300 font-medium uppercase tracking-wider mb-1">
+                {% trans "Redirecting to Home Page" %}
+            </p>
+            <div class="text-3xl font-extrabold text-indigo-700 dark:text-indigo-200">
+                <span id="countdown">10</span> <span class="text-sm font-normal text-indigo-600 dark:text-indigo-300">{% trans "seconds" %}</span>
+            </div>
+        </div>
+
+        <!-- Action Button -->
+        <a href="/" class="w-full inline-flex justify-center items-center px-5 py-3 border border-transparent text-sm font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-md hover:shadow-lg">
+            {% trans "Return to Home Page Now" %}
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Countdown Script -->
+    <script>
+        (function() {
+            var seconds = 10;
+            var countdownEl = document.getElementById('countdown');
+            var interval = setInterval(function() {
+                seconds--;
+                if (countdownEl) {
+                    countdownEl.textContent = seconds;
+                }
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    window.location.href = '/';
+                }
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>

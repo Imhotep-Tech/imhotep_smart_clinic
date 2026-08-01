@@ -1,3 +1,5 @@
+import uuid
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import DoctorProfile, Patients, MedicalRecord
@@ -6,7 +8,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from accounts.decorators import doctor_required
 from django.urls import reverse
 from django.utils import timezone
-from django.http import HttpResponse
+from django.utils.dateparse import parse_datetime
+from django.http import HttpResponse, JsonResponse
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch, mm
 import os
@@ -120,39 +123,31 @@ def delete_medical_record(request):
         messages.error(request, _("Method Not allowed"))
         return redirect("doctor_dashboard")
 
-@login_required
-@doctor_required
-def generate_prescription_pdf(request, record_id):
-    # Get the medical record
-    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
-    medical_record = get_object_or_404(MedicalRecord, id=record_id, doctor=doctor_profile)
+def _render_prescription_pdf_response(request, medical_record, inline=False):
     patient = medical_record.patient
+    doctor_profile = medical_record.doctor
     
-    # Format date to show only YYYY-MM-DD
     formatted_date = str(medical_record.date).split(' ')[0]
     
-    # Helper function to check for Arabic text
     def has_arabic(text):
+        if not text:
+            return False
         return any(ord(c) >= 0x0600 and ord(c) <= 0x06FF for c in text)
     
-    # Check if prescription content has Arabic
     has_arabic_prescription = False
     if medical_record.prescription:
         has_arabic_prescription = has_arabic(medical_record.prescription)
     
-    # Check if patient name or doctor name contains Arabic
     has_arabic_name = has_arabic(patient.name)
-    doctor_name = f"{request.user.first_name} {request.user.last_name}"
+    doctor_user = doctor_profile.user
+    doctor_name = f"{doctor_user.first_name} {doctor_user.last_name}".strip() or doctor_user.username
     has_arabic_doctor_name = has_arabic(doctor_name)
     has_arabic_specialization = has_arabic(doctor_profile.specialization)
     
-    # Prepare the clinic logo path with absolute URL if it exists
     clinic_logo_path = None
     if doctor_profile.logo_path:
-        # Get the absolute URL for the clinic logo
         clinic_logo_path = request.build_absolute_uri(settings.MEDIA_URL + doctor_profile.logo_path)
     
-    # Prepare context for the template
     context = {
         'patient': patient,
         'medical_record': medical_record,
@@ -167,18 +162,88 @@ def generate_prescription_pdf(request, record_id):
         'clinic_logo_path': clinic_logo_path,
     }
     
-    # Render the HTML template
     html_string = render_to_string('prescription_pdf.html', context)
-    
-    # Create HTTP response with PDF
     response = HttpResponse(content_type='application/pdf')
     filename = f"prescription_{patient.name}_{formatted_date}.pdf"
-    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    disposition = 'inline' if inline else 'attachment'
+    response['Content-Disposition'] = f'{disposition}; filename="{filename}"'
     
-    # Generate PDF from HTML
     html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
-    
-    # Generate PDF and attach to response
     html.write_pdf(response)
-    
     return response
+
+@login_required
+@doctor_required
+def generate_prescription_pdf(request, record_id):
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
+    medical_record = get_object_or_404(MedicalRecord, id=record_id, doctor=doctor_profile)
+    return _render_prescription_pdf_response(request, medical_record, inline=False)
+
+def shared_prescription_pdf(request, token):
+    medical_record = get_object_or_404(MedicalRecord, share_token=token)
+    if not medical_record.is_share_link_active():
+        context = {
+            'medical_record': medical_record,
+            'error_message': _("This prescription share link is no longer shared or has expired."),
+            'redirect_seconds': 10,
+        }
+        return render(request, 'shared_prescription_expired.html', context, status=403)
+    
+    return _render_prescription_pdf_response(request, medical_record, inline=True)
+
+@login_required
+@doctor_required
+def toggle_prescription_share(request, record_id):
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': str(_('Method Not allowed'))}, status=405)
+    
+    doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
+    medical_record = get_object_or_404(MedicalRecord, id=record_id, doctor=doctor_profile)
+    
+    action = request.POST.get('action', 'enable')
+    expires_at_str = request.POST.get('expires_at', '')
+    never_expires = request.POST.get('never_expires', 'false').lower() in ['true', '1', 'yes']
+    
+    if action == 'disable':
+        medical_record.is_shareable = False
+        medical_record.share_expires_at = None
+        medical_record.save(update_fields=['is_shareable', 'share_expires_at'])
+        return JsonResponse({
+            'status': 'success',
+            'is_shareable': False,
+            'message': str(_('Prescription share link disabled successfully.')),
+            'share_url': medical_record.get_share_url(request),
+            'share_expires_at': None,
+            'share_expires_at_formatted': None,
+        })
+    
+    if not medical_record.share_token:
+        medical_record.share_token = uuid.uuid4()
+    
+    medical_record.is_shareable = True
+    
+    if never_expires or not expires_at_str or expires_at_str.lower() in ['never', 'forever']:
+        medical_record.share_expires_at = None
+    else:
+        try:
+            parsed_dt = parse_datetime(expires_at_str)
+            if parsed_dt is None:
+                parsed_dt = datetime.fromisoformat(expires_at_str)
+            if timezone.is_naive(parsed_dt):
+                parsed_dt = timezone.make_aware(parsed_dt, timezone.get_current_timezone())
+            medical_record.share_expires_at = parsed_dt
+        except Exception:
+            return JsonResponse({'status': 'error', 'message': str(_('Invalid expiration date format.'))}, status=400)
+    
+    medical_record.save()
+    
+    expires_formatted = medical_record.share_expires_at.strftime('%Y-%m-%d %H:%M') if medical_record.share_expires_at else str(_('Forever (No Expiration)'))
+    
+    return JsonResponse({
+        'status': 'success',
+        'is_shareable': True,
+        'message': str(_('Prescription share link updated successfully.')),
+        'share_url': medical_record.get_share_url(request),
+        'share_expires_at': medical_record.share_expires_at.isoformat() if medical_record.share_expires_at else None,
+        'share_expires_at_formatted': expires_formatted,
+    })

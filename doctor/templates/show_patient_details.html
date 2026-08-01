@@ -233,7 +233,7 @@
                                                     <a href="{% url 'update_medical_record' %}?medical_record_id={{ record.id }}" class="text-blue-600 hover:text-blue-900">{% trans "Edit" %}</a>
                                                     <button type="button" onclick="openDeleteRecordModal('{{ record.id }}')" class="text-red-600 hover:text-red-900">{% trans "Delete" %}</button>
                                                     {% if record.prescription %}
-                                                    <a href="{% url 'generate_prescription_pdf' record.id %}" class="text-green-600 hover:text-green-800" target="_blank">
+                                                    <a href="{% url 'generate_prescription_pdf' record.id %}" class="text-green-600 hover:text-green-800" target="_blank" title="Download PDF">
                                                         <span class="flex items-center">
                                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
@@ -241,6 +241,14 @@
                                                             PDF
                                                         </span>
                                                     </a>
+                                                    <button type="button" 
+                                                            onclick="openShareModal('{{ record.id }}', '{{ record.get_share_url|escapejs }}', {{ record.is_share_link_active|yesno:'true,false' }}, '{% if record.share_expires_at %}{{ record.share_expires_at|date:'Y-m-d\TH:i' }}{% endif %}', '{% if record.share_expires_at %}{{ record.share_expires_at|date:'Y-m-d H:i' }}{% else %}Forever{% endif %}')" 
+                                                            class="text-indigo-600 hover:text-indigo-900 flex items-center">
+                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                                                        </svg>
+                                                        {% trans "Share Link" %}
+                                                    </button>
                                                     {% endif %}
                                                     {% else %}
                                                     <span class="text-gray-400">{% trans "Restricted" %}</span>
@@ -280,7 +288,15 @@
                                                         <h4 class="text-sm font-medium text-gray-500">{% trans "Prescription" %}</h4>
                                                         <div class="text-base medical-content prescription-content">{{ record.prescription|safe }}</div>
                                                     </div>
-                                                    <div class="mt-4 flex justify-end">
+                                                    <div class="mt-4 flex justify-end space-x-3">
+                                                        <button type="button" 
+                                                                onclick="closeRecordDetails('{{ record.id }}'); openShareModal('{{ record.id }}', '{{ record.get_share_url|escapejs }}', {{ record.is_share_link_active|yesno:'true,false' }}, '{% if record.share_expires_at %}{{ record.share_expires_at|date:'Y-m-d\TH:i' }}{% endif %}', '{% if record.share_expires_at %}{{ record.share_expires_at|date:'Y-m-d H:i' }}{% else %}Forever{% endif %}')" 
+                                                                class="inline-flex items-center px-4 py-2 border border-indigo-600 rounded-md shadow-sm text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none">
+                                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                                                            </svg>
+                                                            {% trans "Share Link" %}
+                                                        </button>
                                                         <a href="{% url 'generate_prescription_pdf' record.id %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" target="_blank">
                                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
@@ -460,7 +476,106 @@
     </div>
 </div>
 
+<!-- Share Prescription Link Modal -->
+<div id="shareModal" class="fixed inset-0 z-50 hidden">
+    <div class="fixed inset-0 bg-black bg-opacity-50" onclick="closeShareModal()"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full mx-auto border border-gray-100 dark:border-gray-700">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-5 pb-3 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center space-x-2">
+                        <div class="p-2 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{% trans "Share Prescription Link" %}</h3>
+                    </div>
+                    <button type="button" onclick="closeShareModal()" class="text-gray-400 hover:text-gray-500 rounded-lg p-1">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <input type="hidden" id="shareModalRecordId">
+
+                <!-- Current Share Status Box -->
+                <div class="mb-5 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/40 border border-gray-200 dark:border-gray-600 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-medium text-gray-500 dark:text-gray-400 block uppercase tracking-wider mb-1">{% trans "Status" %}</span>
+                        <span id="shareStatusBadge" class="px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                            {% trans "Disabled" %}
+                        </span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-medium text-gray-500 dark:text-gray-400 block uppercase tracking-wider mb-1">{% trans "Expiration" %}</span>
+                        <span id="shareStatusText" class="text-xs font-medium text-gray-700 dark:text-gray-300"></span>
+                    </div>
+                </div>
+
+                <!-- Expiration Date Selection -->
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {% trans "Set Expiration Date & Time" %}
+                    </label>
+                    <input type="datetime-local" id="shareExpiryInput" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg text-sm focus:ring-indigo-500 focus:border-indigo-500 mb-3">
+                    
+                    <!-- Quick Presets -->
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs text-gray-500 self-center mr-1">{% trans "Quick set:" %}</span>
+                        <button type="button" onclick="setSharePreset('1_day')" class="px-2.5 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 rounded-md transition-colors">{% trans "1 Day" %}</button>
+                        <button type="button" onclick="setSharePreset('4_days')" class="px-2.5 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 rounded-md transition-colors">{% trans "4 Days" %}</button>
+                        <button type="button" onclick="setSharePreset('1_week')" class="px-2.5 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 rounded-md transition-colors">{% trans "1 Week" %}</button>
+                        <button type="button" onclick="setSharePreset('1_month')" class="px-2.5 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 rounded-md transition-colors">{% trans "1 Month" %}</button>
+                        <button type="button" onclick="setSharePreset('forever')" class="px-2.5 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 hover:text-indigo-600 rounded-md transition-colors">{% trans "Forever" %}</button>
+                    </div>
+                </div>
+
+                <!-- Share URL & Copy -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        {% trans "Shareable Link" %}
+                    </label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <input type="text" id="shareUrlInput" readonly class="flex-1 min-w-0 px-3 py-2 rounded-l-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-600 dark:text-gray-300 text-xs font-mono select-all">
+                        <button type="button" onclick="copyShareUrl()" class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 text-xs font-medium transition-colors">
+                            <svg class="w-4 h-4 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            <span id="copyBtnText">{% trans "Copy" %}</span>
+                        </button>
+                        <a id="testShareLinkBtn" href="#" target="_blank" class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 dark:border-gray-600 bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-r-lg text-xs font-medium transition-colors" title="Open Link Online">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer Buttons -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <button type="button" id="disableShareBtn" onclick="submitShareUpdate('disable')" class="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                        {% trans "Make Not Shareable" %}
+                    </button>
+                    <div class="flex space-x-2">
+                        <button type="button" onclick="closeShareModal()" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                            {% trans "Close" %}
+                        </button>
+                        <button type="button" onclick="submitShareUpdate('enable')" class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors">
+                            {% trans "Save & Enable Link" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    let currentShareRecordId = null;
+
     function openDeleteModal() {
         document.getElementById('deleteModal').classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
@@ -490,6 +605,127 @@
     function closeDeleteRecordModal() {
         document.getElementById('deleteRecordModal').classList.add('hidden');
         document.body.classList.remove('overflow-hidden');
+    }
+
+    function openShareModal(recordId, shareUrl, isShareable, expiresIso, expiresFormatted) {
+        currentShareRecordId = recordId;
+        document.getElementById('shareModalRecordId').value = recordId;
+        const fullUrl = shareUrl ? (window.location.origin + shareUrl) : '';
+        document.getElementById('shareUrlInput').value = fullUrl;
+        document.getElementById('testShareLinkBtn').href = fullUrl || '#';
+        
+        const statusBadge = document.getElementById('shareStatusBadge');
+        const statusText = document.getElementById('shareStatusText');
+        const expiryInput = document.getElementById('shareExpiryInput');
+        const disableBtn = document.getElementById('disableShareBtn');
+        
+        if (isShareable) {
+            statusBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300';
+            statusBadge.textContent = '{% trans "Active" %}';
+            statusText.textContent = '{% trans "Expires:" %} ' + (expiresFormatted || '{% trans "Forever" %}');
+            disableBtn.classList.remove('hidden');
+        } else {
+            statusBadge.className = 'px-2.5 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+            statusBadge.textContent = '{% trans "Disabled" %}';
+            statusText.textContent = '{% trans "Not shareable online" %}';
+            disableBtn.classList.add('hidden');
+        }
+
+        if (expiresIso) {
+            expiryInput.value = expiresIso;
+        } else {
+            expiryInput.value = '';
+        }
+
+        document.getElementById('shareModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeShareModal() {
+        document.getElementById('shareModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    function setSharePreset(preset) {
+        const expiryInput = document.getElementById('shareExpiryInput');
+        const now = new Date();
+        if (preset === 'forever') {
+            expiryInput.value = '';
+            return;
+        }
+        
+        let target = new Date(now);
+        if (preset === '1_day') {
+            target.setDate(target.getDate() + 1);
+        } else if (preset === '4_days') {
+            target.setDate(target.getDate() + 4);
+        } else if (preset === '1_week') {
+            target.setDate(target.getDate() + 7);
+        } else if (preset === '1_month') {
+            target.setMonth(target.getMonth() + 1);
+        }
+        
+        const year = target.getFullYear();
+        const month = String(target.getMonth() + 1).padStart(2, '0');
+        const day = String(target.getDate()).padStart(2, '0');
+        const hours = String(target.getHours()).padStart(2, '0');
+        const minutes = String(target.getMinutes()).padStart(2, '0');
+            
+        expiryInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+    function submitShareUpdate(action) {
+        if (!currentShareRecordId) return;
+        
+        const expiryInput = document.getElementById('shareExpiryInput');
+        const expiresAt = expiryInput.value;
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]') ? document.querySelector('[name=csrfmiddlewaretoken]').value : '';
+        
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', csrfToken);
+        formData.append('action', action);
+        if (action === 'enable') {
+            if (!expiresAt) {
+                formData.append('never_expires', 'true');
+            } else {
+                formData.append('expires_at', expiresAt);
+            }
+        }
+        
+        const url = '/doctor/prescription/toggle-share/' + currentShareRecordId + '/';
+        
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.reload();
+            } else {
+                alert(data.message || '{% trans "An error occurred." %}');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('{% trans "Failed to update prescription share settings." %}');
+        });
+    }
+
+    function copyShareUrl() {
+        const input = document.getElementById('shareUrlInput');
+        if (!input.value) return;
+        
+        navigator.clipboard.writeText(input.value).then(() => {
+            const btnText = document.getElementById('copyBtnText');
+            if (btnText) {
+                const originalText = btnText.textContent;
+                btnText.textContent = '{% trans "Copied!" %}';
+                setTimeout(() => {
+                    btnText.textContent = originalText;
+                }, 2000);
+            }
+        });
     }
 </script>
 {% endblock %}

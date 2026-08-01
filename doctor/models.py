@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -71,6 +72,26 @@ class MedicalRecord(models.Model):
     details = models.CharField(max_length=2000, help_text="Clinical notes - visible to doctor and assistant only")
     remarks = models.CharField(max_length=1000, default='', blank=True, help_text="Visible to patient")
     prescription = models.CharField(max_length=1000, default='', null=True, blank=True, help_text="Visible to patient")
+    share_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, null=True, blank=True)
+    is_shareable = models.BooleanField(default=False)
+    share_expires_at = models.DateTimeField(null=True, blank=True)
+
+    def is_share_link_active(self):
+        if not self.is_shareable:
+            return False
+        if self.share_expires_at is not None:
+            return timezone.now() < self.share_expires_at
+        return True
+
+    def get_share_url(self, request=None):
+        from django.urls import reverse
+        if not self.share_token:
+            self.share_token = uuid.uuid4()
+            self.save(update_fields=['share_token'])
+        path = reverse('shared_prescription_pdf', kwargs={'token': self.share_token})
+        if request:
+            return request.build_absolute_uri(path)
+        return path
 
     def __str__(self):
         return f"Medical record for {self.patient} - {self.date.strftime('%Y-%m-%d')}"
