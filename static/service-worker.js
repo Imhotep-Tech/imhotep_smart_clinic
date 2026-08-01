@@ -1,4 +1,4 @@
-const CACHE_NAME = 'imhotep-clinic-v1';
+const CACHE_NAME = 'imhotep-clinic-v3';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache immediately
