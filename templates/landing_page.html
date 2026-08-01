@@ -106,19 +106,26 @@
             
             <!-- Left Hero Content -->
             <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-                <!-- Status Badge -->
-                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-dot"></span>
-                    <span>{% trans "Trusted Next-Gen Healthcare System" %}</span>
+                <!-- Open Source & Status Badges -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                    <a href="https://github.com/Imhotep-Tech/imhotep_smart_clinic" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-slate-900 dark:bg-slate-800 text-white hover:bg-slate-800 dark:hover:bg-slate-700 transition-all border border-slate-700 shadow-sm">
+                        <i class="fab fa-github text-sm"></i>
+                        <span>{% trans "100% Open Source" %}</span>
+                        <i class="fas fa-external-link-alt text-[10px] opacity-70"></i>
+                    </a>
+                    <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-dot"></span>
+                        <span>{% trans "Free Clinic Management Platform" %}</span>
+                    </div>
                 </div>
 
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-[1.15]">
-                    {% trans "Intelligent Management for" %} <br>
-                    <span class="gradient-text">{% trans "Modern Medical Practices" %}</span>
+                    {% trans "Open-Source EMR &" %} <br>
+                    <span class="gradient-text">{% trans "Smart Clinic Suite" %}</span>
                 </h1>
 
                 <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                    {% trans "Empowering healthcare providers and patients with seamless scheduling, real-time medical records, AI assistance, and practice analytics in one intuitive platform." %}
+                    {% trans "An open-source practice management system for medical clinics. Simplify patient records, clinical notes, appointment scheduling, and assistant workflows with full transparency." %}
                 </p>
 
                 <!-- Action Buttons -->
@@ -126,8 +133,8 @@
                     <a href="{% url 'register' %}" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold text-white bg-sky-600 hover:bg-sky-500 shadow-lg shadow-sky-600/30 hover:shadow-sky-600/40 transform hover:-translate-y-0.5 transition-all text-center">
                         <i class="fas fa-stethoscope mr-2"></i>{% trans "Get Started Free" %}
                     </a>
-                    <a href="#live-stats" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold text-gray-800 dark:text-gray-100 glass-card hover:bg-white dark:hover:bg-slate-800 transition-all text-center border border-slate-200 dark:border-slate-700">
-                        <i class="fas fa-chart-line mr-2 text-sky-600"></i>{% trans "View Platform Stats" %}
+                    <a href="https://github.com/Imhotep-Tech/imhotep_smart_clinic" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold text-gray-800 dark:text-gray-100 glass-card hover:bg-white dark:hover:bg-slate-800 transition-all text-center border border-slate-200 dark:border-slate-700">
+                        <i class="fab fa-github mr-2 text-gray-900 dark:text-white"></i>{% trans "View on GitHub" %}
                     </a>
                 </div>
             </div>
@@ -271,6 +278,36 @@
     </div>
 </section>
 
+<!-- OPEN SOURCE COMMUNITY BANNER -->
+<section class="py-12 bg-slate-900 text-white relative overflow-hidden">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-card bg-slate-800/80 border-slate-700/80 p-8 sm:p-12 rounded-3xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="space-y-4 text-center lg:text-left max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                    <i class="fab fa-github"></i>
+                    <span>{% trans "Community Driven & Transparent" %}</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    {% trans "100% Open Source Clinic Solution" %}
+                </h3>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {% trans "Imhotep Smart Clinic is built in the open. Self-host on your own infrastructure with Docker, MySQL, or SQLite without vendor lock-in or subscription fees." %}
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                <a href="https://github.com/Imhotep-Tech/imhotep_smart_clinic" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl font-bold text-sm bg-white text-slate-900 hover:bg-slate-100 transition-all text-center flex items-center justify-center gap-2 shadow-lg">
+                    <i class="fab fa-github text-lg"></i>
+                    <span>{% trans "Star on GitHub" %}</span>
+                </a>
+                <a href="https://github.com/Imhotep-Tech/imhotep_smart_clinic/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl font-bold text-sm bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white transition-all text-center flex items-center justify-center gap-2">
+                    <i class="fas fa-code-branch"></i>
+                    <span>{% trans "Contribute Code" %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Features Section -->
 <section id="features" class="py-20 bg-slate-50 dark:bg-gray-950">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -334,22 +371,22 @@
             <!-- Feature 5 -->
             <div class="feature-card glass-card p-8 rounded-2xl border-t-4 border-t-rose-500 shadow-sm hover:shadow-xl transition-all">
                 <div class="w-14 h-14 rounded-2xl bg-rose-500/10 flex items-center justify-center mb-6 text-rose-600 dark:text-rose-400">
-                    <i class="fas fa-chart-bar text-2xl"></i>
+                    <i class="fas fa-file-pdf text-2xl"></i>
                 </div>
-                <h4 class="text-xl font-bold text-gray-900 dark:text-white">{% trans "Analytics & Reporting" %}</h4>
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white">{% trans "Prescriptions & PDF Export" %}</h4>
                 <p class="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                    {% trans "Understand patient volume trends, peak clinic hours, and operational efficiency with interactive performance metrics." %}
+                    {% trans "Generate clean digital prescriptions and clinical visit notes, ready for instant printing or PDF export for patients." %}
                 </p>
             </div>
             
             <!-- Feature 6 -->
             <div class="feature-card glass-card p-8 rounded-2xl border-t-4 border-t-indigo-500 shadow-sm hover:shadow-xl transition-all">
                 <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-6 text-indigo-600 dark:text-indigo-400">
-                    <i class="fas fa-robot text-2xl"></i>
+                    <i class="fas fa-user-nurse text-2xl"></i>
                 </div>
-                <h4 class="text-xl font-bold text-gray-900 dark:text-white">{% trans "AI Medical Assistant" %}</h4>
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white">{% trans "Assistant & Staff Workflows" %}</h4>
                 <p class="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                    {% trans "Integrated intelligent healthcare assistant helping streamline medical notes draft and clinic support inquiries." %}
+                    {% trans "Assign clinic assistants with dedicated access to streamline patient registration, queue management, and visit check-ins." %}
                 </p>
             </div>
         </div>
