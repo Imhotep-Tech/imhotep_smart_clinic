@@ -80,6 +80,8 @@ def dashboard(request):
     }
     return render(request, "doctor_dashboard.html", context)
 
+@doctor_required
+@login_required
 def add_assistant(request):
     doctor_profile = DoctorProfile.get_or_create_for_user(request.user)
 
