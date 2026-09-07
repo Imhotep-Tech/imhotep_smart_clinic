@@ -15,6 +15,9 @@ def doctor_required(view_func):
 
             if request.user.is_assistant():
                 return redirect("assistant_dashboard")
+
+            if request.user.is_patient():
+                return redirect("patient.dashboard")
             
         return view_func(request, *args, **kwargs)
     return _wrapped_view
