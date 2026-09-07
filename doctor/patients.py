@@ -138,7 +138,7 @@ def show_patient_details(request):
     else:
         patient = get_object_or_404(Patients, doctor=doctor_profile, id=patient_id)
         
-    records_list = MedicalRecord.objects.filter(patient=patient_id).order_by('-date')
+    records_list = MedicalRecord.objects.filter(patient=patient_id, doctor=doctor_profile).order_by('-date')
 
     if patient.date_of_birth:
         today = date.today()
